@@ -1,0 +1,78 @@
+<Window x:Class="AntennaSimulatorApp.Views.ExportStepWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Export STEP File"
+        Width="380"
+        Height="340"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="Select contents to export:"
+                   FontWeight="SemiBold"
+                   FontSize="13"
+                   Margin="0,0,0,10"/>
+
+        <!-- Checkboxes -->
+        <StackPanel Grid.Row="1"
+                    Margin="8,0,0,0">
+            <CheckBox x:Name="ChkPcb"
+                      Content="PCB Boards (carrier + module substrates)"
+                      IsChecked="True"
+                      IsEnabled="False"
+                      Margin="0,4"
+                      ToolTip="PCB boards are always included"/>
+            <CheckBox x:Name="ChkDefaultCopper"
+                      Content="Default Copper (flood-fill layers without shapes)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkCopperShapes"
+                      Content="Copper Shapes (manually drawn copper)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkAntennas"
+                      Content="Antennas (parametric antenna traces)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkVias"
+                      Content="Vias (plated through-holes)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+        </StackPanel>
+
+        <!-- Info -->
+        <TextBlock Grid.Row="2"
+                   Text="The exported .step / .stp file can be opened in most 3D CAD software (FreeCAD, SolidWorks, Fusion 360, etc.)."
+                   TextWrapping="Wrap"
+                   Foreground="#666"
+                   FontSize="11"
+                   Margin="0,12,0,0"
+                   VerticalAlignment="Bottom"/>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,12,0,0">
+            <Button Content="Export…"
+                    Click="ExportBtn_Click"
+                    Padding="16,5"
+                    Margin="0,0,8,0"
+                    IsDefault="True"
+                    Background="#DDEEFF"/>
+            <Button Content="Cancel"
+                    IsCancel="True"
+                    Padding="16,5"/>
+        </StackPanel>
+    </Grid>
+</Window>

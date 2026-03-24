@@ -1,0 +1,146 @@
+<Window x:Class="AntennaSimulatorApp.Views.ManageShapesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AntennaSimulatorApp.Views"
+        Title="Copper Shapes"
+        Width="680"
+        Height="420"
+        MinWidth="520"
+        MinHeight="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <DockPanel Margin="10">
+
+        <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,6">
+            <Button Content="New…"
+                    Click="NewShape_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    Background="#DDEEFF"
+                    ToolTip="Draw a new copper polygon"/>
+            <Button Content="Edit…"
+                    Click="EditShape_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    ToolTip="Edit the selected shape"/>
+            <Button Content="Delete"
+                    Click="DeleteShape_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    ToolTip="Delete selected shapes"/>
+            <Separator Width="10"
+                       Background="Transparent"/>
+            <Button Content="Copy"
+                    Click="CopyShape_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    ToolTip="Copy selected shapes (Ctrl+C)"/>
+            <Button Content="Paste"
+                    Click="PasteShape_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    ToolTip="Paste copied shapes (Ctrl+V)"/>
+            <Separator Width="10"
+                       Background="Transparent"/>
+            <Button Content="Merge (same layer)"
+                    Click="MergeShapes_Click"
+                    Padding="10,4"
+                    Margin="0,0,4,0"
+                    Background="#EEFFDD"
+                    ToolTip="Merge 2+ selected shapes that share the same board and layer into one shape"/>
+            <Separator Width="10"
+                       Background="Transparent"/>
+            <Button Content="Close"
+                    IsDefault="True"
+                    IsCancel="True"
+                    Padding="10,4"/>
+        </StackPanel>
+
+        <!-- ── Status bar ───────────────────────────────────────────────────── -->
+        <TextBlock x:Name="StatusBar"
+                   DockPanel.Dock="Bottom"
+                   Margin="0,4,0,0"
+                   FontSize="11"
+                   Foreground="#555"
+                   Text="0 shapes"/>
+
+        <!-- ── DataGrid ─────────────────────────────────────────────────────── -->
+        <DataGrid x:Name="ShapesGrid"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeRows="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  RowHeaderWidth="0"
+                  MouseDoubleClick="ShapesGrid_DoubleClick"
+                  SelectionChanged="ShapesGrid_SelectionChanged">
+
+            <DataGrid.Columns>
+
+                <!-- Name (editable inline) -->
+                <DataGridTextColumn Header="Name"
+                                    Width="*"
+                                    Binding="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
+
+                <!-- Board -->
+                <DataGridTemplateColumn Header="Board"
+                                        Width="75"
+                                        CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding BoardLabel}"
+                                       VerticalAlignment="Center"
+                                       Margin="4,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Layer -->
+                <DataGridTextColumn Header="Layer"
+                                    Width="110"
+                                    Binding="{Binding LayerName}"
+                                    IsReadOnly="True"/>
+
+                <!-- Vertex count -->
+                <DataGridTemplateColumn Header="Pts"
+                                        Width="50"
+                                        CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Vertices.Count}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Merged sub-polygons count -->
+                <DataGridTemplateColumn Header="Merged"
+                                        Width="60"
+                                        CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MergedPolygons.Count}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="#888"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
+
+</Window>

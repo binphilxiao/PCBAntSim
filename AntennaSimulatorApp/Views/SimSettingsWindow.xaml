@@ -1,0 +1,845 @@
+<Window x:Class="AntennaSimulatorApp.Views.SimSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Simulation Settings"
+        Width="680"
+        Height="750"
+        MinWidth="560"
+        MinHeight="620"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False">
+
+    <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin"
+                    Value="0,0,0,8"/>
+            <Setter Property="Padding"
+                    Value="8,6"/>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Padding"
+                    Value="3,0"/>
+            <Setter Property="FontWeight"
+                    Value="Normal"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="2"/>
+            <Setter Property="Padding"
+                    Value="3,2"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="2"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="2,3"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding"
+                    Value="10,4"/>
+            <Setter Property="Margin"
+                    Value="4,2"/>
+            <Setter Property="MinWidth"
+                    Value="68"/>
+        </Style>
+        <!-- Hint text style -->
+        <Style x:Key="Hint"
+               TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="10.5"/>
+            <Setter Property="Foreground"
+                    Value="#888"/>
+            <Setter Property="FontStyle"
+                    Value="Italic"/>
+            <Setter Property="TextWrapping"
+                    Value="Wrap"/>
+            <Setter Property="Margin"
+                    Value="2,1,2,4"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel Margin="10">
+
+        <!-- Bottom buttons -->
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,8,0,0">
+            <Button Content="OK"
+                    x:Name="OkButton"
+                    IsDefault="True"
+                    Click="OkButton_Click"
+                    Background="#BBDDBB"/>
+            <Button Content="Apply"
+                    x:Name="ApplyButton"
+                    Click="ApplyButton_Click"/>
+            <Button Content="Cancel"
+                    x:Name="CancelButton"
+                    IsCancel="True"
+                    Click="CancelButton_Click"/>
+        </StackPanel>
+
+        <!-- Tab control -->
+        <TabControl x:Name="MainTabs"
+                    Margin="0,0,0,4">
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 1 — Ports & Feed Points
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Ports / Feed">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="6,6,6,4">
+
+                        <TextBlock Style="{StaticResource Hint}"
+                                   Text="Define excitation ports that drive the simulation. A Lumped Port spans two conductor layers at a given (X, Y) position. A Waveguide Port models a coax or microstrip cross-section."/>
+
+                        <!-- Port list -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left: list + add/remove -->
+                            <DockPanel Grid.Column="0"
+                                       Margin="0,0,6,0">
+                                <StackPanel DockPanel.Dock="Bottom"
+                                            Orientation="Horizontal"
+                                            Margin="0,4,0,0">
+                                    <Button Content="+ Add"
+                                            x:Name="AddPortBtn"
+                                            Click="AddPort_Click"
+                                            MinWidth="52"
+                                            Padding="6,3"/>
+                                    <Button Content="− Remove"
+                                            x:Name="RemovePortBtn"
+                                            Click="RemovePort_Click"
+                                            MinWidth="52"
+                                            Padding="6,3"/>
+                                </StackPanel>
+                                <ListBox x:Name="PortListBox"
+                                         SelectionChanged="PortListBox_SelectionChanged"
+                                         DisplayMemberPath="Label"
+                                         MinHeight="130"/>
+                            </DockPanel>
+
+                            <!-- Right: selected port detail -->
+                            <GroupBox Grid.Column="1"
+                                      Header="Port Details"
+                                      FontWeight="Normal">
+                                <Grid x:Name="PortDetailPanel"
+                                      IsEnabled="False">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="115"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Content="Label:"/>
+                                    <TextBox Grid.Row="0"
+                                             Grid.Column="1"
+                                             x:Name="PortLabelBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Content="Port type:"/>
+                                    <ComboBox Grid.Row="1"
+                                              Grid.Column="1"
+                                              x:Name="PortTypeCombo"
+                                              SelectionChanged="PortField_Changed">
+                                        <ComboBoxItem Content="Lumped Port"/>
+                                        <ComboBoxItem Content="Waveguide Port"/>
+                                    </ComboBox>
+
+                                    <Label Grid.Row="2"
+                                           Grid.Column="0"
+                                           Content="Signal layer (+):"/>
+                                    <ComboBox Grid.Row="2"
+                                              Grid.Column="1"
+                                              x:Name="FromLayerCombo"
+                                              ToolTip="Signal layer (+ terminal), e.g. Carrier Top or Module Top"
+                                              SelectionChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="3"
+                                           Grid.Column="0"
+                                           Content="Ground layer (−):"/>
+                                    <ComboBox Grid.Row="3"
+                                              Grid.Column="1"
+                                              x:Name="ToLayerCombo"
+                                              ToolTip="Reference layer (− terminal), typically the nearest ground plane"
+                                              SelectionChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="4"
+                                           Grid.Column="0"
+                                           Content="X (mm):"/>
+                                    <TextBox Grid.Row="4"
+                                             Grid.Column="1"
+                                             x:Name="PortXBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="5"
+                                           Grid.Column="0"
+                                           Content="Y (mm):"/>
+                                    <TextBox Grid.Row="5"
+                                             Grid.Column="1"
+                                             x:Name="PortYBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="6"
+                                           Grid.Column="0"
+                                           Content="Width X (mm):">
+                                        <Label.ToolTip>Port extent in X direction (mm)</Label.ToolTip>
+                                    </Label>
+                                    <TextBox Grid.Row="6"
+                                             Grid.Column="1"
+                                             x:Name="PortWidthXBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="7"
+                                           Grid.Column="0"
+                                           Content="Width Y (mm):">
+                                        <Label.ToolTip>Port extent in Y direction (mm)</Label.ToolTip>
+                                    </Label>
+                                    <TextBox Grid.Row="7"
+                                             Grid.Column="1"
+                                             x:Name="PortWidthYBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="8"
+                                           Grid.Column="0"
+                                           Content="Reference Ω:"/>
+                                    <TextBox Grid.Row="8"
+                                             Grid.Column="1"
+                                             x:Name="PortZBox"
+                                             TextChanged="PortField_Changed"/>
+
+                                    <Label Grid.Row="9"
+                                           Grid.Column="0"
+                                           Content="Integ. line:">
+                                        <Label.ToolTip>Integration line direction for voltage polarity (Lumped Port only)</Label.ToolTip>
+                                    </Label>
+                                    <ComboBox Grid.Row="9"
+                                              Grid.Column="1"
+                                              x:Name="IntegLineCombo"
+                                              SelectionChanged="PortField_Changed">
+                                        <ComboBoxItem Content="+Z  (bottom → top)"/>
+                                        <ComboBoxItem Content="−Z  (top → bottom)"/>
+                                        <ComboBoxItem Content="+X"/>
+                                        <ComboBoxItem Content="−X"/>
+                                        <ComboBoxItem Content="+Y"/>
+                                        <ComboBoxItem Content="−Y"/>
+                                    </ComboBox>
+
+                                    <TextBlock Grid.Row="10"
+                                               Grid.ColumnSpan="2"
+                                               Style="{StaticResource Hint}"
+                                               Text="Integration line defines voltage polarity: +Z means V measured from From-layer upward to To-layer."/>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+
+                        <!-- ── 2D Preview: board outlines, copper, antennas, port markers ── -->
+                        <GroupBox Header="Port Location Preview"
+                                  FontWeight="Normal"
+                                  Margin="0,6,0,0">
+                            <DockPanel>
+                                <!-- Board selector + zoom toolbar -->
+                                <Grid DockPanel.Dock="Top"
+                                      Margin="0,0,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0"
+                                                Orientation="Horizontal">
+                                        <Label Content="Board:"
+                                               Padding="4,0"/>
+                                        <ComboBox x:Name="PortPreviewBoardCombo"
+                                                  Width="90"
+                                                  SelectionChanged="PortPreviewBoardCombo_SelectionChanged">
+                                            <ComboBoxItem Content="Carrier"
+                                                          IsSelected="True"/>
+                                            <ComboBoxItem Content="Module"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal">
+                                        <Button Content="🔍＋"
+                                                Click="PortZoomIn_Click"
+                                                ToolTip="Zoom In"
+                                                MinWidth="32"
+                                                Padding="4,2"/>
+                                        <Button Content="🔍－"
+                                                Click="PortZoomOut_Click"
+                                                ToolTip="Zoom Out"
+                                                MinWidth="32"
+                                                Padding="4,2"/>
+                                        <Button Content="⟵"
+                                                Click="PortPanLeft_Click"
+                                                ToolTip="Pan Left"
+                                                MinWidth="26"
+                                                Padding="3,2"/>
+                                        <Button Content="⟶"
+                                                Click="PortPanRight_Click"
+                                                ToolTip="Pan Right"
+                                                MinWidth="26"
+                                                Padding="3,2"/>
+                                        <Button Content="⟰"
+                                                Click="PortPanUp_Click"
+                                                ToolTip="Pan Up"
+                                                MinWidth="26"
+                                                Padding="3,2"/>
+                                        <Button Content="⟱"
+                                                Click="PortPanDown_Click"
+                                                ToolTip="Pan Down"
+                                                MinWidth="26"
+                                                Padding="3,2"/>
+                                        <Button Content="Fit"
+                                                Click="PortFitView_Click"
+                                                ToolTip="Reset to fit all"
+                                                MinWidth="32"
+                                                Padding="4,2"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock x:Name="EdgeInfoText"
+                                           DockPanel.Dock="Bottom"
+                                           FontSize="11"
+                                           Foreground="DarkSlateGray"
+                                           TextWrapping="Wrap"
+                                           Margin="4,2,4,0"/>
+                                <Canvas x:Name="PortPreviewCanvas"
+                                        Height="220"
+                                        Background="White"
+                                        ClipToBounds="True"
+                                        Focusable="True"
+                                        SizeChanged="PortPreviewCanvas_SizeChanged"
+                                        MouseWheel="PortPreviewCanvas_MouseWheel"
+                                        MouseLeftButtonDown="PortPreviewCanvas_MouseLeftButtonDown"/>
+                            </DockPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 2 — Ground Planes
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Ground Planes">
+                <DockPanel Margin="6,6,6,4">
+                    <TextBlock DockPanel.Dock="Top"
+                               Style="{StaticResource Hint}"
+                               Text="Select which conductive layers act as the ground reference for the simulation. Multiple layers can be selected (e.g. inner ground pours plus a back-copper pour)."/>
+                    <TextBlock DockPanel.Dock="Bottom"
+                               Style="{StaticResource Hint}"
+                               Margin="0,4,0,0"
+                               Text="Layers whose type is set to 'Ground' in the stackup editor are pre-ticked automatically."/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="GroundPlaneList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsGround}"
+                                              Content="{Binding DisplayName}"
+                                              Margin="2,3"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 3 — Boundary Conditions
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Boundary">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="6,6,6,4">
+
+                        <GroupBox Header="Far-Field Boundary Type">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Hint}"
+                                           Text="PML (Perfectly Matched Layer): absorbs outgoing waves. Recommended for most antenna simulations. 'Open (Add Space)' pads the air box by the spacing below, then applies a PML."/>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="0,4,0,0">
+                                    <RadioButton x:Name="PmlRadio"
+                                                 Content="PML"
+                                                 Margin="0,0,16,0"
+                                                 GroupName="BoundaryType"
+                                                 Checked="BoundaryType_Changed"/>
+                                    <RadioButton x:Name="OpenAddSpaceRadio"
+                                                 Content="Open (Add Space)"
+                                                 GroupName="BoundaryType"
+                                                 IsChecked="True"
+                                                 Checked="BoundaryType_Changed"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="0,6,0,0">
+                                    <TextBlock Text="PML Layers:"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,6,0"/>
+                                    <TextBox x:Name="PmlLayersBox"
+                                             Width="40"
+                                             Text="8"
+                                             VerticalAlignment="Center"/>
+                                    <TextBlock Text="(4–16)"
+                                               Foreground="Gray"
+                                               VerticalAlignment="Center"
+                                               Margin="6,0,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Air-Box Padding (mm)  –  used when 'Open (Add Space)' is selected"
+                                  x:Name="AirBoxPaddingGroup">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       Content="+X:"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="1"
+                                         x:Name="SpXpBox"/>
+                                <Label Grid.Row="0"
+                                       Grid.Column="2"
+                                       Content="−X:"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="3"
+                                         x:Name="SpXmBox"/>
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Content="+Y:"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         x:Name="SpYpBox"/>
+                                <Label Grid.Row="1"
+                                       Grid.Column="2"
+                                       Content="−Y:"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="3"
+                                         x:Name="SpYmBox"/>
+                                <Label Grid.Row="0"
+                                       Grid.Column="4"
+                                       Content="+Z:"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="5"
+                                         x:Name="SpZpBox"/>
+                                <Label Grid.Row="1"
+                                       Grid.Column="4"
+                                       Content="−Z:"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="5"
+                                         x:Name="SpZmBox"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Simulation Domain Size (mm)"
+                                  x:Name="SimAreaGroup">
+                            <StackPanel>
+                                <CheckBox x:Name="ManualSimAreaCheck"
+                                          Content="Manually specify simulation area (override auto-compute)"
+                                          Margin="0,2,0,6"
+                                          Checked="ManualSimArea_Changed"
+                                          Unchecked="ManualSimArea_Changed"/>
+                                <Grid x:Name="SimAreaGrid"
+                                      IsEnabled="False">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="70"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Content="X min:"/>
+                                    <TextBox Grid.Row="0"
+                                             Grid.Column="1"
+                                             x:Name="SimXMinBox"/>
+                                    <Label Grid.Row="0"
+                                           Grid.Column="2"
+                                           Content="X max:"/>
+                                    <TextBox Grid.Row="0"
+                                             Grid.Column="3"
+                                             x:Name="SimXMaxBox"/>
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Content="Y min:"/>
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="1"
+                                             x:Name="SimYMinBox"/>
+                                    <Label Grid.Row="1"
+                                           Grid.Column="2"
+                                           Content="Y max:"/>
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="3"
+                                             x:Name="SimYMaxBox"/>
+                                    <Label Grid.Row="0"
+                                           Grid.Column="4"
+                                           Content="Z min:"/>
+                                    <TextBox Grid.Row="0"
+                                             Grid.Column="5"
+                                             x:Name="SimZMinBox"/>
+                                    <Label Grid.Row="1"
+                                           Grid.Column="4"
+                                           Content="Z max:"/>
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="5"
+                                             x:Name="SimZMaxBox"/>
+                                </Grid>
+                                <TextBlock Style="{StaticResource Hint}"
+                                           Text="When unchecked, the simulation area is auto-computed from board geometry + padding. Enable to set exact boundaries."
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Symmetry Planes  (reduces compute time for symmetric structures)">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Hint}"
+                                           Text="PEC symmetry: tangential E = 0 on the plane (use when structure has electric symmetry). PMC: tangential H = 0 (magnetic symmetry). 'None' means no symmetry is enforced."/>
+                                <Grid Margin="0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0"
+                                           Content="X-plane:"/>
+                                    <ComboBox Grid.Column="1"
+                                              x:Name="SymXCombo">
+                                        <ComboBoxItem Content="None"/>
+                                        <ComboBoxItem Content="PEC"/>
+                                        <ComboBoxItem Content="PMC"/>
+                                    </ComboBox>
+                                    <Label Grid.Column="2"
+                                           Content="Y-plane:"/>
+                                    <ComboBox Grid.Column="3"
+                                              x:Name="SymYCombo">
+                                        <ComboBoxItem Content="None"/>
+                                        <ComboBoxItem Content="PEC"/>
+                                        <ComboBoxItem Content="PMC"/>
+                                    </ComboBox>
+                                    <Label Grid.Column="4"
+                                           Content="Z-plane:"/>
+                                    <ComboBox Grid.Column="5"
+                                              x:Name="SymZCombo">
+                                        <ComboBoxItem Content="None"/>
+                                        <ComboBoxItem Content="PEC"/>
+                                        <ComboBoxItem Content="PMC"/>
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 4 — Mesh
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Mesh">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="6,6,6,4">
+
+                        <GroupBox Header="Adaptive Meshing *">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Hint}"
+                                           Text="The solver refines the mesh automatically in regions of high field variation (trace edges, vias) and checks S-parameter convergence between passes."/>
+                                <CheckBox x:Name="AdaptiveCheck"
+                                          Content="Enable adaptive mesh refinement *"
+                                          IsChecked="True"
+                                          Margin="0,4"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Mesh Parameters">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       Content="Mesh frequency (GHz):"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="1"
+                                         x:Name="MeshFreqBox"/>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  mesh cell size = λ / CellsPerWL at this frequency"/>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Content="Cells per wavelength:"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         x:Name="CellsPerWLBox"/>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  ≥ 15 recommended; 20–30 for high accuracy"/>
+
+                                <Label Grid.Row="2"
+                                       Grid.Column="0"
+                                       Content="Min mesh step (mm) *:"/>
+                                <TextBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         x:Name="MinStepBox"/>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  prevents excessively fine cells; ≈ copper thickness"/>
+
+                                <Label Grid.Row="3"
+                                       Grid.Column="0"
+                                       Content="Max adaptive passes *:"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="1"
+                                         x:Name="MaxPassesBox"/>
+                                <TextBlock Grid.Row="3"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  convergence delta = ΔS &lt; threshold between passes"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Convergence *">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Content="Convergence delta (ΔS) *:"/>
+                                <TextBox Grid.Column="1"
+                                         x:Name="ConvDeltaBox"/>
+                                <TextBlock Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  e.g. 0.01 stops when S-param change &lt; 1% between passes"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <TextBlock Text="* Reserved for future use, currently not active."
+                                   Foreground="Gray"
+                                   FontStyle="Italic"
+                                   Margin="0,8,0,0"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 5 — Frequency Sweep
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Freq. Sweep">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="6,6,6,4">
+
+                        <GroupBox Header="Sweep Type">
+                            <StackPanel>
+                                <RadioButton x:Name="FastSweepRadio"
+                                             Content="Fast  – coarse scan, good for locating resonances"
+                                             Margin="0,2"
+                                             GroupName="Sweep"/>
+                                <RadioButton x:Name="InterpolatingSweepRadio"
+                                             Content="Interpolating  – adaptive accuracy, recommended for S11 plots"
+                                             Margin="0,2"
+                                             GroupName="Sweep"
+                                             IsChecked="True"/>
+                                <RadioButton x:Name="DiscreteSweepRadio"
+                                             Content="Discrete  – re-solves at every frequency point, slowest &amp; most accurate"
+                                             Margin="0,2"
+                                             GroupName="Sweep"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Frequency Range">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       Content="Start (GHz):"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="1"
+                                         x:Name="SweepStartBox"/>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Content="Stop (GHz):"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         x:Name="SweepStopBox"/>
+
+                                <Label Grid.Row="2"
+                                       Grid.Column="0"
+                                       Content="Step (GHz)  [Discrete]:"/>
+                                <TextBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         x:Name="SweepStepBox"/>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  only used for Discrete sweep"/>
+
+                                <Label Grid.Row="3"
+                                       Grid.Column="0"
+                                       Content="Points  [Fast / Interp]:"/>
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="1"
+                                         x:Name="SweepPointsBox"/>
+                                <TextBlock Grid.Row="3"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  number of sample points for Fast or Interpolating sweep"/>
+                            </Grid>
+                        </GroupBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 6 — Material Properties (placeholder)
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Materials">
+                <StackPanel Margin="6,16,6,4">
+                    <TextBlock FontSize="13"
+                               FontWeight="SemiBold"
+                               Text="Material Properties"
+                               Margin="0,0,0,8"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="#555"
+                               Text="Material properties (εᵣ, loss tangent, copper conductivity) are configured in the main window stackup editor for each PCB layer. No additional settings are required here."/>
+                    <TextBlock Margin="0,12,0,0"
+                               TextWrapping="Wrap"
+                               Foreground="#888"
+                               FontStyle="Italic"
+                               Text="Tip: For FR-4, use εᵣ ≈ 4.2–4.6 (frequency-dependent). Rogers 4350B offers stable εᵣ = 3.48 up to 10 GHz. Set loss tangent (tan δ) in the stackup table — FR-4 tan δ ≈ 0.02."/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- ══════════════════════════════════════════════════════════
+                 TAB 7 — Solver / Simulation
+                 ══════════════════════════════════════════════════════════ -->
+            <TabItem Header="Simulation">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="6,6,6,4">
+
+                        <GroupBox Header="FDTD Solver">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       Content="Max timesteps (NrTS):"/>
+                                <TextBox Grid.Row="0"
+                                         Grid.Column="1"
+                                         x:Name="MaxTimestepsBox"/>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  Upper limit; simulation stops early if converged"/>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Content="End criteria:"/>
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         x:Name="EndCriteriaBox"/>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  Energy decay threshold (e.g. 1e-5 = -50 dB)"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <TextBlock Margin="0,12,0,0"
+                                   TextWrapping="Wrap"
+                                   Foreground="#888"
+                                   FontStyle="Italic"
+                                   Text="Tip: For quick preview use NrTS=50000 with EndCriteria=1e-3. For accurate results use NrTS=500000 with EndCriteria=1e-5."/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
+</Window>

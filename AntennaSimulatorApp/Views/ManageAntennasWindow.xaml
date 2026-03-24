@@ -1,0 +1,110 @@
+<Window x:Class="AntennaSimulatorApp.Views.ManageAntennasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AntennaSimulatorApp.Views"
+        Title="Manage Antennas"
+        Width="700"
+        Height="420"
+        MinWidth="520"
+        MinHeight="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+        <DockPanel Margin="10">
+
+                <!-- ── Toolbar ──────────────────────────────────────────────────────── -->
+                <StackPanel DockPanel.Dock="Top"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,6">
+                        <Button Content="New…"
+                                Click="NewAntenna_Click"
+                                Padding="10,4"
+                                Margin="0,0,4,0"
+                                Background="#DDEEFF"
+                                ToolTip="Create a new antenna"/>
+                        <Button Content="Edit…"
+                                Click="EditAntenna_Click"
+                                Padding="10,4"
+                                Margin="0,0,4,0"
+                                ToolTip="Edit the selected antenna"/>
+                        <Button Content="Delete"
+                                Click="DeleteAntenna_Click"
+                                Padding="10,4"
+                                Margin="0,0,4,0"
+                                ToolTip="Delete selected antennas"/>
+                        <Separator Width="10"
+                                   Background="Transparent"/>
+                        <Button Content="Copy"
+                                Click="CopyAntenna_Click"
+                                Padding="10,4"
+                                Margin="0,0,4,0"
+                                ToolTip="Copy selected antennas (Ctrl+C)"/>
+                        <Button Content="Paste"
+                                Click="PasteAntenna_Click"
+                                Padding="10,4"
+                                Margin="0,0,4,0"
+                                ToolTip="Paste copied antennas (Ctrl+V)"/>
+                        <Separator Width="10"
+                                   Background="Transparent"/>
+                        <Button Content="Close"
+                                IsDefault="True"
+                                IsCancel="True"
+                                Padding="10,4"/>
+                </StackPanel>
+
+                <!-- ── Status bar ───────────────────────────────────────────────────── -->
+                <TextBlock x:Name="StatusBar"
+                           DockPanel.Dock="Bottom"
+                           Margin="0,4,0,0"
+                           FontSize="11"
+                           Foreground="#555"
+                           Text="0 antennas"/>
+
+                <!-- ── DataGrid ─────────────────────────────────────────────────────── -->
+                <DataGrid x:Name="AntennasGrid"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserReorderColumns="False"
+                          CanUserResizeRows="False"
+                          SelectionMode="Extended"
+                          SelectionUnit="FullRow"
+                          GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column"
+                          RowHeaderWidth="0"
+                          MouseDoubleClick="AntennasGrid_DoubleClick"
+                          SelectionChanged="AntennasGrid_SelectionChanged">
+
+                        <DataGrid.Columns>
+
+                                <!-- Name (editable inline) -->
+                                <DataGridTextColumn Header="Name"
+                                                    Width="*"
+                                                    Binding="{Binding Name, UpdateSourceTrigger=LostFocus}"/>
+
+                                <!-- Type -->
+                                <DataGridTextColumn Header="Type"
+                                                    Width="80"
+                                                    Binding="{Binding Type}"
+                                                    IsReadOnly="True"/>
+
+                                <!-- Board -->
+                                <DataGridTextColumn Header="Board"
+                                                    Width="70"
+                                                    Binding="{Binding IsCarrier, Converter={x:Static local:AntennaBoardConverter.Instance}}"
+                                                    IsReadOnly="True"/>
+
+                                <!-- Layer -->
+                                <DataGridTextColumn Header="Layer"
+                                                    Width="100"
+                                                    Binding="{Binding LayerName}"
+                                                    IsReadOnly="True"/>
+
+                        </DataGrid.Columns>
+                </DataGrid>
+
+        </DockPanel>
+
+</Window>

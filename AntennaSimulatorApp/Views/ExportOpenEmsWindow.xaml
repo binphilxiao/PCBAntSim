@@ -1,0 +1,95 @@
+<Window x:Class="AntennaSimulatorApp.Views.ExportOpenEmsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Export openEMS Simulation Files"
+        Width="420"
+        Height="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="Select geometry to include in the openEMS simulation:"
+                   FontWeight="SemiBold"
+                   FontSize="13"
+                   Margin="0,0,0,10"/>
+
+        <!-- Checkboxes -->
+        <StackPanel Grid.Row="1"
+                    Margin="8,0,0,0">
+            <CheckBox x:Name="ChkSubstrate"
+                      Content="PCB Substrates (dielectric layers)"
+                      IsChecked="True"
+                      IsEnabled="False"
+                      Margin="0,4"
+                      ToolTip="Substrates are always included"/>
+            <CheckBox x:Name="ChkDefaultCopper"
+                      Content="Default Copper (flood-fill layers without shapes)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkCopperShapes"
+                      Content="Copper Shapes (manually drawn copper)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkAntennas"
+                      Content="Antennas (parametric antenna traces)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+            <CheckBox x:Name="ChkVias"
+                      Content="Vias (plated through-holes)"
+                      IsChecked="True"
+                      Margin="0,4"/>
+        </StackPanel>
+
+        <!-- Output info -->
+        <StackPanel Grid.Row="2"
+                    Margin="0,14,0,0">
+            <TextBlock Text="Output files:"
+                       FontWeight="SemiBold"
+                       FontSize="12"
+                       Margin="0,0,0,4"/>
+            <TextBlock Text="  • run_simulation.py — FDTD simulation script"
+                       FontSize="11"
+                       Foreground="#555"/>
+            <TextBlock Text="  • stl/ — STL geometry files for copper shapes"
+                       FontSize="11"
+                       Foreground="#555"/>
+        </StackPanel>
+
+        <!-- Note -->
+        <TextBlock Grid.Row="3"
+                   TextWrapping="Wrap"
+                   Foreground="#666"
+                   FontSize="11"
+                   Margin="0,12,0,0"
+                   VerticalAlignment="Bottom"
+                   Text="The generated Python script requires openEMS + CSXCAD installed. Run with:  python run_simulation.py"/>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,12,0,0">
+            <Button Content="Cancel"
+                    Width="80"
+                    Height="30"
+                    Margin="0,0,8,0"
+                    Click="CancelBtn_Click"/>
+            <Button Content="Export…"
+                    Width="100"
+                    Height="30"
+                    IsDefault="True"
+                    Click="ExportBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

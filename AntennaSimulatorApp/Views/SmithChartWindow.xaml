@@ -1,0 +1,201 @@
+<Window x:Class="AntennaSimulatorApp.Views.SmithChartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Smith Chart – Impedance Matching"
+        Width="960"
+        Height="720"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        Background="#F5F5F5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="280"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Smith Chart Canvas -->
+        <Border Grid.Column="0"
+                Margin="8"
+                Background="White"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                CornerRadius="4">
+            <Canvas x:Name="ChartCanvas"
+                    ClipToBounds="True"
+                    SizeChanged="ChartCanvas_SizeChanged"
+                    MouseMove="ChartCanvas_MouseMove"
+                    MouseLeftButtonDown="ChartCanvas_MouseLeftButtonDown"/>
+        </Border>
+
+        <!-- Right Panel -->
+        <ScrollViewer Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="0,8,8,8">
+            <StackPanel Margin="4">
+
+                <!-- Reference Impedance -->
+                <GroupBox Header="Reference Impedance"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <DockPanel Margin="0,2">
+                            <TextBlock Text="Z₀ (Ω):"
+                                       Width="60"
+                                       VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtZ0"
+                                     Text="50"
+                                     Width="80"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="OnParamChanged"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Load Impedance Input -->
+                <GroupBox Header="Load Impedance (ZL)"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <DockPanel Margin="0,2">
+                            <TextBlock Text="R (Ω):"
+                                       Width="60"
+                                       VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtR"
+                                     Text="75"
+                                     Width="80"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="OnParamChanged"/>
+                        </DockPanel>
+                        <DockPanel Margin="0,4">
+                            <TextBlock Text="X (Ω):"
+                                       Width="60"
+                                       VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtX"
+                                     Text="25"
+                                     Width="80"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="OnParamChanged"/>
+                        </DockPanel>
+                        <DockPanel Margin="0,4">
+                            <TextBlock Text="Freq (GHz):"
+                                       Width="72"
+                                       VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtFreq"
+                                     Text="2.45"
+                                     Width="80"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="OnParamChanged"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Calculated Results -->
+                <GroupBox Header="Reflection Coefficient (Γ)"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <TextBlock x:Name="TxtGammaMag"
+                                   Text="|Γ| = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtGammaAngle"
+                                   Text="∠Γ = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtVSWR"
+                                   Text="VSWR = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtReturnLoss"
+                                   Text="Return Loss = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtMismatchLoss"
+                                   Text="Mismatch Loss = —"
+                                   Margin="0,2"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Normalized Impedance -->
+                <GroupBox Header="Normalized Values"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <TextBlock x:Name="TxtNormZ"
+                                   Text="z = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtNormY"
+                                   Text="y = —"
+                                   Margin="0,2"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Impedance Matching -->
+                <GroupBox Header="Impedance Matching"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <DockPanel Margin="0,0,0,4">
+                            <TextBlock Text="π Q factor:"
+                                       Width="64"
+                                       VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtQFactor"
+                                     Text="5"
+                                     Width="50"
+                                     HorizontalAlignment="Left"
+                                     TextChanged="OnParamChanged"/>
+                        </DockPanel>
+                        <TextBlock Text="Solution:"
+                                   Margin="0,0,0,2"/>
+                        <ComboBox x:Name="CmbSolution"
+                                  Margin="0,0,0,6"
+                                  SelectionChanged="CmbSolution_SelectionChanged"/>
+
+                        <!-- Schematic canvas -->
+                        <Border Background="White"
+                                BorderBrush="#CCC"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Margin="0,0,0,6"
+                                Height="130">
+                            <Canvas x:Name="SchematicCanvas"
+                                    ClipToBounds="True"/>
+                        </Border>
+
+                        <!-- Component values -->
+                        <TextBlock x:Name="TxtComp1"
+                                   Text=""
+                                   Margin="0,1"
+                                   TextWrapping="Wrap"
+                                   FontFamily="Consolas"
+                                   FontSize="11.5"/>
+                        <TextBlock x:Name="TxtComp2"
+                                   Text=""
+                                   Margin="0,1"
+                                   TextWrapping="Wrap"
+                                   FontFamily="Consolas"
+                                   FontSize="11.5"/>
+                        <TextBlock x:Name="TxtComp3"
+                                   Text=""
+                                   Margin="0,1"
+                                   TextWrapping="Wrap"
+                                   FontFamily="Consolas"
+                                   FontSize="11.5"/>
+                        <Separator Margin="0,4"/>
+                        <TextBlock x:Name="TxtMatchInfo"
+                                   Text=""
+                                   Margin="0,2"
+                                   TextWrapping="Wrap"
+                                   Foreground="#555"
+                                   FontSize="10.5"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Cursor readout -->
+                <GroupBox Header="Cursor"
+                          Margin="0,0,0,8">
+                    <StackPanel Margin="4">
+                        <TextBlock x:Name="TxtCursorZ"
+                                   Text="Z = —"
+                                   Margin="0,2"/>
+                        <TextBlock x:Name="TxtCursorGamma"
+                                   Text="Γ = —"
+                                   Margin="0,2"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

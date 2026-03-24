@@ -1,0 +1,415 @@
+﻿<Window x:Class="AntennaSimulatorApp.Views.DrawAntennaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Draw Antenna"
+        Width="680"
+        Height="1040"
+        MinWidth="600"
+        MinHeight="700"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Window.Resources>
+        <!-- Field label style -->
+        <Style x:Key="ParamLabel"
+               TargetType="TextBlock">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="0,4,6,4"/>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+        </Style>
+        <!-- Hint / recommended range text -->
+        <Style x:Key="HintText"
+               TargetType="TextBlock">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Margin"
+                    Value="6,4,0,4"/>
+            <Setter Property="FontSize"
+                    Value="11"/>
+            <Setter Property="Foreground"
+                    Value="#888"/>
+            <Setter Property="FontStyle"
+                    Value="Italic"/>
+            <Setter Property="TextWrapping"
+                    Value="Wrap"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="Padding"
+                    Value="4,3"/>
+            <Setter Property="MinWidth"
+                    Value="72"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding"
+                    Value="10,4"/>
+            <Setter Property="Margin"
+                    Value="4,2"/>
+            <Setter Property="MinWidth"
+                    Value="72"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel Margin="12">
+
+        <!-- ── Bottom buttons ──────────────────────── -->
+        <DockPanel DockPanel.Dock="Bottom"
+                   Margin="0,8,0,0">
+            <!-- Left: file operations -->
+            <StackPanel DockPanel.Dock="Left"
+                        Orientation="Horizontal">
+                <Button Content="💾 Save Params"
+                        Click="SaveParamsBtn_Click"
+                        ToolTip="Save antenna parameters to .antparam file"
+                        Background="#DDDDEE"/>
+                <Button Content="📂 Open Params"
+                        Click="OpenParamsBtn_Click"
+                        ToolTip="Load antenna parameters from .antparam file"
+                        Background="#DDDDEE"/>
+                <Button Content="� Export DXF"
+                        Click="ExportDxfBtn_Click"
+                        ToolTip="Export antenna drawing with dimensions to DXF (CAD)"
+                        Background="#DDEEFF"/>
+            </StackPanel>
+            <!-- Right: update / close -->
+            <StackPanel DockPanel.Dock="Right"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="OkButton"
+                        Content="OK"
+                        Click="OkButton_Click"
+                        Background="#BBDDBB"
+                        ToolTip="Save antenna and close"/>
+                <Button Content="Cancel"
+                        Click="CancelButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- ── 主体（ScrollViewer 内） ────────────────────────── -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <!-- Antenna Type -->
+                <GroupBox Header="Antenna Type"
+                          Padding="8,6"
+                          Margin="0,0,0,8">
+                    <StackPanel>
+                        <Grid Margin="0,2,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Name:"
+                                       VerticalAlignment="Center"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,8,0"/>
+                            <TextBox x:Name="AntennaNameBox"
+                                     Grid.Column="1"
+                                     Padding="4,3"/>
+                        </Grid>
+                        <ComboBox x:Name="AntennaTypeCombo"
+                                  Margin="0,4,0,4"
+                                  SelectionChanged="AntennaTypeCombo_SelectionChanged"/>
+                        <TextBlock x:Name="TypeDescText"
+                                   TextWrapping="Wrap"
+                                   FontSize="11"
+                                   Foreground="#555"
+                                   Margin="2,2,2,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Placement -->
+                <GroupBox Header="Placement"
+                          Padding="8,6"
+                          Margin="0,0,0,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Board:"
+                                   Style="{StaticResource ParamLabel}"
+                                   Grid.Column="0"/>
+                        <ComboBox x:Name="BoardCombo"
+                                  Grid.Column="1"
+                                  Margin="2,4"
+                                  SelectionChanged="BoardCombo_SelectionChanged"/>
+                        <TextBlock Text="Conductive Layer:"
+                                   Style="{StaticResource ParamLabel}"
+                                   Grid.Column="2"
+                                   Margin="12,4,6,4"/>
+                        <ComboBox x:Name="LayerCombo"
+                                  Grid.Column="3"
+                                  Margin="2,4"
+                                  DisplayMemberPath="Name"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Common Parameters -->
+                <GroupBox Header="Common Parameters"
+                          Padding="8,6"
+                          Margin="0,0,0,4">
+                    <Grid x:Name="CommonParamGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- rows built in code-behind -->
+                    </Grid>
+                </GroupBox>
+
+                <!-- IFA Parameters -->
+                <GroupBox x:Name="IfaGroup"
+                          Header="IFA Parameters"
+                          Padding="8,6"
+                          Margin="0,4,0,4">
+                    <Grid x:Name="IfaParamGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </GroupBox>
+
+                <!-- MIFA Meander Parameters -->
+                <GroupBox x:Name="MifaGroup"
+                          Header="MIFA Meander Parameters"
+                          Padding="8,6"
+                          Margin="0,4,0,8"
+                          Visibility="Collapsed">
+                    <Grid x:Name="MifaParamGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Custom Antenna (polygon vertex editor) -->
+                <GroupBox x:Name="CustomGroup"
+                          Header="Custom Antenna — Polygon Vertices (mm)"
+                          Padding="8,6"
+                          Margin="0,4,0,8"
+                          Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="Enter vertex coordinates (mm). The polygon must be closed: last vertex = first vertex. Y-axis points up from GND."
+                                   TextWrapping="Wrap"
+                                   FontSize="11"
+                                   Foreground="#666"
+                                   Margin="0,0,0,6"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid x:Name="CustomVertexGrid"
+                                      Grid.Column="0"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="True"
+                                      CanUserDeleteRows="True"
+                                      CanUserReorderColumns="False"
+                                      CanUserResizeRows="False"
+                                      HeadersVisibility="Column"
+                                      SelectionMode="Single"
+                                      Height="200"
+                                      Margin="0,0,4,0"
+                                      CellEditEnding="CustomVertexGrid_CellEditEnding">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="X (mm)"
+                                                        Width="*"
+                                                        Binding="{Binding X, StringFormat=F4, UpdateSourceTrigger=LostFocus}"/>
+                                    <DataGridTextColumn Header="Y (mm)"
+                                                        Width="*"
+                                                        Binding="{Binding Y, StringFormat=F4, UpdateSourceTrigger=LostFocus}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <StackPanel Grid.Column="1"
+                                        VerticalAlignment="Top"
+                                        Margin="0,2,0,0">
+                                <Button Content="Add"
+                                        Click="CustomAddVertex_Click"
+                                        ToolTip="Append a new (0,0) vertex"/>
+                                <Button Content="Delete"
+                                        Click="CustomDeleteVertex_Click"
+                                        ToolTip="Remove selected vertex"/>
+                                <Separator Margin="2,4"/>
+                                <Button Content="↑ Up"
+                                        Click="CustomMoveUp_Click"
+                                        ToolTip="Move vertex up"/>
+                                <Button Content="↓ Down"
+                                        Click="CustomMoveDown_Click"
+                                        ToolTip="Move vertex down"/>
+                                <Separator Margin="2,4"/>
+                                <Button Content="Close"
+                                        Click="CustomClosePolygon_Click"
+                                        MinWidth="64"
+                                        ToolTip="Copy first vertex to last to close the polygon"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 参数警告条 -->
+                <Border x:Name="WarnBorder"
+                        Background="#FFF8DC"
+                        BorderBrush="#E6A800"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Padding="8,5"
+                        Margin="0,0,0,8"
+                        Visibility="Collapsed">
+                    <TextBlock x:Name="WarnText"
+                               TextWrapping="Wrap"
+                               Foreground="#7A5000"
+                               FontSize="11"/>
+                </Border>
+
+                <!-- Available PCB Space -->
+                <GroupBox Header="Available PCB Space (for fit check)"
+                          Padding="8,6"
+                          Margin="0,0,0,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0: Width / Height / Fit status -->
+                        <TextBlock Text="Width (mm):"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"
+                                   Grid.Row="0"
+                                   Grid.Column="0"/>
+                        <TextBox x:Name="AvailWidthBox"
+                                 Text="30"
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 TextChanged="AvailSpace_TextChanged"/>
+                        <TextBlock Text="Height (mm):"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"
+                                   Grid.Row="0"
+                                   Grid.Column="3"/>
+                        <TextBox x:Name="AvailHeightBox"
+                                 Text="10"
+                                 Grid.Row="0"
+                                 Grid.Column="4"
+                                 TextChanged="AvailSpace_TextChanged"/>
+                        <TextBlock x:Name="FitStatusText"
+                                   Grid.Row="0"
+                                   Grid.Column="6"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="12"/>
+
+                        <!-- Row 2: Offset X / Offset Y / Auto Center -->
+                        <TextBlock Text="Offset X (mm):"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"
+                                   Grid.Row="2"
+                                   Grid.Column="0"/>
+                        <TextBox x:Name="PcbOffsetXBox"
+                                 Text="0"
+                                 Grid.Row="2"
+                                 Grid.Column="1"
+                                 TextChanged="AvailSpace_TextChanged"/>
+                        <TextBlock Text="Offset Y (mm):"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"
+                                   Grid.Row="2"
+                                   Grid.Column="3"/>
+                        <TextBox x:Name="PcbOffsetYBox"
+                                 Text="0"
+                                 Grid.Row="2"
+                                 Grid.Column="4"
+                                 TextChanged="AvailSpace_TextChanged"/>
+                        <Button x:Name="AutoCenterBtn"
+                                Content="Auto Center"
+                                Grid.Row="2"
+                                Grid.Column="6"
+                                HorizontalAlignment="Left"
+                                Padding="8,3"
+                                Click="AutoCenterBtn_Click"/>
+
+                        <!-- Row 4: Clearance -->
+                        <TextBlock Text="Clearance (mm):"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"
+                                   Grid.Row="4"
+                                   Grid.Column="0"/>
+                        <TextBox x:Name="ClearanceBox"
+                                 Text="0.254"
+                                 Grid.Row="4"
+                                 Grid.Column="1"
+                                 TextChanged="AvailSpace_TextChanged"/>
+                        <TextBlock Text="Copper to PCB-space edge (left/right/top). Default 10 mil = 0.254 mm"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,0,0"
+                                   FontSize="11"
+                                   Foreground="#888"
+                                   FontStyle="Italic"
+                                   Grid.Row="4"
+                                   Grid.Column="3"
+                                   Grid.ColumnSpan="4"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Preview -->
+                <GroupBox Header="Preview (schematic — dimensions shown in mm)"
+                          Padding="8,6">
+                    <StackPanel>
+                        <Border Background="#F8F8F8"
+                                BorderBrush="#CCC"
+                                BorderThickness="1"
+                                Height="280">
+                            <Canvas x:Name="PreviewCanvas"
+                                    ClipToBounds="True"
+                                    UseLayoutRounding="True"
+                                    SnapsToDevicePixels="True"
+                                    RenderOptions.EdgeMode="Unspecified"
+                                    SizeChanged="PreviewCanvas_SizeChanged"/>
+                        </Border>
+                        <TextBlock x:Name="DimensionSummary"
+                                   Margin="0,6,0,0"
+                                   FontFamily="Consolas"
+                                   FontSize="11"
+                                   Foreground="#444"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
