@@ -93,7 +93,7 @@ namespace AntennaSimulatorApp.Models
         {
             // G=Ground, P=Power, S=Signal
             // 2 layers: S - G (User said G2(Bottom), usually standard is S-S or S-G. Let's stick to user request S-G)
-            // User: 2层 S1 (Top) - G2 (Bottom)
+            // User: 2-layer S1 (Top) - G2 (Bottom)
             if (count == 2) return new List<LayerType> { LayerType.Signal, LayerType.Ground };
 
             // 4 layers: S1 - G2 - P3 - S4

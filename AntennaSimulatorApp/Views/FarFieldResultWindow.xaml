@@ -1,0 +1,148 @@
+<Window x:Class="AntennaSimulatorApp.Views.FarFieldResultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:h="http://helix-toolkit.org/wpf"
+        Title="Far-Field Results"
+        Width="960"
+        Height="680"
+        MinWidth="700"
+        MinHeight="500"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="True">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Key metrics bar -->
+        <Border Grid.Row="0"
+                Background="#F0F4F8"
+                CornerRadius="4"
+                Padding="12,8"
+                Margin="0,0,0,10">
+            <WrapPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,24,0">
+                    <TextBlock Text="Frequency: "
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtFrequency"
+                               Text="—"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Foreground="#1565C0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,24,0">
+                    <TextBlock Text="Directivity: "
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtDirectivity"
+                               Text="—"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Foreground="#C62828"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,24,0">
+                    <TextBlock Text="Efficiency: "
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtEfficiency"
+                               Text="—"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Foreground="#2E7D32"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </WrapPanel>
+        </Border>
+
+        <!-- Tabbed chart area -->
+        <TabControl Grid.Row="1"
+                    x:Name="ChartTabs"
+                    SelectionChanged="ChartTabs_SelectionChanged">
+            <TabItem Header="Rectangular Pattern">
+                <Border BorderBrush="#CCC"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Background="White"
+                        ClipToBounds="True">
+                    <Canvas x:Name="RectCanvas"
+                            Background="White"
+                            SizeChanged="Canvas_SizeChanged"/>
+                </Border>
+            </TabItem>
+            <TabItem Header="Polar E-Plane">
+                <Border BorderBrush="#CCC"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Background="White"
+                        ClipToBounds="True">
+                    <Canvas x:Name="PolarECanvas"
+                            Background="White"
+                            SizeChanged="Canvas_SizeChanged"/>
+                </Border>
+            </TabItem>
+            <TabItem Header="Polar H-Plane">
+                <Border BorderBrush="#CCC"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Background="White"
+                        ClipToBounds="True">
+                    <Canvas x:Name="PolarHCanvas"
+                            Background="White"
+                            SizeChanged="Canvas_SizeChanged"/>
+                </Border>
+            </TabItem>
+            <TabItem Header="3D Pattern">
+                <Border BorderBrush="#CCC"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Background="White"
+                        ClipToBounds="True">
+                    <h:HelixViewport3D x:Name="Viewport3D"
+                                       Background="White"
+                                       ShowCoordinateSystem="True"
+                                       CoordinateSystemLabelForeground="Gray"
+                                       ZoomExtentsWhenLoaded="True"
+                                       ShowViewCube="True"
+                                       IsRotationEnabled="True"
+                                       IsPanEnabled="True"
+                                       IsZoomEnabled="True"
+                                       RotateAroundMouseDownPoint="True"
+                                       InfoForeground="Gray">
+                        <h:HelixViewport3D.Camera>
+                            <PerspectiveCamera Position="2,2,1.5"
+                                               LookDirection="-2,-2,-1.5"
+                                               UpDirection="0,0,1"
+                                               FieldOfView="45"/>
+                        </h:HelixViewport3D.Camera>
+                        <h:DefaultLights/>
+                    </h:HelixViewport3D>
+                </Border>
+            </TabItem>
+        </TabControl>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+            <Button Content="Open Folder"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,8,0"
+                    Click="BtnOpenFolder_Click"/>
+            <Button Content="Close"
+                    Width="80"
+                    Height="30"
+                    Click="BtnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

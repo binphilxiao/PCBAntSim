@@ -11,6 +11,7 @@ namespace AntennaSimulatorApp.Models
     public enum BoundaryType    { PML, OpenAddSpace }
     public enum SymmetryType    { None, PEC, PMC }
     public enum SweepType       { Fast, Discrete, Interpolating }
+    public enum AnalysisType    { S11Only, FarField, Both }
 
     // ── Feed point / port ─────────────────────────────────────────────────────
 

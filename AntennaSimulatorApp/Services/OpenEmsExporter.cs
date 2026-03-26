@@ -44,7 +44,8 @@ namespace AntennaSimulatorApp.Services
             bool includeDefaultCopper = false,
             bool includeCopperShapes  = true,
             bool includeAntennas      = true,
-            bool includeVias          = true)
+            bool includeVias          = true,
+            AnalysisType analysisType = AnalysisType.S11Only)
         {
             Directory.CreateDirectory(outputDir);
 
@@ -83,8 +84,15 @@ namespace AntennaSimulatorApp.Services
 
             WritePorts(sb, vm);
             WriteMesh(sb, vm);
-            WriteRun(sb);
-            WritePostProcess(sb, vm);
+
+            bool needNF2FF = analysisType == AnalysisType.FarField || analysisType == AnalysisType.Both;
+            WriteRun(sb, needNF2FF);
+
+            if (analysisType == AnalysisType.S11Only || analysisType == AnalysisType.Both)
+                WritePostProcess(sb, vm);
+
+            if (analysisType == AnalysisType.FarField || analysisType == AnalysisType.Both)
+                WriteFarFieldPostProcess(sb, vm);
 
             var scriptPath = Path.Combine(scriptsDir, "run_simulation.py");
             File.WriteAllText(scriptPath, sb.ToString(), new UTF8Encoding(false));
@@ -687,13 +695,23 @@ namespace AntennaSimulatorApp.Services
 
         // ── Run & post-process ───────────────────────────────────────────────
 
-        private static void WriteRun(StringBuilder sb)
+        private static void WriteRun(StringBuilder sb, bool includeNF2FF)
         {
             sb.AppendLine("# --- Run Simulation ---");
             sb.AppendLine("sim_path = sim_data_dir");
             sb.AppendLine("os.makedirs(sim_path, exist_ok=True)");
             sb.AppendLine("csx.Write2XML(os.path.join(sim_path, 'antenna.xml'))");
             sb.AppendLine("sim.SetCSX(csx)");
+            sb.AppendLine();
+
+            if (includeNF2FF)
+            {
+                sb.AppendLine("# --- NF2FF Recording Box ---");
+                sb.AppendLine("from openEMS.nf2ff import nf2ff");
+                sb.AppendLine("nf2ff_box = sim.CreateNF2FFBox()");
+                sb.AppendLine();
+            }
+
             sb.AppendLine("if not post_only:");
             sb.AppendLine("    print('Starting openEMS simulation...')");
             sb.AppendLine("    sim.Run(sim_path, verbose=2)");
@@ -720,15 +738,16 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("    sys.exit(1)");
             sb.AppendLine();
             sb.AppendLine("s11_dB = 20 * np.log10(np.abs(ports[0].uf_ref / ports[0].uf_inc))");
+            sb.AppendLine("s11_complex = ports[0].uf_ref / ports[0].uf_inc");
             sb.AppendLine("idx_min = np.argmin(s11_dB)");
             sb.AppendLine("print(f'Resonance: {freq[idx_min]/1e9:.4f} GHz,  S11 = {s11_dB[idx_min]:.2f} dB')");
             sb.AppendLine();
 
-            // Save S11 data as CSV
+            // Save S11 data as CSV (dB + complex for VSWR/impedance/Smith)
             sb.AppendLine("# --- Save S11 CSV ---");
             sb.AppendLine("csv_path = os.path.join(results_dir, 'S11.csv')");
-            sb.AppendLine("np.savetxt(csv_path, np.column_stack((freq / 1e9, s11_dB)),");
-            sb.AppendLine("           delimiter=',', header='Frequency_GHz,S11_dB', comments='')");
+            sb.AppendLine("np.savetxt(csv_path, np.column_stack((freq / 1e9, s11_dB, np.real(s11_complex), np.imag(s11_complex))),");
+            sb.AppendLine("           delimiter=',', header='Frequency_GHz,S11_dB,S11_Real,S11_Imag', comments='')");
             sb.AppendLine("print(f'S11 data saved to {csv_path}')");
             sb.AppendLine();
 
@@ -751,6 +770,166 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("    print(f'S11 plot saved to {plot_path}')");
             sb.AppendLine("except ImportError:");
             sb.AppendLine("    print('matplotlib not available - skipping plot.')");
+            sb.AppendLine();
+        }
+
+        // ── NF2FF (Near-Field to Far-Field) ──────────────────────────────────
+
+        private static void WriteFarFieldPostProcess(StringBuilder sb, MainViewModel vm)
+        {
+            if (vm.SimSettings.Ports.Count == 0) return;
+
+            var sw = vm.SimSettings.Sweep;
+            double fStartHz = sw.StartGHz * 1e9;
+            double fStopHz  = sw.StopGHz  * 1e9;
+            double f0Hz     = (fStartHz + fStopHz) / 2.0;
+
+            sb.AppendLine("# --- Post-Processing: Far-Field ---");
+            sb.AppendLine($"ff_freq = np.linspace({F(fStartHz)}, {F(fStopHz)}, {sw.NumPoints})");
+            sb.AppendLine();
+
+            // Calculate port data if not already done (for FarField-only mode)
+            sb.AppendLine("try:");
+            sb.AppendLine("    _ = ports[0].uf_inc");
+            sb.AppendLine("except:");
+            sb.AppendLine($"    for p in ports:");
+            sb.AppendLine($"        p.CalcPort(sim_path, ff_freq)");
+            sb.AppendLine();
+
+            // Find resonant frequency from S11
+            sb.AppendLine("ff_s11_dB = 20 * np.log10(np.abs(ports[0].uf_ref / ports[0].uf_inc))");
+            sb.AppendLine("ff_idx_min = np.argmin(ff_s11_dB)");
+            sb.AppendLine("f_res = ff_freq[ff_idx_min]");
+            sb.AppendLine("print(f'Far-field at resonance: {f_res/1e9:.4f} GHz')");
+            sb.AppendLine();
+
+            // Compute NF2FF at resonance frequency
+            sb.AppendLine("theta = np.arange(-180, 180.5, 1)");
+            sb.AppendLine("phi_E = 0    # E-plane (XZ)");
+            sb.AppendLine("phi_H = 90   # H-plane (YZ)");
+            sb.AppendLine();
+
+            // Accepted power for realized gain
+            sb.AppendLine("P_in = 0.5 * np.real(ports[0].uf_tot[ff_idx_min] * np.conj(ports[0].if_tot[ff_idx_min]))");
+            sb.AppendLine();
+
+            // E-plane cut
+            sb.AppendLine("nf2ff_res_E = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_E, center=[0,0,0])");
+            sb.AppendLine("E_norm = nf2ff_res_E.E_norm[0]");
+            sb.AppendLine("Dmax_E = nf2ff_res_E.Dmax[0]");
+            sb.AppendLine();
+
+            // H-plane cut
+            sb.AppendLine("nf2ff_res_H = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_H, center=[0,0,0])");
+            sb.AppendLine("H_norm = nf2ff_res_H.E_norm[0]");
+            sb.AppendLine("Dmax_H = nf2ff_res_H.Dmax[0]");
+            sb.AppendLine();
+
+            // Compute directivity in dBi
+            sb.AppendLine("D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])");
+            sb.AppendLine("D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])");
+            sb.AppendLine();
+
+            // Realized gain using accepted power
+            sb.AppendLine("if P_in > 0:");
+            sb.AppendLine("    realized_gain_E = (E_norm**2 / np.max(E_norm**2)) * nf2ff_res_E.Dmax[0]");
+            sb.AppendLine("    realized_gain_H = (H_norm**2 / np.max(H_norm**2)) * nf2ff_res_H.Dmax[0]");
+            sb.AppendLine("else:");
+            sb.AppendLine("    realized_gain_E = E_norm**2 / np.max(E_norm**2) if np.max(E_norm**2) > 0 else E_norm * 0");
+            sb.AppendLine("    realized_gain_H = H_norm**2 / np.max(H_norm**2) if np.max(H_norm**2) > 0 else H_norm * 0");
+            sb.AppendLine();
+
+            // Normalized pattern in dB
+            sb.AppendLine("E_pattern_dB = 10 * np.log10(E_norm**2 / np.max(E_norm**2) + 1e-12)");
+            sb.AppendLine("H_pattern_dB = 10 * np.log10(H_norm**2 / np.max(H_norm**2) + 1e-12)");
+            sb.AppendLine();
+
+            // Radiation efficiency
+            sb.AppendLine("Prad = nf2ff_res_E.Prad[0]");
+            sb.AppendLine("eff = Prad / P_in if P_in > 0 else 0");
+            sb.AppendLine("print(f'Directivity: {D_E_dBi:.2f} dBi,  Radiation Efficiency: {eff*100:.1f}%')");
+            sb.AppendLine();
+
+            // Save E-plane CSV: Theta, E_pattern_dB
+            sb.AppendLine("eplane_csv = os.path.join(results_dir, 'FarField_Eplane.csv')");
+            sb.AppendLine("np.savetxt(eplane_csv, np.column_stack((theta, E_pattern_dB)),");
+            sb.AppendLine("           delimiter=',', header='Theta_deg,Pattern_dB', comments='')");
+            sb.AppendLine("print(f'E-plane pattern saved to {eplane_csv}')");
+            sb.AppendLine();
+
+            // Save H-plane CSV: Theta, H_pattern_dB
+            sb.AppendLine("hplane_csv = os.path.join(results_dir, 'FarField_Hplane.csv')");
+            sb.AppendLine("np.savetxt(hplane_csv, np.column_stack((theta, H_pattern_dB)),");
+            sb.AppendLine("           delimiter=',', header='Theta_deg,Pattern_dB', comments='')");
+            sb.AppendLine("print(f'H-plane pattern saved to {hplane_csv}')");
+            sb.AppendLine();
+
+            // Save summary CSV with key metrics
+            sb.AppendLine("summary_csv = os.path.join(results_dir, 'FarField_Summary.csv')");
+            sb.AppendLine("with open(summary_csv, 'w') as f:");
+            sb.AppendLine("    f.write('Parameter,Value\\n')");
+            sb.AppendLine("    f.write(f'Frequency_GHz,{f_res/1e9:.6f}\\n')");
+            sb.AppendLine("    f.write(f'Directivity_dBi,{D_E_dBi:.4f}\\n')");
+            sb.AppendLine("    f.write(f'RadiationEfficiency,{eff:.6f}\\n')");
+            sb.AppendLine("    f.write(f'Prad_W,{Prad:.6e}\\n')");
+            sb.AppendLine("    f.write(f'Pin_W,{P_in:.6e}\\n')");
+            sb.AppendLine("print(f'Far-field summary saved to {summary_csv}')");
+            sb.AppendLine();
+
+            // Save optional matplotlib plots
+            sb.AppendLine("try:");
+            sb.AppendLine("    import matplotlib");
+            sb.AppendLine("    matplotlib.use('Agg')");
+            sb.AppendLine("    import matplotlib.pyplot as plt");
+            sb.AppendLine();
+            sb.AppendLine("    # --- Rectangular pattern plot ---");
+            sb.AppendLine("    fig, ax = plt.subplots(figsize=(8, 5))");
+            sb.AppendLine("    ax.plot(theta, E_pattern_dB, 'b-', linewidth=1.5, label='E-plane')");
+            sb.AppendLine("    ax.plot(theta, H_pattern_dB, 'r--', linewidth=1.5, label='H-plane')");
+            sb.AppendLine("    ax.set_xlabel('Theta (degrees)')");
+            sb.AppendLine("    ax.set_ylabel('Normalized Pattern (dB)')");
+            sb.AppendLine("    ax.set_title(f'Far-Field Pattern @ {f_res/1e9:.3f} GHz')");
+            sb.AppendLine("    ax.set_ylim([-40, 5])");
+            sb.AppendLine("    ax.grid(True)");
+            sb.AppendLine("    ax.legend()");
+            sb.AppendLine("    fig.savefig(os.path.join(results_dir, 'FarField_Rectangular.png'), dpi=150)");
+            sb.AppendLine("    plt.close(fig)");
+            sb.AppendLine();
+            sb.AppendLine("    # --- Polar pattern plot ---");
+            sb.AppendLine("    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'polar': True}, figsize=(12, 5))");
+            sb.AppendLine("    theta_rad = np.deg2rad(theta)");
+            sb.AppendLine("    ax1.plot(theta_rad, np.clip(E_pattern_dB, -40, 0) + 40, 'b-', linewidth=1.5)");
+            sb.AppendLine("    ax1.set_title('E-plane', pad=15)");
+            sb.AppendLine("    ax1.set_ylim([0, 40])");
+            sb.AppendLine("    ax2.plot(theta_rad, np.clip(H_pattern_dB, -40, 0) + 40, 'r-', linewidth=1.5)");
+            sb.AppendLine("    ax2.set_title('H-plane', pad=15)");
+            sb.AppendLine("    ax2.set_ylim([0, 40])");
+            sb.AppendLine("    fig.savefig(os.path.join(results_dir, 'FarField_Polar.png'), dpi=150)");
+            sb.AppendLine("    plt.close(fig)");
+            sb.AppendLine("    print('Far-field pattern plots saved.')");
+            sb.AppendLine("except ImportError:");
+            sb.AppendLine("    print('matplotlib not available - skipping far-field plots.')");
+            sb.AppendLine();
+
+            // ── Full 3-D pattern (theta × phi sweep) ──
+            sb.AppendLine("# --- 3D Far-Field Pattern ---");
+            sb.AppendLine("print('Computing full 3D far-field pattern ...')");
+            sb.AppendLine("theta_3d = np.arange(0, 181, 5)");
+            sb.AppendLine("phi_3d   = np.arange(0, 361, 5)");
+            sb.AppendLine("nf2ff_3d = nf2ff_box.CalcNF2FF(sim_path, f_res, theta_3d, phi_3d, center=[0,0,0])");
+            sb.AppendLine("E3d = nf2ff_3d.E_norm[0]");
+            sb.AppendLine("E3d_max2 = np.max(E3d**2)");
+            sb.AppendLine("if E3d_max2 > 0:");
+            sb.AppendLine("    E3d_dB = 10 * np.log10(E3d**2 / E3d_max2 + 1e-12)");
+            sb.AppendLine("else:");
+            sb.AppendLine("    E3d_dB = np.zeros_like(E3d)");
+            sb.AppendLine("ff3d_csv = os.path.join(results_dir, 'FarField_3D.csv')");
+            sb.AppendLine("with open(ff3d_csv, 'w') as f3d:");
+            sb.AppendLine("    f3d.write('Theta_deg,Phi_deg,Pattern_dB\\n')");
+            sb.AppendLine("    for ti in range(len(theta_3d)):");
+            sb.AppendLine("        for pi in range(len(phi_3d)):");
+            sb.AppendLine("            f3d.write(f'{theta_3d[ti]:.1f},{phi_3d[pi]:.1f},{E3d_dB[ti,pi]:.4f}\\n')");
+            sb.AppendLine("print(f'3D far-field pattern saved to {ff3d_csv}')");
             sb.AppendLine();
         }
 

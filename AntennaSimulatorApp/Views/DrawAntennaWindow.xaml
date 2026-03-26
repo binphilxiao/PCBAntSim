@@ -92,7 +92,7 @@
             </StackPanel>
         </DockPanel>
 
-        <!-- ── 主体（ScrollViewer 内） ────────────────────────── -->
+        <!-- ── Main Body (inside ScrollViewer) ────────────────── -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
 
@@ -263,7 +263,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- 参数警告条 -->
+                <!-- Parameter Warning Bar -->
                 <Border x:Name="WarnBorder"
                         Background="#FFF8DC"
                         BorderBrush="#E6A800"

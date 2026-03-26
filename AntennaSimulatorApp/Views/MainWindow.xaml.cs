@@ -1418,6 +1418,11 @@ public partial class MainWindow : Window
             return;
         }
 
+        // ── Ask user for analysis type ──
+        var typeDlg = new SimTypeDialog { Owner = this };
+        if (typeDlg.ShowDialog() != true) return;
+        var analysisType = typeDlg.SelectedType;
+
         string projectDir = System.IO.Path.GetDirectoryName(_currentProjectPath)!;
         string outputDir = System.IO.Path.Combine(projectDir, "Sim");
         System.IO.Directory.CreateDirectory(outputDir);
@@ -1432,7 +1437,8 @@ public partial class MainWindow : Window
                 includeDefaultCopper: false,
                 includeCopperShapes:  true,
                 includeAntennas:      true,
-                includeVias:          true);
+                includeVias:          true,
+                analysisType:         analysisType);
 
             Mouse.OverrideCursor = null;
         }
@@ -1532,17 +1538,32 @@ public partial class MainWindow : Window
 
     private void MenuViewS11_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show(
-            "S11 ???(????)??????????\n\n" +
-            "?????,????? S11(dB) ?????????",
-            "???? � S11", MessageBoxButton.OK, MessageBoxImage.Information);
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select S11.csv",
+            Filter = "S11 CSV|S11.csv|All CSV|*.csv",
+            FileName = "S11.csv"
+        };
+        if (dlg.ShowDialog(this) != true) return;
+
+        string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
+        var win = new S11ResultWindow(resultsDir) { Owner = this };
+        win.Show();
     }
 
     private void MenuViewFarField_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show(
-            "?????(E ? / H ? / 3D ???)??????????",
-            "???? � ?????", MessageBoxButton.OK, MessageBoxImage.Information);
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select FarField_Eplane.csv",
+            Filter = "Far-Field CSV|FarField_Eplane.csv|All CSV|*.csv",
+            FileName = "FarField_Eplane.csv"
+        };
+        if (dlg.ShowDialog(this) != true) return;
+
+        string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
+        var win = new FarFieldResultWindow(resultsDir) { Owner = this };
+        win.Show();
     }
 
     private void MenuViewGain_Click(object sender, RoutedEventArgs e)
