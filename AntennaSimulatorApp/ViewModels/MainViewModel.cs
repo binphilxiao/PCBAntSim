@@ -45,6 +45,10 @@ namespace AntennaSimulatorApp.ViewModels
         public ObservableCollection<AntennaSimulatorApp.Models.Via> Vias { get; }
             = new ObservableCollection<AntennaSimulatorApp.Models.Via>();
 
+        /// <summary>Solder joints connecting module bottom to carrier top, added via Draw → Draw Solder Joint…</summary>
+        public ObservableCollection<AntennaSimulatorApp.Models.SolderJoint> SolderJoints { get; }
+            = new ObservableCollection<AntennaSimulatorApp.Models.SolderJoint>();
+
         /// <summary>Simulation settings (ports, boundary, mesh, sweep, ground planes).</summary>
         public AntennaSimulatorApp.Models.SimSettings SimSettings { get; }
             = new AntennaSimulatorApp.Models.SimSettings();

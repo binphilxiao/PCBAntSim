@@ -118,6 +118,9 @@ public partial class MainWindow : Window
             // Re-render when vias are added/removed
             vm.Vias.CollectionChanged += (_, __) => RebuildLayerVisuals();
 
+            // Re-render when solder joints are added/removed
+            vm.SolderJoints.CollectionChanged += (_, __) => RebuildLayerVisuals();
+
             // Re-render when ports are added/removed/changed
             vm.SimSettings.Ports.CollectionChanged += (_, __) => RebuildLayerVisuals();
 
@@ -194,6 +197,7 @@ public partial class MainWindow : Window
         CopperShapeVisual3D.Children.Clear();
         AntennaVisual3D.Children.Clear();
         ViaVisual3D.Children.Clear();
+        SolderJointVisual3D.Children.Clear();
         PortVisual3D.Children.Clear();
         TransparentVisual3D.Children.Clear();
 
@@ -409,6 +413,37 @@ public partial class MainWindow : Window
             var mat = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0xC0, 0xC0, 0xC0)));
             var model = new GeometryModel3D(mesh, mat) { BackMaterial = mat };
             ViaVisual3D.Children.Add(new ModelVisual3D { Content = model });
+        }
+
+        // - Solder joints (module bottom → carrier top, in the mount gap) --
+        if (vm.HasModule)
+        {
+            // carrier top layer bottom face Z
+            var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
+            // module bottom layer top face Z
+            var moduleLayers = vm.Module.Stackup.Layers.ToList();
+            var moduleBottomLayer = moduleLayers.LastOrDefault(l => l.IsConductive);
+
+            if (carrierTopLayer != null && moduleBottomLayer != null)
+            {
+                double zCarrierTopFace = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true, MountGap);
+                double zCarrierBot = zCarrierTopFace - carrierTopLayer.Thickness;
+                double zModuleBotFace = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap);
+
+                double sjTop = zModuleBotFace;
+                double sjBot = zCarrierBot;
+
+                foreach (var sj in vm.SolderJoints)
+                {
+                    if (!sj.ShowIn3D) continue;
+                    double radius = sj.DiameterMm / 2.0;
+
+                    var sjMesh = BuildCylinderMesh(sj.X, sj.Y, sjBot, sjTop, radius, 16);
+                    var sjMat = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0xC0, 0xB0, 0x60)));
+                    var sjModel = new GeometryModel3D(sjMesh, sjMat) { BackMaterial = sjMat };
+                    SolderJointVisual3D.Children.Add(new ModelVisual3D { Content = sjModel });
+                }
+            }
         }
 
         // - Ports (rendered as coloured boxes spanning from/to layers) ------
@@ -1072,6 +1107,7 @@ public partial class MainWindow : Window
         var copperShapeVis    = new ModelVisual3D();
         var antennaVis        = new ModelVisual3D();
         var viaVis            = new ModelVisual3D();
+        var solderJointVis    = new ModelVisual3D();
 
         double cWidth  = vm.CarrierBoard.Width;
         double cHeight = vm.CarrierBoard.Height;
@@ -1224,6 +1260,31 @@ public partial class MainWindow : Window
             viaVis.Children.Add(new ModelVisual3D { Content = model });
         }
 
+        // - Solder Joints -----------------------------------------------
+        if (vm.HasModule)
+        {
+            var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
+            var expModuleLayers = vm.Module.Stackup.Layers.ToList();
+            var moduleBottomLayer = expModuleLayers.LastOrDefault(l => l.IsConductive);
+
+            if (carrierTopLayer != null && moduleBottomLayer != null)
+            {
+                double zCarrierTopFace = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true, MountGap);
+                double zCarrierBot = zCarrierTopFace - carrierTopLayer.Thickness;
+                double zModuleBotFace = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap);
+
+                foreach (var sj in vm.SolderJoints)
+                {
+                    if (!sj.ShowIn3D) continue;
+                    double radius = sj.DiameterMm / 2.0;
+                    var sjMesh = BuildCylinderMesh(sj.X, sj.Y, zCarrierBot, zModuleBotFace, radius, 16);
+                    var sjMat  = new DiffuseMaterial(new SolidColorBrush(Color.FromRgb(0xC0, 0xB0, 0x60)));
+                    var sjModel = new GeometryModel3D(sjMesh, sjMat) { BackMaterial = sjMat };
+                    solderJointVis.Children.Add(new ModelVisual3D { Content = sjModel });
+                }
+            }
+        }
+
         // - Assemble selected groups ------------------------------------
         // PCB is always included
         result.Add(("PCB Substrate", pcbVisual));
@@ -1236,6 +1297,9 @@ public partial class MainWindow : Window
             result.Add(("Antennas", antennaVis));
         if (opts.IncludeVias)
             result.Add(("Vias", viaVis));
+
+        // Solder joints always included when present (they are part of the board connection)
+        result.Add(("Solder Joints", solderJointVis));
 
         // Remove empty groups
         result.RemoveAll(g =>
@@ -1303,6 +1367,20 @@ public partial class MainWindow : Window
     {
         if (!(DataContext is MainViewModel vm)) return;
         var win = new DrawViaWindow(vm) { Owner = this };
+        if (win.ShowDialog() == true)
+            RebuildLayerVisuals();
+    }
+
+    private void MenuDrawSolderJoint_Click(object sender, RoutedEventArgs e)
+    {
+        if (!(DataContext is MainViewModel vm)) return;
+        if (!vm.HasModule)
+        {
+            MessageBox.Show("Solder joints require a module board.\nPlease enable the module first.",
+                "No Module", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+        var win = new DrawSolderJointWindow(vm) { Owner = this };
         if (win.ShowDialog() == true)
             RebuildLayerVisuals();
     }

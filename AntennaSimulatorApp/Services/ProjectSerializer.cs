@@ -88,6 +88,9 @@ namespace AntennaSimulatorApp.Services
             foreach (var v in vm.Vias)
                 pd.Vias.Add(ViaToDto(v));
 
+            foreach (var sj in vm.SolderJoints)
+                pd.SolderJoints.Add(SolderJointToDto(sj));
+
             return pd;
         }
 
@@ -176,7 +179,16 @@ namespace AntennaSimulatorApp.Services
             Y           = v.Y,
             ShowIn3D    = v.ShowIn3D,
         };
+        // ── SolderJoint ─────────────────────────────────────────────────────────────
 
+        private static SolderJointDto SolderJointToDto(SolderJoint sj) => new()
+        {
+            Name        = sj.Name,
+            DiameterMil = sj.DiameterMil,
+            X           = sj.X,
+            Y           = sj.Y,
+            ShowIn3D    = sj.ShowIn3D,
+        };
         // ── AntennaParams ─────────────────────────────────────────────────────
 
         private static AntennaParamsDto AntennaToDto(AntennaParams a)
@@ -344,6 +356,12 @@ namespace AntennaSimulatorApp.Services
                 foreach (var vDto in pd.Vias)
                     vm.Vias.Add(DtoToVia(vDto));
 
+            // ── Solder Joints ──
+            vm.SolderJoints.Clear();
+            if (pd.SolderJoints != null)
+                foreach (var sjDto in pd.SolderJoints)
+                    vm.SolderJoints.Add(DtoToSolderJoint(sjDto));
+
             // ── SimSettings ──
             ApplySimSettings(pd.SimSettings, vm.SimSettings);
         }
@@ -432,6 +450,17 @@ namespace AntennaSimulatorApp.Services
             IsCarrier   = dto.IsCarrier,
             FromLayer   = dto.FromLayer,
             ToLayer     = dto.ToLayer,
+            DiameterMil = dto.DiameterMil,
+            X           = dto.X,
+            Y           = dto.Y,
+            ShowIn3D    = dto.ShowIn3D,
+        };
+
+        // ── SolderJoint ───────────────────────────────────────────────────────
+
+        private static SolderJoint DtoToSolderJoint(SolderJointDto dto) => new()
+        {
+            Name        = dto.Name,
             DiameterMil = dto.DiameterMil,
             X           = dto.X,
             Y           = dto.Y,

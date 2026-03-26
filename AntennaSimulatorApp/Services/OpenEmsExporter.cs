@@ -79,6 +79,8 @@ namespace AntennaSimulatorApp.Services
             if (includeVias)
                 WriteVias(sb, vm);
 
+            WriteSolderJoints(sb, vm);
+
             WritePorts(sb, vm);
             WriteMesh(sb, vm);
             WriteRun(sb);
@@ -376,6 +378,38 @@ namespace AntennaSimulatorApp.Services
                     $"[{F(via.X)}, {F(via.Y)}, {F(zTop)}], " +
                     $"{F(radius)}, priority=15)");
                 idx++;
+            }
+            sb.AppendLine();
+        }
+
+        // ── Solder Joints ────────────────────────────────────────────────────
+
+        private static void WriteSolderJoints(StringBuilder sb, MainViewModel vm)
+        {
+            if (!vm.HasModule || vm.SolderJoints.Count == 0) return;
+
+            sb.AppendLine("# --- Solder Joints (module bottom → carrier top) ---");
+
+            // carrier top layer
+            var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
+            // module bottom layer
+            var moduleLayers = vm.Module.Stackup.Layers.ToList();
+            var moduleBottomLayer = moduleLayers.LastOrDefault(l => l.IsConductive);
+            if (carrierTopLayer == null || moduleBottomLayer == null) return;
+
+            double zCarrierTop = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true);
+            double zCarrierBot = zCarrierTop - carrierTopLayer.Thickness;
+            double zModuleBot  = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false);
+
+            foreach (var sj in vm.SolderJoints)
+            {
+                if (!sj.ShowIn3D) continue;
+                double radius = sj.DiameterMm / 2.0;
+
+                sb.AppendLine($"copper.AddCylinder(" +
+                    $"[{F(sj.X)}, {F(sj.Y)}, {F(zCarrierBot)}], " +
+                    $"[{F(sj.X)}, {F(sj.Y)}, {F(zModuleBot)}], " +
+                    $"{F(radius)}, priority=15)");
             }
             sb.AppendLine();
         }

@@ -21,6 +21,7 @@ namespace AntennaSimulatorApp.Models
         public List<ManualShapeDto>   ManualShapes   { get; set; } = new();
         public List<AntennaParamsDto> DrawnAntennas  { get; set; } = new();
         public List<ViaDto>           Vias           { get; set; } = new();
+        public List<SolderJointDto>    SolderJoints   { get; set; } = new();
 
         // ── Simulation ────────────────────────────────────────────────────────
         public SimSettingsDto SimSettings { get; set; } = new();
@@ -86,6 +87,17 @@ namespace AntennaSimulatorApp.Models
         public string  FromLayer   { get; set; } = "";
         public string  ToLayer     { get; set; } = "";
         public double  DiameterMil { get; set; } = 10.0;
+        public double  X           { get; set; }
+        public double  Y           { get; set; }
+        public bool    ShowIn3D    { get; set; } = true;
+    }
+
+    // ── SolderJoint DTO ──────────────────────────────────────────────────
+
+    public class SolderJointDto
+    {
+        public string  Name        { get; set; } = "SJ";
+        public double  DiameterMil { get; set; } = 20.0;
         public double  X           { get; set; }
         public double  Y           { get; set; }
         public bool    ShowIn3D    { get; set; } = true;
