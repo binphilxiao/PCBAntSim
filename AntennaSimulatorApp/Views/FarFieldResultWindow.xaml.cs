@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
@@ -651,5 +652,140 @@ namespace AntennaSimulatorApp.Views
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
+
+        // ── 3D view control buttons ─────────────────────────────────────
+
+        private void FF_SetView(Point3D pos, Vector3D up)
+        {
+            var look = new Vector3D(-pos.X, -pos.Y, -pos.Z);
+            look.Normalize();
+            var cam = new PerspectiveCamera
+            {
+                Position = pos,
+                LookDirection = look,
+                UpDirection = up,
+                FieldOfView = 45
+            };
+            Viewport3D.Camera = cam;
+            Viewport3D.ZoomExtents(0);
+        }
+
+        private void FF_ViewTop_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(0, 0, 5), new Vector3D(0, 1, 0));
+        private void FF_ViewBottom_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(0, 0, -5), new Vector3D(0, 1, 0));
+        private void FF_ViewFront_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(0, 5, 0), new Vector3D(0, 0, 1));
+        private void FF_ViewBack_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(0, -5, 0), new Vector3D(0, 0, 1));
+        private void FF_ViewLeft_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(-5, 0, 0), new Vector3D(0, 0, 1));
+        private void FF_ViewRight_Click(object sender, RoutedEventArgs e)
+            => FF_SetView(new Point3D(5, 0, 0), new Vector3D(0, 0, 1));
+
+        private void FF_ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Viewport3D.Camera is PerspectiveCamera pc)
+            {
+                var offset = new Vector3D(pc.LookDirection.X, pc.LookDirection.Y, pc.LookDirection.Z);
+                offset.Normalize();
+                double step = (pc.Position - new Point3D()).Length * 0.2;
+                pc.Position += offset * step;
+            }
+        }
+
+        private void FF_ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (Viewport3D.Camera is PerspectiveCamera pc)
+            {
+                var offset = new Vector3D(pc.LookDirection.X, pc.LookDirection.Y, pc.LookDirection.Z);
+                offset.Normalize();
+                double step = (pc.Position - new Point3D()).Length * 0.2;
+                pc.Position -= offset * step;
+            }
+        }
+
+        private void FF_ZoomFit_Click(object sender, RoutedEventArgs e)
+            => Viewport3D.ZoomExtents(200);
+
+        // ── Keyboard arrow keys ─────────────────────────────────────
+
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            // Only handle arrow keys when 3D tab is active
+            if (ChartTabs.SelectedIndex != 3) return;
+
+            bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+
+            const double OrbitStep = 5.0;   // degrees per key press
+            const double ZoomStep  = 0.12;  // fraction of distance
+
+            switch (e.Key)
+            {
+                case Key.Left:  if (!shift) { FF_OrbitCamera(-OrbitStep, 0); e.Handled = true; } break;
+                case Key.Right: if (!shift) { FF_OrbitCamera(+OrbitStep, 0); e.Handled = true; } break;
+                case Key.Up:
+                    if (!shift) { FF_OrbitCamera(0, +OrbitStep); e.Handled = true; }
+                    else        { FF_ZoomCamera(1.0 - ZoomStep);  e.Handled = true; }
+                    break;
+                case Key.Down:
+                    if (!shift) { FF_OrbitCamera(0, -OrbitStep); e.Handled = true; }
+                    else        { FF_ZoomCamera(1.0 + ZoomStep);  e.Handled = true; }
+                    break;
+            }
+        }
+
+        private void FF_OrbitCamera(double dAz, double dEl)
+        {
+            if (Viewport3D.Camera is not PerspectiveCamera cam) return;
+
+            var look = cam.LookDirection;
+            double dist = look.Length;
+            look.Normalize();
+            var target = cam.Position + look * dist;
+            var arm    = cam.Position - target;
+
+            // Azimuth: rotate arm around world Z
+            if (Math.Abs(dAz) > 1e-9)
+            {
+                double rad = dAz * Math.PI / 180.0;
+                double c = Math.Cos(rad), s = Math.Sin(rad);
+                arm = new Vector3D(arm.X * c - arm.Y * s,
+                                   arm.X * s + arm.Y * c,
+                                   arm.Z);
+            }
+
+            // Elevation: rotate arm around camera-right axis (Rodrigues)
+            if (Math.Abs(dEl) > 1e-9)
+            {
+                var right = Vector3D.CrossProduct(look, cam.UpDirection);
+                right.Normalize();
+                double rad = dEl * Math.PI / 180.0;
+                double c = Math.Cos(rad), s = Math.Sin(rad);
+                double dot = Vector3D.DotProduct(right, arm);
+                var cross = Vector3D.CrossProduct(right, arm);
+                arm = arm * c + cross * s + right * (dot * (1 - c));
+
+                var armN = arm; armN.Normalize();
+                if (Math.Abs(armN.Z / armN.Length) > Math.Cos(3.0 * Math.PI / 180.0))
+                    return;
+            }
+
+            cam.Position      = target + arm;
+            cam.LookDirection = target - cam.Position;
+        }
+
+        private void FF_ZoomCamera(double factor)
+        {
+            if (Viewport3D.Camera is not PerspectiveCamera cam) return;
+
+            var look = cam.LookDirection;
+            double dist = look.Length;
+            look.Normalize();
+
+            double newDist = Math.Max(0.5, dist * factor);
+            cam.Position      = cam.Position + look * (dist - newDist);
+            cam.LookDirection = look * newDist;
+        }
     }
 }

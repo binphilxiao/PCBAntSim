@@ -8,7 +8,8 @@
         MinWidth="700"
         MinHeight="500"
         WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="True">
+        ShowInTaskbar="True"
+        PreviewKeyDown="Window_PreviewKeyDown">
 
     <Grid Margin="12">
         <Grid.RowDefinitions>
@@ -106,25 +107,118 @@
                         CornerRadius="3"
                         Background="White"
                         ClipToBounds="True">
-                    <h:HelixViewport3D x:Name="Viewport3D"
-                                       Background="White"
-                                       ShowCoordinateSystem="True"
-                                       CoordinateSystemLabelForeground="Gray"
-                                       ZoomExtentsWhenLoaded="True"
-                                       ShowViewCube="True"
-                                       IsRotationEnabled="True"
-                                       IsPanEnabled="True"
-                                       IsZoomEnabled="True"
-                                       RotateAroundMouseDownPoint="True"
-                                       InfoForeground="Gray">
-                        <h:HelixViewport3D.Camera>
-                            <PerspectiveCamera Position="2,2,1.5"
-                                               LookDirection="-2,-2,-1.5"
-                                               UpDirection="0,0,1"
-                                               FieldOfView="45"/>
-                        </h:HelixViewport3D.Camera>
-                        <h:DefaultLights/>
-                    </h:HelixViewport3D>
+                    <Grid>
+                        <!-- View control toolbar -->
+                        <Border VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Background="#DD2B3A4A"
+                                CornerRadius="4"
+                                Margin="8"
+                                Padding="4"
+                                Panel.ZIndex="10">
+                            <Border.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground"
+                                            Value="#EEEEEE"/>
+                                    <Setter Property="Background"
+                                            Value="#444444"/>
+                                    <Setter Property="BorderBrush"
+                                            Value="#666666"/>
+                                    <Setter Property="BorderThickness"
+                                            Value="1"/>
+                                    <Setter Property="Margin"
+                                            Value="2,2"/>
+                                    <Setter Property="Padding"
+                                            Value="7,3"/>
+                                    <Setter Property="FontSize"
+                                            Value="11"/>
+                                    <Setter Property="Cursor"
+                                            Value="Hand"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="3"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver"
+                                                             Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="#606060"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed"
+                                                             Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="#2288CC"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Border.Resources>
+                            <StackPanel Orientation="Vertical">
+                                <!-- View preset row -->
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Top"
+                                            ToolTip="Top view (–Z)"
+                                            Click="FF_ViewTop_Click"/>
+                                    <Button Content="Bottom"
+                                            ToolTip="Bottom view (+Z)"
+                                            Click="FF_ViewBottom_Click"/>
+                                    <Button Content="Front"
+                                            ToolTip="Front view (–Y)"
+                                            Click="FF_ViewFront_Click"/>
+                                    <Button Content="Back"
+                                            ToolTip="Back view (+Y)"
+                                            Click="FF_ViewBack_Click"/>
+                                    <Button Content="Left"
+                                            ToolTip="Left view (–X)"
+                                            Click="FF_ViewLeft_Click"/>
+                                    <Button Content="Right"
+                                            ToolTip="Right view (+X)"
+                                            Click="FF_ViewRight_Click"/>
+                                </StackPanel>
+                                <!-- Zoom row -->
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <Button Content="＋ Zoom In"
+                                            ToolTip="Zoom in"
+                                            Click="FF_ZoomIn_Click"/>
+                                    <Button Content="－ Zoom Out"
+                                            ToolTip="Zoom out"
+                                            Click="FF_ZoomOut_Click"/>
+                                    <Button Content="⛶ Fit"
+                                            ToolTip="Zoom fit"
+                                            Click="FF_ZoomFit_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <h:HelixViewport3D x:Name="Viewport3D"
+                                           Background="White"
+                                           ShowCoordinateSystem="True"
+                                           CoordinateSystemLabelForeground="Gray"
+                                           ZoomExtentsWhenLoaded="True"
+                                           ShowViewCube="True"
+                                           IsRotationEnabled="False"
+                                           IsPanEnabled="False"
+                                           IsZoomEnabled="False"
+                                           InfoForeground="Gray">
+                            <h:HelixViewport3D.Camera>
+                                <PerspectiveCamera Position="2,2,1.5"
+                                                   LookDirection="-2,-2,-1.5"
+                                                   UpDirection="0,0,1"
+                                                   FieldOfView="45"/>
+                            </h:HelixViewport3D.Camera>
+                            <h:DefaultLights/>
+                        </h:HelixViewport3D>
+                    </Grid>
                 </Border>
             </TabItem>
         </TabControl>

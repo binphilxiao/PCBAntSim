@@ -1048,6 +1048,9 @@
                                        ShowCoordinateSystem="True"
                                        ShowViewCube="False"
                                        CameraRotationMode="Trackball"
+                                       IsRotationEnabled="False"
+                                       IsPanEnabled="False"
+                                       IsZoomEnabled="False"
                                        Loaded="Viewport3D_Loaded">
                         <h:DefaultLights/>
                         <h:GridLinesVisual3D Width="200"
