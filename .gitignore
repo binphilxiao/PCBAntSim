@@ -59,9 +59,6 @@ obj/
 .venv*/
 .env*/
 
-# OpenEMS installation (large DLLs)
-openEMS/
-
 # Simulation output folders (large binary data files)
 Sim_Wifi_Antenna/
 Sim_Wifi_Antenna_Snapshot/
