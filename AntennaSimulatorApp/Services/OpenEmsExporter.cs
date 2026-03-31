@@ -146,7 +146,7 @@ namespace AntennaSimulatorApp.Services
             else
             {
                 sb.AppendLine("openems_path = None");
-                sb.AppendLine("print('WARNING: openEMS path not configured. Please set it in Tools → Options.')");
+                sb.AppendLine("print('WARNING: openEMS path not configured. Please set it in Tools -> Options.')");
             }
 
             sb.AppendLine("if openems_path and os.path.isdir(openems_path):");
