@@ -1668,8 +1668,8 @@ public partial class MainWindow : Window
 
     private void MenuToolOptions_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Options / Preferences dialog is not yet implemented.",
-            "Tools � Options", MessageBoxButton.OK, MessageBoxImage.Information);
+        var win = new OptionsWindow { Owner = this };
+        win.ShowDialog();
     }
 
     // -- ?? ------------------------------------------------------------------

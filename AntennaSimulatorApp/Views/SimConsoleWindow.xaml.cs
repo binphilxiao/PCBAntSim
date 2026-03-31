@@ -306,6 +306,11 @@ namespace AntennaSimulatorApp.Views
 
         private string? FindPython()
         {
+            // 0. User-configured path from Tools → Options
+            string userPython = Services.AppSettings.Instance.PythonPath;
+            if (!string.IsNullOrWhiteSpace(userPython) && File.Exists(userPython) && TestPython(userPython))
+                return userPython;
+
             // Candidates to try in order
             string projectDir = Path.GetDirectoryName(_simDir)!;
             string parentDir  = Path.GetDirectoryName(projectDir) ?? "";
