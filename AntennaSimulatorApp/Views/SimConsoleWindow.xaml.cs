@@ -291,7 +291,8 @@ namespace AntennaSimulatorApp.Views
             {
                 // Open new window with auto-refresh (file-based, every 5s)
                 int refreshInterval = isFinal ? 0 : 5;
-                _liveResultWindow = new S11ResultWindow(resultsDir, refreshInterval) { Owner = this };
+                _liveResultWindow = new S11ResultWindow(resultsDir, refreshInterval);
+                if (this.IsLoaded) _liveResultWindow.Owner = this;
                 _liveResultWindow.Closed += (_, __) => _liveResultWindow = null;
                 _liveResultWindow.Show();
             }
