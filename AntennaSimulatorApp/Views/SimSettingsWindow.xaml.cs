@@ -426,18 +426,53 @@ namespace AntennaSimulatorApp.Views
 
             if (shift)
             {
-                double step = _pvRange * PvPanStep;
-                _pvCenterY += (e.Delta > 0) ? step : -step;
-            }
-            else if (ctrl)
-            {
+                // Shift + wheel → horizontal pan
                 double step = _pvRange * PvPanStep;
                 _pvCenterX += (e.Delta > 0) ? step : -step;
             }
+            else if (ctrl)
+            {
+                // Ctrl + wheel → vertical pan
+                double step = _pvRange * PvPanStep;
+                _pvCenterY += (e.Delta > 0) ? step : -step;
+            }
             else
             {
+                // Zoom centered on mouse
+                var pos = e.GetPosition(PortPreviewCanvas);
+                const double mg = 10;
+                double cw = PortPreviewCanvas.ActualWidth;
+                double ch = PortPreviewCanvas.ActualHeight;
+                double drawW = Math.Max(cw - 2 * mg, 20);
+                double drawH = Math.Max(ch - 2 * mg, 20);
+                double scale = drawW / (2 * _pvRange);
+
+                // World coordinate under mouse
+                double wx = _pvCenterX + (pos.X - mg - drawW / 2) / scale;
+                double wy = _pvCenterY + (mg + drawH / 2 - pos.Y) / scale;
+
+                // Apply zoom
                 if (e.Delta > 0) _pvRange /= PvZoomFactor;
                 else             _pvRange *= PvZoomFactor;
+
+                // Adjust center so world point stays at same pixel
+                double newScale = drawW / (2 * _pvRange);
+                _pvCenterX = wx - (pos.X - mg - drawW / 2) / newScale;
+                _pvCenterY = wy - (mg + drawH / 2 - pos.Y) / newScale;
+            }
+            RedrawPortPreview();
+            e.Handled = true;
+        }
+
+        private void PortPreviewCanvas_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Left:  _pvCenterX -= _pvRange * PvPanStep; break;
+                case Key.Right: _pvCenterX += _pvRange * PvPanStep; break;
+                case Key.Up:    _pvCenterY += _pvRange * PvPanStep; break;
+                case Key.Down:  _pvCenterY -= _pvRange * PvPanStep; break;
+                default: return;
             }
             RedrawPortPreview();
             e.Handled = true;
@@ -580,14 +615,18 @@ namespace AntennaSimulatorApp.Views
                 }
             }
 
-            // ── Origin cross ──
+            // ── Origin cross + label ──
             double oxPx = Tx(0), oyPx = Ty(0);
             if (oxPx > mg - 2 && oxPx < cw - mg + 2 &&
                 oyPx > mg - 2 && oyPx < ch - mg + 2)
             {
                 double crossLen = Math.Min(15, Math.Min(drawW, drawH) * 0.06);
-                PortPreviewCanvas.Children.Add(new Line { X1 = oxPx - crossLen, Y1 = oyPx, X2 = oxPx + crossLen, Y2 = oyPx, Stroke = Brushes.LightGray, StrokeThickness = 0.8 });
-                PortPreviewCanvas.Children.Add(new Line { X1 = oxPx, Y1 = oyPx - crossLen, X2 = oxPx, Y2 = oyPx + crossLen, Stroke = Brushes.LightGray, StrokeThickness = 0.8 });
+                PortPreviewCanvas.Children.Add(new Line { X1 = oxPx - crossLen, Y1 = oyPx, X2 = oxPx + crossLen, Y2 = oyPx, Stroke = Brushes.Red, StrokeThickness = 1 });
+                PortPreviewCanvas.Children.Add(new Line { X1 = oxPx, Y1 = oyPx - crossLen, X2 = oxPx, Y2 = oyPx + crossLen, Stroke = Brushes.Red, StrokeThickness = 1 });
+                var originLbl = new TextBlock { Text = "(0, 0)", FontSize = 9, Foreground = Brushes.Red, FontWeight = FontWeights.Bold };
+                Canvas.SetLeft(originLbl, oxPx + 4);
+                Canvas.SetTop(originLbl, oyPx + 2);
+                PortPreviewCanvas.Children.Add(originLbl);
             }
 
             // ── Port markers ──

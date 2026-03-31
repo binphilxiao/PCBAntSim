@@ -611,21 +611,39 @@ namespace AntennaSimulatorApp.Views
 
             if (shift)
             {
-                // Shift + wheel → vertical pan
-                double step = _viewRange * PanStepFraction;
-                _viewCenterY += (e.Delta > 0) ? step : -step;
-            }
-            else if (ctrl)
-            {
-                // Ctrl + wheel → horizontal pan
+                // Shift + wheel → horizontal pan
                 double step = _viewRange * PanStepFraction;
                 _viewCenterX += (e.Delta > 0) ? step : -step;
             }
+            else if (ctrl)
+            {
+                // Ctrl + wheel → vertical pan
+                double step = _viewRange * PanStepFraction;
+                _viewCenterY += (e.Delta > 0) ? step : -step;
+            }
             else
             {
-                // Plain wheel → zoom
+                // Plain wheel → zoom centered on mouse
+                var pos = e.GetPosition(PreviewCanvas);
+                const double mg = 10;
+                double cw = PreviewCanvas.ActualWidth;
+                double ch = PreviewCanvas.ActualHeight;
+                double drawW = Math.Max(cw - 2 * mg, 20);
+                double drawH = Math.Max(ch - 2 * mg, 20);
+                double scale = drawW / (2 * _viewRange);
+
+                // World coordinate under mouse
+                double wx = _viewCenterX + (pos.X - mg - drawW / 2) / scale;
+                double wy = _viewCenterY + (mg + drawH / 2 - pos.Y) / scale;
+
+                // Apply zoom
                 if (e.Delta > 0) _viewRange /= ZoomFactor;
                 else             _viewRange *= ZoomFactor;
+
+                // Adjust center so world point stays at same pixel
+                double newScale = drawW / (2 * _viewRange);
+                _viewCenterX = wx - (pos.X - mg - drawW / 2) / newScale;
+                _viewCenterY = wy - (mg + drawH / 2 - pos.Y) / newScale;
             }
 
             RefreshPreview();
@@ -644,20 +662,12 @@ namespace AntennaSimulatorApp.Views
             // Don't intercept keys when a TextBox or ComboBox has focus
             if (e.OriginalSource is TextBox || e.OriginalSource is ComboBox) return;
 
-            bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
-
             switch (e.Key)
             {
                 case Key.Left:  _viewCenterX -= _viewRange * PanStepFraction; RefreshPreview(); e.Handled = true; break;
                 case Key.Right: _viewCenterX += _viewRange * PanStepFraction; RefreshPreview(); e.Handled = true; break;
-                case Key.Up:
-                    if (shift) { _viewRange /= ZoomFactor; }
-                    else       { _viewCenterY += _viewRange * PanStepFraction; }
-                    RefreshPreview(); e.Handled = true; break;
-                case Key.Down:
-                    if (shift) { _viewRange *= ZoomFactor; }
-                    else       { _viewCenterY -= _viewRange * PanStepFraction; }
-                    RefreshPreview(); e.Handled = true; break;
+                case Key.Up:    _viewCenterY += _viewRange * PanStepFraction; RefreshPreview(); e.Handled = true; break;
+                case Key.Down:  _viewCenterY -= _viewRange * PanStepFraction; RefreshPreview(); e.Handled = true; break;
             }
         }
 

@@ -295,32 +295,32 @@
                                                 Orientation="Horizontal">
                                         <Button Content="🔍＋"
                                                 Click="PortZoomIn_Click"
-                                                ToolTip="Zoom In"
+                                                ToolTip="Zoom In (scroll up)"
                                                 MinWidth="32"
                                                 Padding="4,2"/>
                                         <Button Content="🔍－"
                                                 Click="PortZoomOut_Click"
-                                                ToolTip="Zoom Out"
+                                                ToolTip="Zoom Out (scroll down)"
                                                 MinWidth="32"
                                                 Padding="4,2"/>
                                         <Button Content="⟵"
                                                 Click="PortPanLeft_Click"
-                                                ToolTip="Pan Left"
+                                                ToolTip="Pan Left (← / Shift+scroll up)"
                                                 MinWidth="26"
                                                 Padding="3,2"/>
                                         <Button Content="⟶"
                                                 Click="PortPanRight_Click"
-                                                ToolTip="Pan Right"
+                                                ToolTip="Pan Right (→ / Shift+scroll down)"
                                                 MinWidth="26"
                                                 Padding="3,2"/>
                                         <Button Content="⟰"
                                                 Click="PortPanUp_Click"
-                                                ToolTip="Pan Up"
+                                                ToolTip="Pan Up (↑ / Ctrl+scroll up)"
                                                 MinWidth="26"
                                                 Padding="3,2"/>
                                         <Button Content="⟱"
                                                 Click="PortPanDown_Click"
-                                                ToolTip="Pan Down"
+                                                ToolTip="Pan Down (↓ / Ctrl+scroll down)"
                                                 MinWidth="26"
                                                 Padding="3,2"/>
                                         <Button Content="Fit"
@@ -343,6 +343,7 @@
                                         Focusable="True"
                                         SizeChanged="PortPreviewCanvas_SizeChanged"
                                         MouseWheel="PortPreviewCanvas_MouseWheel"
+                                        PreviewKeyDown="PortPreviewCanvas_PreviewKeyDown"
                                         MouseLeftButtonDown="PortPreviewCanvas_MouseLeftButtonDown"/>
                             </DockPanel>
                         </GroupBox>

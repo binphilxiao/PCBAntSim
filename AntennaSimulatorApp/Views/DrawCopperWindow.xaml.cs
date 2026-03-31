@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using AntennaSimulatorApp.Models;
@@ -23,6 +24,9 @@ namespace AntennaSimulatorApp.Views
 
         // Locally-held vertex list bound to the DataGrid
         private readonly ObservableCollection<ShapeVertex> _vertices = new ObservableCollection<ShapeVertex>();
+        private double _prevMinX, _prevMinY, _prevScale, _prevOffX, _prevOffY, _prevCh;
+        private readonly List<((double X, double Y) A, (double X, double Y) B)> _edgeSegments = new();
+        private double _zoom = 1.0, _panXpx, _panYpx;
 
         // ── Construction ──────────────────────────────────────────────────────
 
@@ -252,7 +256,8 @@ namespace AntennaSimulatorApp.Views
         private void DrawPreview2D()
         {
             PreviewCanvas2D.Children.Clear();
-            if (_vertices.Count < 2) return;
+            _edgeSegments.Clear();
+            if (_vertices.Count < 2) { EdgeInfoText.Text = ""; return; }
 
             double cw = PreviewCanvas2D.ActualWidth;
             double ch = PreviewCanvas2D.ActualHeight;
@@ -270,9 +275,11 @@ namespace AntennaSimulatorApp.Views
             const double Mg = 18;
             double scaleX = (cw - 2 * Mg) / rngX;
             double scaleY = (ch - 2 * Mg) / rngY;
-            double scale  = Math.Min(scaleX, scaleY);
-            double offX   = Mg + (cw - 2 * Mg - rngX * scale) / 2;
-            double offY   = Mg + (ch - 2 * Mg - rngY * scale) / 2;
+            double scale  = Math.Min(scaleX, scaleY) * _zoom;
+            double offX   = Mg + (cw - 2 * Mg - rngX * scale) / 2 + _panXpx;
+            double offY   = Mg + (ch - 2 * Mg - rngY * scale) / 2 + _panYpx;
+            _prevMinX = minX; _prevMinY = minY; _prevScale = scale;
+            _prevOffX = offX; _prevOffY = offY; _prevCh = ch;
 
             // Flip Y so +Y is up (on rotated coordinates)
             double Tx(double rx) => (rx - minX) * scale + offX;
@@ -288,6 +295,14 @@ namespace AntennaSimulatorApp.Views
             foreach (var v in _vertices)
                 poly.Points.Add(new System.Windows.Point(Tx(v.X), Ty(v.Y)));
             PreviewCanvas2D.Children.Add(poly);
+
+            // Record polygon edges for edge-click
+            for (int ei = 0; ei < _vertices.Count; ei++)
+            {
+                var va = _vertices[ei];
+                var vb = _vertices[(ei + 1) % _vertices.Count];
+                _edgeSegments.Add(((va.X, va.Y), (vb.X, vb.Y)));
+            }
 
             // Vertex dots + index labels
             for (int i = 0; i < _vertices.Count; i++)
@@ -345,6 +360,141 @@ namespace AntennaSimulatorApp.Views
             // Axis indicator (bottom-left corner)
             DrawAxisIndicator(cw, ch);
         }
+
+        // ── Edge click: show coordinates of the nearest polygon edge ──────
+        private void PreviewCanvas2D_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_prevScale <= 0 || _edgeSegments.Count == 0) { EdgeInfoText.Text = ""; return; }
+
+            var pos = e.GetPosition(PreviewCanvas2D);
+
+            // Canvas pixel → world mm (inverse of Tx/Ty)
+            double wx = (pos.X - _prevOffX) / _prevScale + _prevMinX;
+            double wy = (_prevCh - pos.Y - _prevOffY) / _prevScale + _prevMinY;
+
+            // Find closest edge
+            double bestDist = double.MaxValue;
+            (double X, double Y) bestA = default, bestB = default;
+            foreach (var (a, b) in _edgeSegments)
+            {
+                double d = PointToSegmentDist(wx, wy, a.X, a.Y, b.X, b.Y);
+                if (d < bestDist) { bestDist = d; bestA = a; bestB = b; }
+            }
+
+            double thresholdMm = Math.Max(1.0, 8.0 / _prevScale);
+            if (bestDist > thresholdMm) { EdgeInfoText.Text = ""; return; }
+
+            // Highlight
+            double Tx(double rx) => (rx - _prevMinX) * _prevScale + _prevOffX;
+            double Ty(double ry) => _prevCh - ((ry - _prevMinY) * _prevScale + _prevOffY);
+            for (int i = PreviewCanvas2D.Children.Count - 1; i >= 0; i--)
+                if (PreviewCanvas2D.Children[i] is Line ln && ln.Tag as string == "EdgeHighlight")
+                    PreviewCanvas2D.Children.RemoveAt(i);
+            PreviewCanvas2D.Children.Add(new Line
+            {
+                X1 = Tx(bestA.X), Y1 = Ty(bestA.Y),
+                X2 = Tx(bestB.X), Y2 = Ty(bestB.Y),
+                Stroke = Brushes.OrangeRed, StrokeThickness = 3,
+                Tag = "EdgeHighlight"
+            });
+
+            double minXe = Math.Min(bestA.X, bestB.X), maxXe = Math.Max(bestA.X, bestB.X);
+            double minYe = Math.Min(bestA.Y, bestB.Y), maxYe = Math.Max(bestA.Y, bestB.Y);
+            EdgeInfoText.Text =
+                $"Edge: ({bestA.X:F3}, {bestA.Y:F3}) → ({bestB.X:F3}, {bestB.Y:F3})    " +
+                $"Bounds: X=[{minXe:F3}, {maxXe:F3}]  Y=[{minYe:F3}, {maxYe:F3}]";
+        }
+
+        private static double PointToSegmentDist(double px, double py, double ax, double ay, double bx, double by)
+        {
+            double dx = bx - ax, dy = by - ay;
+            double lenSq = dx * dx + dy * dy;
+            if (lenSq < 1e-12) return Math.Sqrt((px - ax) * (px - ax) + (py - ay) * (py - ay));
+            double t = Math.Max(0, Math.Min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+            double cx = ax + t * dx, cy = ay + t * dy;
+            return Math.Sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
+        }
+
+        // ── Zoom / Pan ───────────────────────────────────────────────────────
+        private void PreviewCanvas2D_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                _panXpx += e.Delta > 0 ? 20 : -20;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                _panYpx += e.Delta > 0 ? -20 : 20;
+            }
+            else
+            {
+                double factor = e.Delta > 0 ? 1.25 : 0.8;
+                var pos = e.GetPosition(PreviewCanvas2D);
+                double cw = PreviewCanvas2D.ActualWidth;
+                double ch = PreviewCanvas2D.ActualHeight;
+
+                // Reverse-map mouse pixel → world coordinate using current transform
+                double oldScale = _prevScale;
+                double wx = _prevMinX + (pos.X - _prevOffX) / oldScale;
+                double wy = _prevMinY + (ch - pos.Y - _prevOffY) / oldScale;
+
+                // Apply zoom
+                double oldZoom = _zoom;
+                _zoom = Math.Clamp(_zoom * factor, 0.1, 50);
+
+                // Recompute base scale at new zoom (same formula as DrawPreview2D)
+                double minX = _vertices.Count > 0 ? _vertices.Min(v => v.X) : 0;
+                double maxX = _vertices.Count > 0 ? _vertices.Max(v => v.X) : 0;
+                double minY = _vertices.Count > 0 ? _vertices.Min(v => v.Y) : 0;
+                double maxY = _vertices.Count > 0 ? _vertices.Max(v => v.Y) : 0;
+                minX = Math.Min(minX, 0); maxX = Math.Max(maxX, 0);
+                minY = Math.Min(minY, 0); maxY = Math.Max(maxY, 0);
+                double rngX = Math.Max(maxX - minX, 1e-6);
+                double rngY = Math.Max(maxY - minY, 1e-6);
+                const double Mg = 18;
+                double newScale = Math.Min((cw - 2 * Mg) / rngX, (ch - 2 * Mg) / rngY) * _zoom;
+
+                // Where the world point would land with _panXpx=0, _panYpx=0
+                double baseOffX = Mg + (cw - 2 * Mg - rngX * newScale) / 2;
+                double baseOffY = Mg + (ch - 2 * Mg - rngY * newScale) / 2;
+                double newPxX = (wx - minX) * newScale + baseOffX;
+                double newPxY = ch - ((wy - minY) * newScale + baseOffY);
+
+                // Adjust pan so world point stays under mouse
+                _panXpx = pos.X - newPxX;
+                _panYpx = -(pos.Y - newPxY);  // offY is added, and Ty flips, so negate
+            }
+            RefreshPreview();
+            e.Handled = true;
+        }
+
+        private void PreviewCanvas2D_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            double step = 20;
+            switch (e.Key)
+            {
+                case Key.Left:  _panXpx -= step; break;
+                case Key.Right: _panXpx += step; break;
+                case Key.Up:    _panYpx -= step; break;
+                case Key.Down:  _panYpx += step; break;
+                default: return;
+            }
+            RefreshPreview();
+            e.Handled = true;
+        }
+
+        private void FitView_Click(object sender, RoutedEventArgs e)
+        {
+            _zoom = 1.0; _panXpx = 0; _panYpx = 0;
+            RefreshPreview();
+        }
+
+        private void ZoomIn_Click(object sender, RoutedEventArgs e)  { _zoom = Math.Clamp(_zoom * 1.25, 0.1, 50); RefreshPreview(); }
+        private void ZoomOut_Click(object sender, RoutedEventArgs e) { _zoom = Math.Clamp(_zoom * 0.8, 0.1, 50); RefreshPreview(); }
+        private void PanLeft_Click(object sender, RoutedEventArgs e)  { _panXpx -= 20; RefreshPreview(); }
+        private void PanRight_Click(object sender, RoutedEventArgs e) { _panXpx += 20; RefreshPreview(); }
+        private void PanUp_Click(object sender, RoutedEventArgs e)    { _panYpx -= 20; RefreshPreview(); }
+        private void PanDown_Click(object sender, RoutedEventArgs e)  { _panYpx += 20; RefreshPreview(); }
 
         /// <summary>Draws a small X/Y axis indicator in the bottom-left corner of the preview canvas.</summary>
         private void DrawAxisIndicator(double cw, double ch)

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Draw Copper"
         Width="580"
-        Height="640"
+        Height="760"
         MinWidth="440"
-        MinHeight="500"
+        MinHeight="560"
         WindowStartupLocation="CenterOwner"
         ResizeMode="CanResizeWithGrip"
         ShowInTaskbar="False"
@@ -125,7 +125,7 @@
                 <!-- ── Row 3: 2-D preview + vertex list (side by side) ──────── -->
                 <Grid DockPanel.Dock="Top"
                       Margin="0,0,0,4"
-                      Height="200">
+                      Height="320">
                         <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="200"/>
@@ -136,16 +136,74 @@
                                   Grid.Column="0"
                                   Padding="4"
                                   Margin="0,0,4,0">
-                                <Border Background="#F4F6FA"
-                                        BorderBrush="#CCC"
-                                        BorderThickness="1">
-                                        <Canvas x:Name="PreviewCanvas2D"
-                                                ClipToBounds="True"
-                                                UseLayoutRounding="True"
-                                                SnapsToDevicePixels="True"
-                                                RenderOptions.EdgeMode="Unspecified"
-                                                SizeChanged="PreviewCanvas2D_SizeChanged"/>
-                                </Border>
+                                <DockPanel>
+                                        <TextBlock x:Name="EdgeInfoText"
+                                                   DockPanel.Dock="Bottom"
+                                                   Margin="4,4,4,0"
+                                                   FontSize="11"
+                                                   Foreground="DarkSlateGray"
+                                                   TextWrapping="Wrap"/>
+                                        <StackPanel DockPanel.Dock="Bottom"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,2,0,0">
+                                                <Button Content="&#x1F50D;&#xFF0B;"
+                                                        Click="ZoomIn_Click"
+                                                        ToolTip="Zoom In (scroll up)"
+                                                        MinWidth="32"
+                                                        Padding="4,1"
+                                                        FontSize="10"/>
+                                                <Button Content="&#x1F50D;&#xFF0D;"
+                                                        Click="ZoomOut_Click"
+                                                        ToolTip="Zoom Out (scroll down)"
+                                                        MinWidth="32"
+                                                        Padding="4,1"
+                                                        FontSize="10"/>
+                                                <Button Content="&#x27F5;"
+                                                        Click="PanLeft_Click"
+                                                        ToolTip="Pan Left (← / Shift+scroll up)"
+                                                        MinWidth="26"
+                                                        Padding="3,1"
+                                                        FontSize="10"/>
+                                                <Button Content="&#x27F6;"
+                                                        Click="PanRight_Click"
+                                                        ToolTip="Pan Right (→ / Shift+scroll down)"
+                                                        MinWidth="26"
+                                                        Padding="3,1"
+                                                        FontSize="10"/>
+                                                <Button Content="&#x27F0;"
+                                                        Click="PanUp_Click"
+                                                        ToolTip="Pan Up (↑ / Ctrl+scroll up)"
+                                                        MinWidth="26"
+                                                        Padding="3,1"
+                                                        FontSize="10"/>
+                                                <Button Content="&#x27F1;"
+                                                        Click="PanDown_Click"
+                                                        ToolTip="Pan Down (↓ / Ctrl+scroll down)"
+                                                        MinWidth="26"
+                                                        Padding="3,1"
+                                                        FontSize="10"/>
+                                                <Button Content="Fit"
+                                                        Click="FitView_Click"
+                                                        Padding="8,1"
+                                                        FontSize="10"
+                                                        ToolTip="Reset zoom/pan to fit all"/>
+                                        </StackPanel>
+                                        <Border Background="#F4F6FA"
+                                                BorderBrush="#CCC"
+                                                BorderThickness="1">
+                                                <Canvas x:Name="PreviewCanvas2D"
+                                                        ClipToBounds="True"
+                                                        UseLayoutRounding="True"
+                                                        SnapsToDevicePixels="True"
+                                                        Background="Transparent"
+                                                        RenderOptions.EdgeMode="Unspecified"
+                                                        Focusable="True"
+                                                        SizeChanged="PreviewCanvas2D_SizeChanged"
+                                                        PreviewMouseLeftButtonDown="PreviewCanvas2D_MouseLeftButtonDown"
+                                                        MouseWheel="PreviewCanvas2D_MouseWheel"
+                                                        PreviewKeyDown="PreviewCanvas2D_PreviewKeyDown"/>
+                                        </Border>
+                                </DockPanel>
                         </GroupBox>
 
                         <!-- Quick vertex summary -->

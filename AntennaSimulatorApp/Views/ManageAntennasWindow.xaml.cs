@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -31,6 +32,14 @@ namespace AntennaSimulatorApp.Views
         {
             InitializeComponent();
             _vm = vm;
+
+            // Commit any pending AddNew / EditItem on the default view
+            // to avoid 'DeferRefresh' crash when re-binding the same collection.
+            if (CollectionViewSource.GetDefaultView(vm.DrawnAntennas) is IEditableCollectionView ecv)
+            {
+                if (ecv.IsAddingNew)    ecv.CommitNew();
+                if (ecv.IsEditingItem)  ecv.CommitEdit();
+            }
 
             AntennasGrid.ItemsSource = vm.DrawnAntennas;
             UpdateStatus();

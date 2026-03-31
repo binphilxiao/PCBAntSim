@@ -123,7 +123,7 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("sim_data_dir = os.path.join(sim_base, 'sim_data')");
             sb.AppendLine("results_dir  = os.path.join(sim_base, 'results')");
             sb.AppendLine();
-            sb.AppendLine("# Search upward for the openEMS folder");
+            sb.AppendLine("# Search upward for the openEMS folder, then check well-known locations");
             sb.AppendLine("openems_path = None");
             sb.AppendLine("_search = sim_base");
             sb.AppendLine("for _ in range(5):");
@@ -132,6 +132,16 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("    if os.path.isdir(_candidate):");
             sb.AppendLine("        openems_path = os.path.abspath(_candidate)");
             sb.AppendLine("        break");
+            sb.AppendLine("if not openems_path:");
+            sb.AppendLine("    for _well_known in [");
+            sb.AppendLine("        os.path.join(os.environ.get('PUBLIC', r'C:\\Users\\Public'), 'openEMS', 'openEMS'),");
+            sb.AppendLine("        os.path.join(os.environ.get('LOCALAPPDATA', ''), 'openEMS', 'openEMS'),");
+            sb.AppendLine("        os.path.join(os.environ.get('PROGRAMFILES', ''), 'openEMS', 'openEMS'),");
+            sb.AppendLine("        r'C:\\openEMS\\openEMS',");
+            sb.AppendLine("    ]:");
+            sb.AppendLine("        if os.path.isdir(_well_known):");
+            sb.AppendLine("            openems_path = os.path.abspath(_well_known)");
+            sb.AppendLine("            break");
             sb.AppendLine("if openems_path:");
             sb.AppendLine("    os.add_dll_directory(openems_path)");
             sb.AppendLine("    print(f'openEMS found: {openems_path}')");

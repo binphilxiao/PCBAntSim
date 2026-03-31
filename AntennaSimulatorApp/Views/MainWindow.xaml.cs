@@ -946,6 +946,35 @@ public partial class MainWindow : Window
         cam.LookDirection = look * newDist;
     }
 
+    private void Viewport3D_MouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        const double OrbitStep = 5.0;
+        const double ZoomStep  = 0.12;
+
+        bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+        bool ctrl  = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
+
+        if (shift)
+        {
+            // Shift + wheel → orbit left/right (azimuth)
+            double dir = e.Delta > 0 ? -OrbitStep : OrbitStep;
+            OrbitCamera(dir, 0);
+        }
+        else if (ctrl)
+        {
+            // Ctrl + wheel → orbit up/down (elevation)
+            double dir = e.Delta > 0 ? OrbitStep : -OrbitStep;
+            OrbitCamera(0, dir);
+        }
+        else
+        {
+            // Plain wheel → zoom
+            double factor = e.Delta > 0 ? (1.0 - ZoomStep) : (1.0 + ZoomStep);
+            ZoomCamera(factor);
+        }
+        e.Handled = true;
+    }
+
     // -- Menu handlers ---------------------------------------------------------
 
     // -- ?? ------------------------------------------------------------------

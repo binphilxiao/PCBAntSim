@@ -1051,6 +1051,7 @@
                                        IsRotationEnabled="False"
                                        IsPanEnabled="False"
                                        IsZoomEnabled="False"
+                                       MouseWheel="Viewport3D_MouseWheel"
                                        Loaded="Viewport3D_Loaded">
                         <h:DefaultLights/>
                         <h:GridLinesVisual3D Width="200"

@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using AntennaSimulatorApp.Models;
@@ -486,6 +487,36 @@ namespace AntennaSimulatorApp.Views
         // ── Preview canvas ───────────────────────────────────────────
 
         private bool _suppressPreview = false;
+        private double _prevOx, _prevOy, _prevScale;
+        private readonly List<((double X, double Y) A, (double X, double Y) B)> _edgeSegments = new();
+        private double _zoom = 1.0, _panXpx, _panYpx;
+
+        /// <summary>Offset to convert local antenna coords → system (board) coords.
+        /// sys = local + _sysOff</summary>
+        private double _sysOffX, _sysOffY;
+
+        /// <summary>Compute the local→board coordinate offset from current UI state.</summary>
+        private void ComputeSysOffset()
+        {
+            double offX = double.TryParse(PcbOffsetXBox?.Text, out double ox) ? ox : 0;
+            double offY = double.TryParse(PcbOffsetYBox?.Text, out double oy) ? oy : 0;
+            double aw   = double.TryParse(AvailWidthBox?.Text, out double a) && a > 0 ? a : 15;
+            double ah   = double.TryParse(AvailHeightBox?.Text, out double b) && b > 0 ? b : 10;
+
+            double boardCX, boardTopY;
+            if (IsCarrierSelected)
+            {
+                boardCX   = 0;
+                boardTopY = 0;
+            }
+            else
+            {
+                boardCX   = _vm.Module.PositionX;
+                boardTopY = -_vm.Module.PositionY;
+            }
+            _sysOffX = -offX - aw / 2.0 + boardCX;
+            _sysOffY = -offY - ah + boardTopY;
+        }
 
         private void DrawPreview()
         {
@@ -493,7 +524,10 @@ namespace AntennaSimulatorApp.Views
 
             try
             {
+                ComputeSysOffset();
                 PreviewCanvas.Children.Clear();
+                EdgeInfoText.Text = "";
+                _edgeSegments.Clear();
                 if (SelectedType == AntennaType.InvertedF)
                     DrawIFA();
                 else if (SelectedType == AntennaType.Custom)
@@ -506,6 +540,117 @@ namespace AntennaSimulatorApp.Views
                 System.Diagnostics.Debug.WriteLine($"DrawPreview error: {ex}");
             }
         }
+
+        // ── Edge click: show coordinates of the nearest antenna edge ────────
+        private void PreviewCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_prevScale <= 0 || _edgeSegments.Count == 0) { EdgeInfoText.Text = ""; return; }
+
+            var pos = e.GetPosition(PreviewCanvas);
+            // Canvas pixel → system (board) mm
+            double wx = (pos.X - _prevOx) / _prevScale + _sysOffX;
+            double wy = (_prevOy - pos.Y) / _prevScale + _sysOffY;
+
+            // Find closest edge
+            double bestDist = double.MaxValue;
+            (double X, double Y) bestA = default, bestB = default;
+            foreach (var (a, b) in _edgeSegments)
+            {
+                double d = PointToSegmentDist(wx, wy, a.X, a.Y, b.X, b.Y);
+                if (d < bestDist) { bestDist = d; bestA = a; bestB = b; }
+            }
+
+            // Threshold: only report if click is reasonably close
+            double thresholdMm = Math.Max(1.0, 8.0 / _prevScale);
+            if (bestDist > thresholdMm) { EdgeInfoText.Text = ""; return; }
+
+            // Highlight the clicked edge (convert system coords back to canvas pixels)
+            double Tx(double sx) => _prevOx + (sx - _sysOffX) * _prevScale;
+            double Ty(double sy) => _prevOy - (sy - _sysOffY) * _prevScale;
+            for (int i = PreviewCanvas.Children.Count - 1; i >= 0; i--)
+                if (PreviewCanvas.Children[i] is Line ln && ln.Tag as string == "EdgeHighlight")
+                    PreviewCanvas.Children.RemoveAt(i);
+            var hl = new Line
+            {
+                X1 = Tx(bestA.X), Y1 = Ty(bestA.Y),
+                X2 = Tx(bestB.X), Y2 = Ty(bestB.Y),
+                Stroke = Brushes.OrangeRed, StrokeThickness = 3,
+                Tag = "EdgeHighlight"
+            };
+            PreviewCanvas.Children.Add(hl);
+
+            double minX = Math.Min(bestA.X, bestB.X);
+            double maxX = Math.Max(bestA.X, bestB.X);
+            double minY = Math.Min(bestA.Y, bestB.Y);
+            double maxY = Math.Max(bestA.Y, bestB.Y);
+            EdgeInfoText.Text =
+                $"Edge: ({bestA.X:F3}, {bestA.Y:F3}) → ({bestB.X:F3}, {bestB.Y:F3})    " +
+                $"Bounds: X=[{minX:F3}, {maxX:F3}]  Y=[{minY:F3}, {maxY:F3}]";
+        }
+
+        /// <summary>Distance from point (px,py) to line segment (ax,ay)-(bx,by).</summary>
+        private static double PointToSegmentDist(double px, double py, double ax, double ay, double bx, double by)
+        {
+            double dx = bx - ax, dy = by - ay;
+            double lenSq = dx * dx + dy * dy;
+            if (lenSq < 1e-12) return Math.Sqrt((px - ax) * (px - ax) + (py - ay) * (py - ay));
+            double t = Math.Max(0, Math.Min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+            double cx = ax + t * dx, cy = ay + t * dy;
+            return Math.Sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
+        }
+
+        // ── Zoom / Pan ───────────────────────────────────────────────────────
+        private void PreviewCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                _panXpx += e.Delta > 0 ? 20 : -20;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                _panYpx += e.Delta > 0 ? -20 : 20;
+            }
+            else
+            {
+                double factor = e.Delta > 0 ? 1.25 : 0.8;
+                var pos = e.GetPosition(PreviewCanvas);
+                double oldZoom = _zoom;
+                _zoom = Math.Clamp(_zoom * factor, 0.1, 50);
+                double r = _zoom / oldZoom;
+                _panXpx = pos.X - (pos.X - _panXpx) * r;
+                _panYpx = pos.Y - (pos.Y - _panYpx) * r;
+            }
+            DrawPreview();
+            e.Handled = true;
+        }
+
+        private void PreviewCanvas_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            double step = 20;
+            switch (e.Key)
+            {
+                case Key.Left:  _panXpx -= step; break;
+                case Key.Right: _panXpx += step; break;
+                case Key.Up:    _panYpx -= step; break;
+                case Key.Down:  _panYpx += step; break;
+                default: return;
+            }
+            DrawPreview();
+            e.Handled = true;
+        }
+
+        private void FitView_Click(object sender, RoutedEventArgs e)
+        {
+            _zoom = 1.0; _panXpx = 0; _panYpx = 0;
+            DrawPreview();
+        }
+
+        private void ZoomIn_Click(object sender, RoutedEventArgs e)  { _zoom = Math.Clamp(_zoom * 1.25, 0.1, 50); DrawPreview(); }
+        private void ZoomOut_Click(object sender, RoutedEventArgs e) { _zoom = Math.Clamp(_zoom * 0.8, 0.1, 50); DrawPreview(); }
+        private void PanLeft_Click(object sender, RoutedEventArgs e)  { _panXpx -= 20; DrawPreview(); }
+        private void PanRight_Click(object sender, RoutedEventArgs e) { _panXpx += 20; DrawPreview(); }
+        private void PanUp_Click(object sender, RoutedEventArgs e)    { _panYpx -= 20; DrawPreview(); }
+        private void PanDown_Click(object sender, RoutedEventArgs e)  { _panYpx += 20; DrawPreview(); }
 
         private Polyline MakePoly(Brush stroke, double thick, params Point[] pts)
         {
@@ -544,6 +689,21 @@ namespace AntennaSimulatorApp.Views
         {
             if (w < 0) { x += w; w = -w; }
             if (h < 0) { y += h; h = -h; }
+            // Record world-space edges in system (board) coordinates
+            if (_prevScale > 0)
+            {
+                double mmX1 = (x - _prevOx) / _prevScale + _sysOffX;
+                double mmY1 = (_prevOy - y) / _prevScale + _sysOffY;
+                double mmX2 = (x + w - _prevOx) / _prevScale + _sysOffX;
+                double mmY2 = (_prevOy - (y + h)) / _prevScale + _sysOffY;
+                // Round to 3 decimals to remove floating-point noise
+                mmX1 = Math.Round(mmX1, 3); mmY1 = Math.Round(mmY1, 3);
+                mmX2 = Math.Round(mmX2, 3); mmY2 = Math.Round(mmY2, 3);
+                _edgeSegments.Add(((mmX1, mmY1), (mmX2, mmY1))); // top
+                _edgeSegments.Add(((mmX1, mmY2), (mmX2, mmY2))); // bottom
+                _edgeSegments.Add(((mmX1, mmY1), (mmX1, mmY2))); // left
+                _edgeSegments.Add(((mmX2, mmY1), (mmX2, mmY2))); // right
+            }
             // Use Floor for position and Ceiling for size to ensure overlap (no gaps)
             double x2 = x + w;
             double y2 = y + h;
@@ -559,7 +719,8 @@ namespace AntennaSimulatorApp.Views
                 Stroke          = stroke,
                 StrokeThickness = stroke != null ? 0.5 : 0,
                 SnapsToDevicePixels = true,
-                UseLayoutRounding   = true
+                UseLayoutRounding   = true,
+                Tag = "AntennaRect"
             };
             Canvas.SetLeft(r, x); Canvas.SetTop(r, y);
             PreviewCanvas.Children.Add(r);
@@ -630,19 +791,21 @@ namespace AntennaSimulatorApp.Views
             double margin = 50;  // px reserved for labels
             double scaleX = (cw - 2 * margin) / Math.Max(bw, 1);
             double scaleY = (ch - 2 * margin) / Math.Max(bh, 1);
-            double sc     = Math.Min(scaleX, scaleY);
+            double sc     = Math.Min(scaleX, scaleY) * _zoom;
             sc = Math.Max(sc, 0.5);  // lower bound
 
             // Center the combined bounding box in canvas
             double drawW = bw * sc;
             double drawH = bh * sc;
-            double ox = (cw - drawW) / 2 - bx0 * sc;
-            double oy = (ch + drawH) / 2 + by0 * sc;  // GND line y (y increases downward)
+            double ox = (cw - drawW) / 2 - bx0 * sc + _panXpx;
+            double oy = (ch + drawH) / 2 + by0 * sc + _panYpx;  // GND line y (y increases downward)
 
             // Scaled helper
             double px(double mm) => ox + mm * sc;
             double py(double mm) => oy - mm * sc;
             double pw(double mm) => Math.Max(mm * sc, 1);
+
+            _prevOx = ox; _prevOy = oy; _prevScale = sc;
 
             var blue = new SolidColorBrush(Color.FromRgb(0x20, 0x60, 0xCC));
             var ltbl = new SolidColorBrush(Color.FromRgb(0x60, 0xA0, 0xEE));
@@ -694,6 +857,9 @@ namespace AntennaSimulatorApp.Views
 
             // Available space overlay
             DrawAvailSpaceOverlay(ox, oy, sc, L, H);
+
+            // Origin cross at (0,0)
+            DrawOriginCross(px, py, cw, ch);
 
             // Axis indicator
             DrawAxisIndicator();
@@ -758,18 +924,20 @@ namespace AntennaSimulatorApp.Views
             double margin = 50;
             double scaleX = (cw - 2 * margin) / Math.Max(bw, 1);
             double scaleY = (ch - 2 * margin) / Math.Max(bh, 1);
-            double sc     = Math.Min(scaleX, scaleY);
+            double sc     = Math.Min(scaleX, scaleY) * _zoom;
             sc = Math.Max(sc, 0.5);
 
             // Center the combined bounding box in canvas
             double drawW = bw * sc;
             double drawH = bh * sc;
-            double ox = (cw - drawW) / 2 - bx0 * sc;
-            double oy = (ch + drawH) / 2 + by0 * sc;
+            double ox = (cw - drawW) / 2 - bx0 * sc + _panXpx;
+            double oy = (ch + drawH) / 2 + by0 * sc + _panYpx;
 
             double px(double mm) => ox + mm * sc;
             double py(double mm) => oy - mm * sc;
             double pw(double mm) => Math.Max(mm * sc, 1);
+
+            _prevOx = ox; _prevOy = oy; _prevScale = sc;
 
             var blue = new SolidColorBrush(Color.FromRgb(0x20, 0x60, 0xCC));
             var gray = new SolidColorBrush(Color.FromRgb(0x80, 0x80, 0x80));
@@ -825,18 +993,18 @@ namespace AntennaSimulatorApp.Views
             AddLabel("Feed", px(feedS) + pw(wFe) / 2 + 2, py(H / 2) - 5, red);
 
             // Dimension annotations
-            double dimY1 = oy + 12;
+            double dimY1 = oy + 18;
             AddDimH(px(0), px(totalW), dimY1, totalW, "Total", grn);
-            double dimX1 = px(totalW) + 8;
+            double dimX1 = px(totalW) + 20;
             // H dimension (total height)
             AddDimV(dimX1, py(H), oy, H, "H", grn);
             // h1 dimension (meander depth)
-            AddDimV(dimX1 + 30, py(yTop), py(H - Hm), Hm, "h1", grn);
+            AddDimV(dimX1 + 40, py(yTop), py(H - Hm), Hm, "h1", grn);
             // Feed gap
-            AddDimH(px(0), px(feedS), dimY1 + 16, feedS, "S", grn);
+            AddDimH(px(0), px(feedS), dimY1 + 18, feedS, "S", grn);
             // Single pitch between first two vertical legs
             if (n >= 1)
-                AddDimH(px(feedS), px(feedS + pitch), dimY1 + 16 + 16, pitch, "P", grn);
+                AddDimH(px(feedS), px(feedS + pitch), dimY1 + 18 + 18, pitch, "P", grn);
 
             // Trace length estimate
             double traceLen = feedS + n_full * (pitch + Hm) + (hasPartial ? pitch + partialHm : 0) + tailLen;
@@ -844,6 +1012,9 @@ namespace AntennaSimulatorApp.Views
 
             // Available space overlay
             DrawAvailSpaceOverlay(ox, oy, sc, totalW, H);
+
+            // Origin cross at (0,0)
+            DrawOriginCross(px, py, cw, ch);
 
             // Axis indicator
             DrawAxisIndicator();
@@ -911,16 +1082,18 @@ namespace AntennaSimulatorApp.Views
             double margin = 50;
             double scaleXv = (cw - 2 * margin) / Math.Max(bw, 1);
             double scaleYv = (ch - 2 * margin) / Math.Max(bh, 1);
-            double sc      = Math.Min(scaleXv, scaleYv);
+            double sc      = Math.Min(scaleXv, scaleYv) * _zoom;
             sc = Math.Max(sc, 0.5);
 
             double drawW = bw * sc;
             double drawH = bh * sc;
-            double ox = (cw - drawW) / 2 - bx0 * sc;
-            double oy = (ch + drawH) / 2 + by0 * sc;
+            double ox = (cw - drawW) / 2 - bx0 * sc + _panXpx;
+            double oy = (ch + drawH) / 2 + by0 * sc + _panYpx;
 
             double px(double mm) => ox + mm * sc;
             double py(double mm) => oy - mm * sc;    // Y-flip (up = positive)
+
+            _prevOx = ox; _prevOy = oy; _prevScale = sc;
 
             var blue = new SolidColorBrush(Color.FromRgb(0x20, 0x60, 0xCC));
             var gray = new SolidColorBrush(Color.FromRgb(0x80, 0x80, 0x80));
@@ -941,6 +1114,14 @@ namespace AntennaSimulatorApp.Views
             foreach (var v in _customVertices)
                 poly.Points.Add(new System.Windows.Point(px(v.X), py(v.Y)));
             PreviewCanvas.Children.Add(poly);
+
+            // Record polygon edges for edge-click (in system/board coordinates)
+            for (int ei = 0; ei < _customVertices.Count; ei++)
+            {
+                var va = _customVertices[ei];
+                var vb = _customVertices[(ei + 1) % _customVertices.Count];
+                _edgeSegments.Add(((va.X + _sysOffX, va.Y + _sysOffY), (vb.X + _sysOffX, vb.Y + _sysOffY)));
+            }
 
             // Vertex dots and index labels
             for (int i = 0; i < _customVertices.Count; i++)
@@ -976,15 +1157,19 @@ namespace AntennaSimulatorApp.Views
                 }
             }
 
-            // Origin cross at (0,0)
-            if (bx0 <= 0 && 0 <= bx1 && by0 <= 0 && 0 <= by1)
+            // Origin cross at system (0,0)
             {
-                var oxPx = px(0); var oyPx = py(0);
-                PreviewCanvas.Children.Add(MakeLine(0, oyPx, cw, oyPx, Brushes.LightGray, 0.8,
-                    new DoubleCollection(new[] { 4.0, 3.0 })));
-                PreviewCanvas.Children.Add(MakeLine(oxPx, 0, oxPx, ch, Brushes.LightGray, 0.8,
-                    new DoubleCollection(new[] { 4.0, 3.0 })));
-                AddLabel("(0,0)", oxPx + 2, oyPx + 1, Brushes.Gray);
+                double sysLocalX = -_sysOffX;  // system origin in local coords
+                double sysLocalY = -_sysOffY;
+                var oxPx = px(sysLocalX); var oyPx = py(sysLocalY);
+                if (oxPx > -5 && oxPx < cw + 5 && oyPx > -5 && oyPx < ch + 5)
+                {
+                    PreviewCanvas.Children.Add(MakeLine(0, oyPx, cw, oyPx, Brushes.LightGray, 0.8,
+                        new DoubleCollection(new[] { 4.0, 3.0 })));
+                    PreviewCanvas.Children.Add(MakeLine(oxPx, 0, oxPx, ch, Brushes.LightGray, 0.8,
+                        new DoubleCollection(new[] { 4.0, 3.0 })));
+                    AddLabel("(0,0)", oxPx + 2, oyPx + 1, Brushes.Red, bold: true);
+                }
             }
 
             // Dimension: width and height
@@ -1060,6 +1245,18 @@ namespace AntennaSimulatorApp.Views
         {
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,
                 new Action(DrawPreview));
+        }
+
+        /// <summary>Draw origin cross at system (board) coordinate (0,0) with label.</summary>
+        private void DrawOriginCross(Func<double, double> px, Func<double, double> py, double cw, double ch)
+        {
+            // System (0,0) in local coords is (-_sysOffX, -_sysOffY)
+            double oxPx = px(-_sysOffX), oyPx = py(-_sysOffY);
+            if (oxPx < -5 || oxPx > cw + 5 || oyPx < -5 || oyPx > ch + 5) return;
+            double crossLen = Math.Min(15, Math.Min(cw, ch) * 0.06);
+            PreviewCanvas.Children.Add(MakeLine(oxPx - crossLen, oyPx, oxPx + crossLen, oyPx, Brushes.Red, 1));
+            PreviewCanvas.Children.Add(MakeLine(oxPx, oyPx - crossLen, oxPx, oyPx + crossLen, Brushes.Red, 1));
+            AddLabel("(0,0)", oxPx + 2, oyPx + 1, Brushes.Red, bold: true);
         }
 
         // ── Available space overlay ─────────────────────────────────
@@ -1151,8 +1348,8 @@ namespace AntennaSimulatorApp.Views
             Canvas.SetTop(rect, rectTop);
             PreviewCanvas.Children.Add(rect);
 
-            // Label on the overlay
-            AddLabel($"{aw:F1}×{ah:F1} mm", rectLeft + 3, rectTop + 2,
+            // Label on the overlay (above the rectangle to avoid antenna body)
+            AddLabel($"{aw:F1}×{ah:F1} mm", rectLeft + 3, rectTop - 14,
                 new SolidColorBrush(borderColor), bold: true);
 
             // ── Draw clearance lines (left / right / top only) ──────────
@@ -1175,8 +1372,8 @@ namespace AntennaSimulatorApp.Views
                     rectLeft, rectTop + clrPx, rectLeft + rw, rectTop + clrPx,
                     clrBrush, 1.0, clrDash));
 
-                // Label clearance value near the top-right corner
-                AddLabel($"clr={clr:G4}", rectLeft + rw - clrPx - 40, rectTop + clrPx + 1,
+                // Label clearance value near the top-right corner (outside clearance area)
+                AddLabel($"clr={clr:G4}", rectLeft + rw - clrPx + 4, rectTop + clrPx + 1,
                     clrBrush);
             }
 
