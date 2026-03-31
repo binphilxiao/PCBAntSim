@@ -154,6 +154,7 @@ namespace AntennaSimulatorApp.Views
             var sv = _settings.Solver;
             MaxTimestepsBox.Text = sv.MaxTimesteps.ToString();
             EndCriteriaBox.Text  = sv.EndCriteria.ToString("E1");
+            NumThreadsBox.Text   = sv.NumThreads.ToString();
         }
 
         private void SetSymCombo(ComboBox cb, SymmetryType sym)
@@ -227,6 +228,7 @@ namespace AntennaSimulatorApp.Views
             var sv = _settings.Solver;
             sv.MaxTimesteps = Math.Clamp(ParseInt(MaxTimestepsBox.Text, 200000), 1000, 10000000);
             sv.EndCriteria  = ParseDouble(EndCriteriaBox.Text, 1e-5);
+            sv.NumThreads   = Math.Clamp(ParseInt(NumThreadsBox.Text, 0), 0, 128);
         }
 
         private static double ParseDouble(string s, double fallback)

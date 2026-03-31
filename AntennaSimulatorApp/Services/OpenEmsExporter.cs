@@ -86,7 +86,9 @@ namespace AntennaSimulatorApp.Services
             WriteMesh(sb, vm);
 
             bool needNF2FF = analysisType == AnalysisType.FarField || analysisType == AnalysisType.Both;
-            WriteRun(sb, needNF2FF);
+            int nThreads = vm.SimSettings.Solver.NumThreads;
+            if (nThreads <= 0) nThreads = Environment.ProcessorCount;
+            WriteRun(sb, needNF2FF, nThreads);
 
             if (analysisType == AnalysisType.S11Only || analysisType == AnalysisType.Both)
                 WritePostProcess(sb, vm);
@@ -762,7 +764,7 @@ namespace AntennaSimulatorApp.Services
 
         // ── Run & post-process ───────────────────────────────────────────────
 
-        private static void WriteRun(StringBuilder sb, bool includeNF2FF)
+        private static void WriteRun(StringBuilder sb, bool includeNF2FF, int numThreads)
         {
             sb.AppendLine("# --- Run Simulation ---");
             sb.AppendLine("sim_path = sim_data_dir");
@@ -781,7 +783,7 @@ namespace AntennaSimulatorApp.Services
 
             sb.AppendLine("if not post_only:");
             sb.AppendLine("    print('Starting openEMS simulation...')");
-            sb.AppendLine("    sim.Run(sim_path, verbose=2)");
+            sb.AppendLine($"    sim.Run(sim_path, verbose=2, numThreads={numThreads})");
             sb.AppendLine("else:");
             sb.AppendLine("    print('Post-processing only (--post-only mode)')");
             sb.AppendLine();

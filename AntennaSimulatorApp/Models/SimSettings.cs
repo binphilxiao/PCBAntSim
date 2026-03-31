@@ -180,9 +180,12 @@ namespace AntennaSimulatorApp.Models
     {
         private int    _maxTimesteps = 200000;
         private double _endCriteria  = 1e-5;
+        private int    _numThreads   = 0;  // 0 = auto (all cores)
 
         public int    MaxTimesteps { get => _maxTimesteps; set { _maxTimesteps = value; OnPropertyChanged(); } }
         public double EndCriteria  { get => _endCriteria;  set { _endCriteria  = value; OnPropertyChanged(); } }
+        /// <summary>Number of OpenMP threads for FDTD engine. 0 = use all available cores.</summary>
+        public int    NumThreads   { get => _numThreads;   set { _numThreads   = value; OnPropertyChanged(); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? n = null)

@@ -226,5 +226,6 @@ namespace AntennaSimulatorApp.Models
     {
         public int    MaxTimesteps { get; set; } = 200000;
         public double EndCriteria  { get; set; } = 1e-5;
+        public int    NumThreads   { get; set; } = 0;
     }
 }

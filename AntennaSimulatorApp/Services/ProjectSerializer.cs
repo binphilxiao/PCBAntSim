@@ -275,6 +275,7 @@ namespace AntennaSimulatorApp.Services
                 {
                     MaxTimesteps = s.Solver.MaxTimesteps,
                     EndCriteria  = s.Solver.EndCriteria,
+                    NumThreads   = s.Solver.NumThreads,
                 },
             };
 
@@ -552,6 +553,7 @@ namespace AntennaSimulatorApp.Services
             {
                 sim.Solver.MaxTimesteps = dto.Solver.MaxTimesteps;
                 sim.Solver.EndCriteria  = dto.Solver.EndCriteria;
+                sim.Solver.NumThreads   = dto.Solver.NumThreads;
             }
 
             // Ports

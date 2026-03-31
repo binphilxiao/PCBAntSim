@@ -805,6 +805,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Row="0"
@@ -828,6 +829,17 @@
                                            Grid.Column="2"
                                            Style="{StaticResource Hint}"
                                            Text="  Energy decay threshold (e.g. 1e-5 = -50 dB)"/>
+
+                                <Label Grid.Row="2"
+                                       Grid.Column="0"
+                                       Content="Threads (0=auto):"/>
+                                <TextBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         x:Name="NumThreadsBox"/>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  OpenMP parallel threads (0 = use all CPU cores)"/>
                             </Grid>
                         </GroupBox>
 
@@ -835,7 +847,7 @@
                                    TextWrapping="Wrap"
                                    Foreground="#888"
                                    FontStyle="Italic"
-                                   Text="Tip: For quick preview use NrTS=50000 with EndCriteria=1e-3. For accurate results use NrTS=500000 with EndCriteria=1e-5."/>
+                                   Text="Tip: For quick preview use NrTS=50000 with EndCriteria=1e-3. For accurate results use NrTS=500000 with EndCriteria=1e-5.&#x0a;Tip: Setting Threads=0 uses all CPU cores for maximum speed."/>
 
                     </StackPanel>
                 </ScrollViewer>
