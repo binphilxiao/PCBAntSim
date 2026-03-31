@@ -14,7 +14,7 @@ dist/
 *.py[cod]
 
 # Log files
-*.log
+# *.log
 
 # Package files
 *.jar
@@ -38,9 +38,6 @@ Thumbs.db
 # Applications
 *.app
 *.war
-# *.exe excluded globally but the published release folder is tracked below
-*.exe
-!release/*.exe
 
 # Large media files
 *.mp4
@@ -51,8 +48,7 @@ Thumbs.db
 *.wmv
 
 
-# Build outputs
-bin/
+# Build outputs (keep obj/ ignored, track bin/Debug)
 obj/
 
 # Python virtual environments
