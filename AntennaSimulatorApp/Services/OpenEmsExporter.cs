@@ -109,8 +109,51 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine();
         }
 
+        /// <summary>
+        /// Resolve the openEMS installation directory by searching upward from the
+        /// application exe (fixed relative path), then falling back to well-known locations.
+        /// Returns the absolute path or null.
+        /// </summary>
+        private static string? ResolveOpenEmsPath()
+        {
+            // Search upward from the app exe – openEMS sits alongside the project tree
+            string exeDir = AppContext.BaseDirectory;
+            string search = exeDir;
+            for (int i = 0; i < 8; i++)
+            {
+                string? parent = Path.GetDirectoryName(search);
+                if (parent == null || parent == search) break;
+                search = parent;
+                string candidate = Path.Combine(search, "openEMS", "openEMS");
+                if (Directory.Exists(candidate))
+                    return Path.GetFullPath(candidate);
+            }
+
+            // Well-known installation locations
+            string[] wellKnown =
+            {
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
+                                 .Replace("ProgramData", "Public"), "openEMS", "openEMS"),
+                Path.Combine(Environment.GetEnvironmentVariable("PUBLIC") ?? @"C:\Users\Public",
+                             "openEMS", "openEMS"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                             "openEMS", "openEMS"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                             "openEMS", "openEMS"),
+                @"C:\openEMS\openEMS",
+            };
+            foreach (var p in wellKnown)
+                if (Directory.Exists(p))
+                    return Path.GetFullPath(p);
+
+            return null;
+        }
+
         private static void WriteImports(StringBuilder sb)
         {
+            // Resolve openEMS path at export time (relative to exe, not to project)
+            string? resolvedPath = ResolveOpenEmsPath();
+
             sb.AppendLine("import os, sys");
             sb.AppendLine("import numpy as np");
             sb.AppendLine();
@@ -123,15 +166,29 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("sim_data_dir = os.path.join(sim_base, 'sim_data')");
             sb.AppendLine("results_dir  = os.path.join(sim_base, 'results')");
             sb.AppendLine();
-            sb.AppendLine("# Search upward for the openEMS folder, then check well-known locations");
-            sb.AppendLine("openems_path = None");
-            sb.AppendLine("_search = sim_base");
-            sb.AppendLine("for _ in range(5):");
-            sb.AppendLine("    _search = os.path.dirname(_search)");
-            sb.AppendLine("    _candidate = os.path.join(_search, 'openEMS', 'openEMS')");
-            sb.AppendLine("    if os.path.isdir(_candidate):");
-            sb.AppendLine("        openems_path = os.path.abspath(_candidate)");
-            sb.AppendLine("        break");
+
+            if (resolvedPath != null)
+            {
+                // Embed the absolute path resolved from the app exe at export time
+                string escaped = resolvedPath.Replace("\\", "\\\\");
+                sb.AppendLine($"openems_path = r'{resolvedPath}'");
+                sb.AppendLine("if not os.path.isdir(openems_path):");
+                sb.AppendLine("    openems_path = None");
+            }
+            else
+            {
+                sb.AppendLine("openems_path = None");
+            }
+
+            // Fallback: search upward from script location & well-known paths
+            sb.AppendLine("if not openems_path:");
+            sb.AppendLine("    _search = sim_base");
+            sb.AppendLine("    for _ in range(8):");
+            sb.AppendLine("        _search = os.path.dirname(_search)");
+            sb.AppendLine("        _candidate = os.path.join(_search, 'openEMS', 'openEMS')");
+            sb.AppendLine("        if os.path.isdir(_candidate):");
+            sb.AppendLine("            openems_path = os.path.abspath(_candidate)");
+            sb.AppendLine("            break");
             sb.AppendLine("if not openems_path:");
             sb.AppendLine("    for _well_known in [");
             sb.AppendLine("        os.path.join(os.environ.get('PUBLIC', r'C:\\Users\\Public'), 'openEMS', 'openEMS'),");

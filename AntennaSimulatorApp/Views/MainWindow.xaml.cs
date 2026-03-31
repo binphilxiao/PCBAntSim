@@ -949,7 +949,6 @@ public partial class MainWindow : Window
     private void Viewport3D_MouseWheel(object sender, MouseWheelEventArgs e)
     {
         const double OrbitStep = 5.0;
-        const double ZoomStep  = 0.12;
 
         bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
         bool ctrl  = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
@@ -966,11 +965,18 @@ public partial class MainWindow : Window
             double dir = e.Delta > 0 ? OrbitStep : -OrbitStep;
             OrbitCamera(0, dir);
         }
-        else
+        else if (Viewport3D.Camera is PerspectiveCamera pc)
         {
-            // Plain wheel → zoom
-            double factor = e.Delta > 0 ? (1.0 - ZoomStep) : (1.0 + ZoomStep);
-            ZoomCamera(factor);
+            // Plain wheel → zoom (same approach as ZoomIn/ZoomOut buttons)
+            var offset = new Vector3D(pc.LookDirection.X, pc.LookDirection.Y, pc.LookDirection.Z);
+            offset.Normalize();
+            // Scale step by number of notches (each notch = Delta 120)
+            double notches = e.Delta / 120.0;
+            double step = (pc.Position - new Point3D()).Length * 0.08 * Math.Abs(notches);
+            if (notches > 0)
+                pc.Position += offset * step;   // zoom in
+            else
+                pc.Position -= offset * step;   // zoom out
         }
         e.Handled = true;
     }
