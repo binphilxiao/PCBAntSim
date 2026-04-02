@@ -192,6 +192,31 @@ namespace AntennaSimulatorApp.Models
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 
+    // ── Field dump settings ──────────────────────────────────────────────
+
+    public class FieldDumpSettings : INotifyPropertyChanged
+    {
+        private bool   _enableSurfaceCurrent = false;
+        private bool   _enableEField         = false;
+        private bool   _enableHField         = false;
+        private bool   _overlayShapeOutline  = true;
+
+        /// <summary>Export surface current density (J-field) at center frequency.</summary>
+        public bool EnableSurfaceCurrent  { get => _enableSurfaceCurrent;  set { _enableSurfaceCurrent  = value; OnPropertyChanged(); } }
+        /// <summary>Export E-field on antenna surface at center frequency.</summary>
+        public bool EnableEField          { get => _enableEField;          set { _enableEField          = value; OnPropertyChanged(); } }
+        /// <summary>Export H-field on antenna surface at center frequency.</summary>
+        public bool EnableHField          { get => _enableHField;          set { _enableHField          = value; OnPropertyChanged(); } }
+        /// <summary>Overlay copper/antenna shape outlines on field dump plots.</summary>
+        public bool OverlayShapeOutline   { get => _overlayShapeOutline;   set { _overlayShapeOutline   = value; OnPropertyChanged(); } }
+
+        public bool AnyEnabled => _enableSurfaceCurrent || _enableEField || _enableHField;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? n = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+    }
+
     // ── Top-level container ───────────────────────────────────────────────────
 
     public class SimSettings : INotifyPropertyChanged
@@ -202,6 +227,7 @@ namespace AntennaSimulatorApp.Models
         public MeshSettings                         Mesh          { get; } = new();
         public FreqSweepSettings                    Sweep         { get; } = new();
         public SolverSettings                       Solver        { get; } = new();
+        public FieldDumpSettings                    FieldDumps    { get; } = new();
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? n = null)

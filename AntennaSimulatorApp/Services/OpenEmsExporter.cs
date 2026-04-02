@@ -86,8 +86,10 @@ namespace AntennaSimulatorApp.Services
             WriteMesh(sb, vm);
 
             bool needNF2FF = analysisType == AnalysisType.FarField || analysisType == AnalysisType.Both;
+            var fd = vm.SimSettings.FieldDumps;
             int nThreads = vm.SimSettings.Solver.NumThreads;
             if (nThreads <= 0) nThreads = Environment.ProcessorCount;
+            WriteFieldDumps(sb, vm, fd);
             WriteRun(sb, needNF2FF, nThreads);
 
             if (analysisType == AnalysisType.S11Only || analysisType == AnalysisType.Both)
@@ -95,6 +97,9 @@ namespace AntennaSimulatorApp.Services
 
             if (analysisType == AnalysisType.FarField || analysisType == AnalysisType.Both)
                 WriteFarFieldPostProcess(sb, vm);
+
+            if (fd.AnyEnabled)
+                WriteFieldDumpPostProcess(sb, vm, fd);
 
             var scriptPath = Path.Combine(scriptsDir, "run_simulation.py");
             File.WriteAllText(scriptPath, sb.ToString(), new UTF8Encoding(false));
@@ -744,6 +749,54 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine();
         }
 
+        // ── Field dumps ──────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Add frequency-domain field dumps (J / E / H) at the center frequency.
+        /// The dumps are 2D XY slices on the antenna copper-layer surface.
+        /// </summary>
+        private static void WriteFieldDumps(StringBuilder sb, MainViewModel vm, FieldDumpSettings fd)
+        {
+            if (!fd.AnyEnabled) return;
+
+            var board = vm.CarrierBoard;
+            double xMin = -board.Height / 2.0;
+            double xMax =  board.Height / 2.0;
+            double yMin = -board.Width;
+            double yMax =  0;
+            // Antenna surface Z (top of TOP copper for carrier, top of module if present)
+            double zSurface = vm.HasModule ? MountGap + vm.Module.Stackup.TotalThickness : 0;
+
+            sb.AppendLine("# --- Field Dumps (frequency domain, 2-D XY slice) ---");
+            sb.AppendLine($"_fd_f0 = f0  # dump frequency");
+            sb.AppendLine();
+
+            if (fd.EnableSurfaceCurrent)
+            {
+                // dump_type=12 → current density (freq domain), dump_mode=2 → cell interpolated
+                sb.AppendLine("Jf_dump = csx.AddDump('Jf_surface', dump_type=12, dump_mode=2, file_type=1)");
+                sb.AppendLine("Jf_dump.SetFrequency(_fd_f0)");
+                sb.AppendLine($"Jf_dump.AddBox([{F(xMin)}, {F(yMin)}, {F(zSurface)}], [{F(xMax)}, {F(yMax)}, {F(zSurface)}])");
+                sb.AppendLine();
+            }
+            if (fd.EnableEField)
+            {
+                // dump_type=10 → E-field (freq domain)
+                sb.AppendLine("Ef_dump = csx.AddDump('Ef_surface', dump_type=10, dump_mode=2, file_type=1)");
+                sb.AppendLine("Ef_dump.SetFrequency(_fd_f0)");
+                sb.AppendLine($"Ef_dump.AddBox([{F(xMin)}, {F(yMin)}, {F(zSurface)}], [{F(xMax)}, {F(yMax)}, {F(zSurface)}])");
+                sb.AppendLine();
+            }
+            if (fd.EnableHField)
+            {
+                // dump_type=11 → H-field (freq domain)
+                sb.AppendLine("Hf_dump = csx.AddDump('Hf_surface', dump_type=11, dump_mode=2, file_type=1)");
+                sb.AppendLine("Hf_dump.SetFrequency(_fd_f0)");
+                sb.AppendLine($"Hf_dump.AddBox([{F(xMin)}, {F(yMin)}, {F(zSurface)}], [{F(xMax)}, {F(yMax)}, {F(zSurface)}])");
+                sb.AppendLine();
+            }
+        }
+
         // ── Run & post-process ───────────────────────────────────────────────
 
         private static void WriteRun(StringBuilder sb, bool includeNF2FF, int numThreads)
@@ -981,6 +1034,170 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("        for pi in range(len(phi_3d)):");
             sb.AppendLine("            f3d.write(f'{theta_3d[ti]:.1f},{phi_3d[pi]:.1f},{E3d_dB[ti,pi]:.4f}\\n')");
             sb.AppendLine("print(f'3D far-field pattern saved to {ff3d_csv}')");
+            sb.AppendLine();
+        }
+
+        // ── Field dump post-processing ───────────────────────────────────────
+
+        /// <summary>
+        /// Generate matplotlib heatmap PNGs from HDF5 field dumps.
+        /// Each dump file stores mesh coordinates and complex vector field data.
+        /// We compute |F| = sqrt(|Fx|² + |Fy|² + |Fz|²) and plot as 2D heatmap.
+        /// </summary>
+        private static void WriteShapeOutlineData(StringBuilder sb, MainViewModel vm)
+        {
+            // Emit Python list entries for all visible copper/antenna shapes on the carrier TOP layer.
+            // Coordinates are in mm (the same coordinate system used by the exporter).
+            foreach (var shape in vm.ManualShapes)
+            {
+                if (!shape.IsCarrier || !shape.ShowIn3D) continue;
+                if (shape.Vertices == null || shape.Vertices.Count < 3) continue;
+
+                bool isAnt = shape.Name?.StartsWith("Antenna (") == true;
+                string isAntStr = isAnt ? "True" : "False";
+
+                // Emit main polygon
+                EmitShapeOutlinePoly(sb, shape.Vertices, shape.Name ?? "shape", isAntStr);
+
+                // Emit merged sub-polygons
+                foreach (var poly in shape.MergedPolygons)
+                {
+                    if (poly == null || poly.Count < 3) continue;
+                    EmitShapeOutlinePoly(sb, poly, shape.Name ?? "shape", isAntStr);
+                }
+            }
+        }
+
+        private static void EmitShapeOutlinePoly(StringBuilder sb, IList<ShapeVertex> verts, string name, string isAntStr)
+        {
+            if (verts == null || verts.Count < 3) return;
+            var pts = verts.ToList();
+            // Build Python list of (x, y) tuples
+            var xyPairs = string.Join(", ", pts.Select(p => $"({F(p.X)}, {F(p.Y)})"));
+            sb.AppendLine($"    _shape_outlines.append({{'name': '{EscapePy(name)}', 'is_antenna': {isAntStr}, 'xy': [{xyPairs}]}})");
+        }
+
+        private static string EscapePy(string s) => s.Replace("\\", "\\\\").Replace("'", "\\'");
+
+        private static void WriteFieldDumpPostProcess(StringBuilder sb, MainViewModel vm, FieldDumpSettings fd)
+        {
+            sb.AppendLine("# --- Post-Processing: Field Dump Heatmaps ---");
+            sb.AppendLine("try:");
+            sb.AppendLine("    import h5py");
+            sb.AppendLine("    import matplotlib");
+            sb.AppendLine("    matplotlib.use('Agg')");
+            sb.AppendLine("    import matplotlib.pyplot as plt");
+            sb.AppendLine("    from matplotlib.colors import LogNorm");
+            sb.AppendLine("    from matplotlib.patches import Polygon as MplPoly");
+            sb.AppendLine("except ImportError as _imp_err:");
+            sb.AppendLine("    print(f'[WARN] Skipping field plots: {_imp_err}')");
+            sb.AppendLine("    h5py = None");
+            sb.AppendLine();
+
+            // ── Emit shape outline data as Python lists ──
+            // Each entry: { 'name': str, 'is_antenna': bool, 'xy': [(x,y), ...] }
+            sb.AppendLine("if h5py is not None:");
+            sb.AppendLine("    _shape_outlines = []");
+            if (fd.OverlayShapeOutline)
+            {
+                WriteShapeOutlineData(sb, vm);
+            }
+            sb.AppendLine();
+
+            sb.AppendLine("    def _plot_field_dump(h5_dir, name, title, cmap='hot'):");
+            sb.AppendLine("        \"\"\"Read an openEMS HDF5 field dump and save a heatmap PNG.\"\"\"");
+            sb.AppendLine("        h5_path = os.path.join(sim_path, name + '.h5')");
+            sb.AppendLine("        if not os.path.isfile(h5_path):");
+            sb.AppendLine("            print(f'[WARN] Field dump not found: {h5_path}')");
+            sb.AppendLine("            return");
+            sb.AppendLine("        try:");
+            sb.AppendLine("            with h5py.File(h5_path, 'r') as hf:");
+            sb.AppendLine("                x = np.array(hf['/Mesh/x']) * 1e3  # m → mm");
+            sb.AppendLine("                y = np.array(hf['/Mesh/y']) * 1e3  # m → mm");
+            sb.AppendLine("                fd_grp = hf['/FieldData/FD']");
+            sb.AppendLine("                re = np.array(fd_grp['f0_real'])  # (3, Nz, Ny, Nx)");
+            sb.AppendLine("                im = np.array(fd_grp['f0_imag'])");
+            sb.AppendLine("                mag = np.sqrt(np.sum(re**2 + im**2, axis=0))");
+            sb.AppendLine("                mag = np.squeeze(mag)");
+            sb.AppendLine("                if mag.ndim == 1:");
+            sb.AppendLine("                    print(f'[WARN] {name}: unexpected 1D field data')");
+            sb.AppendLine("                    return");
+            sb.AppendLine("                vmax = mag.max()");
+            sb.AppendLine("                if vmax == 0:");
+            sb.AppendLine("                    print(f'[WARN] {name}: all-zero field data')");
+            sb.AppendLine("                    return");
+            sb.AppendLine("                vmin = max(vmax * 1e-3, mag[mag > 0].min()) if np.any(mag > 0) else 1e-10");
+            sb.AppendLine();
+            sb.AppendLine("                # --- Determine view bounds from shape outlines or field data ---");
+            sb.AppendLine("                if len(_shape_outlines) > 0:");
+            sb.AppendLine("                    all_sx = [px for s in _shape_outlines for px, _ in s['xy']]");
+            sb.AppendLine("                    all_sy = [py for s in _shape_outlines for _, py in s['xy']]");
+            sb.AppendLine("                    margin_mm = 3.0");
+            sb.AppendLine("                    x_lo = min(all_sx) - margin_mm");
+            sb.AppendLine("                    x_hi = max(all_sx) + margin_mm");
+            sb.AppendLine("                    y_lo = min(all_sy) - margin_mm");
+            sb.AppendLine("                    y_hi = max(all_sy) + margin_mm");
+            sb.AppendLine("                else:");
+            sb.AppendLine("                    active = mag >= vmin");
+            sb.AppendLine("                    rows = np.where(active.any(axis=1))[0]");
+            sb.AppendLine("                    cols = np.where(active.any(axis=0))[0]");
+            sb.AppendLine("                    if len(rows) > 0 and len(cols) > 0:");
+            sb.AppendLine("                        margin_mm = 5.0");
+            sb.AppendLine("                        x_lo = x[max(cols[0]-1, 0)] - margin_mm");
+            sb.AppendLine("                        x_hi = x[min(cols[-1]+1, len(x)-1)] + margin_mm");
+            sb.AppendLine("                        y_lo = y[max(rows[0]-1, 0)] - margin_mm");
+            sb.AppendLine("                        y_hi = y[min(rows[-1]+1, len(y)-1)] + margin_mm");
+            sb.AppendLine("                    else:");
+            sb.AppendLine("                        x_lo, x_hi = x[0], x[-1]");
+            sb.AppendLine("                        y_lo, y_hi = y[0], y[-1]");
+            sb.AppendLine();
+            sb.AppendLine("                fig, ax = plt.subplots(figsize=(10, 8))");
+            sb.AppendLine("                pcm = ax.pcolormesh(x, y, mag, shading='auto', cmap=cmap,");
+            sb.AppendLine("                                    norm=LogNorm(vmin=vmin, vmax=vmax))");
+            sb.AppendLine("                ax.set_xlim(x_lo, x_hi)");
+            sb.AppendLine("                ax.set_ylim(y_lo, y_hi)");
+            sb.AppendLine();
+            sb.AppendLine("                # --- Overlay shape outlines ---");
+            sb.AppendLine("                for shp in _shape_outlines:");
+            sb.AppendLine("                    ec = 'lime' if shp['is_antenna'] else 'cyan'");
+            sb.AppendLine("                    lw = 1.5 if shp['is_antenna'] else 0.8");
+            sb.AppendLine("                    poly = MplPoly(shp['xy'], closed=True, fill=False,");
+            sb.AppendLine("                                   edgecolor=ec, linewidth=lw, linestyle='-')");
+            sb.AppendLine("                    ax.add_patch(poly)");
+            sb.AppendLine();
+            sb.AppendLine("                ax.set_xlabel('X (mm)')");
+            sb.AppendLine("                ax.set_ylabel('Y (mm)')");
+            sb.AppendLine("                ax.set_title(title)");
+            sb.AppendLine("                ax.set_aspect('equal')");
+            sb.AppendLine("                plt.colorbar(pcm, ax=ax, label='Magnitude')");
+            sb.AppendLine("                plt.tight_layout()");
+            sb.AppendLine("                png_path = os.path.join(results_dir, name + '.png')");
+            sb.AppendLine("                fig.savefig(png_path, dpi=150)");
+            sb.AppendLine("                plt.close(fig)");
+            sb.AppendLine("                print(f'Field plot saved: {png_path}')");
+            // Also save the raw data as CSV for the WPF viewer
+            sb.AppendLine("                csv_path = os.path.join(results_dir, name + '.csv')");
+            sb.AppendLine("                with open(csv_path, 'w') as csvf:");
+            sb.AppendLine("                    csvf.write('# x_coords: ' + ','.join(f'{v:.6g}' for v in x) + '\\n')");
+            sb.AppendLine("                    csvf.write('# y_coords: ' + ','.join(f'{v:.6g}' for v in y) + '\\n')");
+            sb.AppendLine("                    for row_i in range(mag.shape[0]):");
+            sb.AppendLine("                        csvf.write(','.join(f'{v:.6e}' for v in mag[row_i, :]) + '\\n')");
+            sb.AppendLine("        except Exception as ex:");
+            sb.AppendLine("            print(f'[WARN] Failed to plot {name}: {ex}')");
+            sb.AppendLine();
+
+            if (fd.EnableSurfaceCurrent)
+            {
+                sb.AppendLine("    _plot_field_dump(sim_path, 'Jf_surface', 'Surface Current Density |J| (A/m)', 'hot')");
+            }
+            if (fd.EnableEField)
+            {
+                sb.AppendLine("    _plot_field_dump(sim_path, 'Ef_surface', 'Electric Field |E| (V/m)', 'viridis')");
+            }
+            if (fd.EnableHField)
+            {
+                sb.AppendLine("    _plot_field_dump(sim_path, 'Hf_surface', 'Magnetic Field |H| (A/m)', 'inferno')");
+            }
             sb.AppendLine();
         }
 

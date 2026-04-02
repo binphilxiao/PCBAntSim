@@ -158,6 +158,7 @@ namespace AntennaSimulatorApp.Models
         public MeshDto                 Mesh         { get; set; } = new();
         public FreqSweepDto            Sweep        { get; set; } = new();
         public SolverDto               Solver       { get; set; } = new();
+        public FieldDumpsDto           FieldDumps   { get; set; } = new();
     }
 
     public class FeedPointDto
@@ -227,5 +228,13 @@ namespace AntennaSimulatorApp.Models
         public int    MaxTimesteps { get; set; } = 200000;
         public double EndCriteria  { get; set; } = 1e-5;
         public int    NumThreads   { get; set; } = 0;
+    }
+
+    public class FieldDumpsDto
+    {
+        public bool EnableSurfaceCurrent { get; set; }
+        public bool EnableEField         { get; set; }
+        public bool EnableHField         { get; set; }
+        public bool OverlayShapeOutline  { get; set; } = true;
     }
 }

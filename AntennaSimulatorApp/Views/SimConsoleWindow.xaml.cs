@@ -267,10 +267,23 @@ namespace AntennaSimulatorApp.Views
         /// </summary>
         private void FinalRefreshResults()
         {
-            string s11Csv = Path.Combine(_simDir, "results", "S11.csv");
+            string resultsDir = Path.Combine(_simDir, "results");
+
+            string s11Csv = Path.Combine(resultsDir, "S11.csv");
             if (File.Exists(s11Csv))
             {
                 OpenOrRefreshResultWindow(isFinal: true);
+            }
+
+            // Auto-open field distribution window if any field dump images exist
+            bool hasFieldPng = File.Exists(Path.Combine(resultsDir, "Jf_surface.png"))
+                            || File.Exists(Path.Combine(resultsDir, "Ef_surface.png"))
+                            || File.Exists(Path.Combine(resultsDir, "Hf_surface.png"));
+            if (hasFieldPng)
+            {
+                var fieldWin = new FieldResultWindow(resultsDir);
+                if (this.IsLoaded) fieldWin.Owner = this;
+                fieldWin.Show();
             }
         }
 

@@ -277,6 +277,13 @@ namespace AntennaSimulatorApp.Services
                     EndCriteria  = s.Solver.EndCriteria,
                     NumThreads   = s.Solver.NumThreads,
                 },
+                FieldDumps = new FieldDumpsDto
+                {
+                    EnableSurfaceCurrent = s.FieldDumps.EnableSurfaceCurrent,
+                    EnableEField         = s.FieldDumps.EnableEField,
+                    EnableHField         = s.FieldDumps.EnableHField,
+                    OverlayShapeOutline  = s.FieldDumps.OverlayShapeOutline,
+                },
             };
 
             foreach (var p in s.Ports)
@@ -554,6 +561,15 @@ namespace AntennaSimulatorApp.Services
                 sim.Solver.MaxTimesteps = dto.Solver.MaxTimesteps;
                 sim.Solver.EndCriteria  = dto.Solver.EndCriteria;
                 sim.Solver.NumThreads   = dto.Solver.NumThreads;
+            }
+
+            // Field dumps
+            if (dto.FieldDumps != null)
+            {
+                sim.FieldDumps.EnableSurfaceCurrent = dto.FieldDumps.EnableSurfaceCurrent;
+                sim.FieldDumps.EnableEField         = dto.FieldDumps.EnableEField;
+                sim.FieldDumps.EnableHField         = dto.FieldDumps.EnableHField;
+                sim.FieldDumps.OverlayShapeOutline  = dto.FieldDumps.OverlayShapeOutline;
             }
 
             // Ports

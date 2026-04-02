@@ -1458,6 +1458,12 @@ public partial class MainWindow : Window
         if (typeDlg.ShowDialog() != true) return;
         var analysisType = typeDlg.SelectedType;
 
+        // Apply field dump selections to settings
+        vm.SimSettings.FieldDumps.EnableSurfaceCurrent = typeDlg.DumpSurfaceCurrent;
+        vm.SimSettings.FieldDumps.EnableEField         = typeDlg.DumpEField;
+        vm.SimSettings.FieldDumps.EnableHField         = typeDlg.DumpHField;
+        vm.SimSettings.FieldDumps.OverlayShapeOutline  = typeDlg.OverlayOutline;
+
         string projectDir = System.IO.Path.GetDirectoryName(_currentProjectPath)!;
         string outputDir = System.IO.Path.Combine(projectDir, "Sim");
         System.IO.Directory.CreateDirectory(outputDir);
@@ -1617,9 +1623,17 @@ public partial class MainWindow : Window
 
     private void MenuViewCurrentDist_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show(
-            "??????(Surface Current)??????????",
-            "???? � ????", MessageBoxButton.OK, MessageBoxImage.Information);
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select a field dump image (e.g. Jf_surface.png)",
+            Filter = "Field PNG|*_surface.png|All files|*.*",
+            FileName = "Jf_surface.png"
+        };
+        if (dlg.ShowDialog(this) != true) return;
+
+        string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
+        var win = new FieldResultWindow(resultsDir) { Owner = this };
+        win.Show();
     }
 
     private void MenuViewSmith_Click(object sender, RoutedEventArgs e)
