@@ -650,6 +650,32 @@ namespace AntennaSimulatorApp.Services
                         zLines.Add(zBase);
                     }
                 }
+
+                // Insert midpoints in thin dielectric substrates so each gets
+                // at least 2–4 cells.  Without this, layers thinner than the Z
+                // maxRes (0.5 mm) end up with only 1 cell – too coarse for
+                // field gradient resolution (e.g. Sub1-2 at 0.2 mm).
+                var sorted = zLines.Distinct().OrderBy(v => v).ToList();
+                var extra = new List<double>();
+                for (int i = 0; i < sorted.Count - 1; i++)
+                {
+                    double gap = sorted[i + 1] - sorted[i];
+                    // Target dielectric layers: thicker than copper (>0.05 mm)
+                    // but thin enough to be single-cell under maxRes.
+                    if (gap > 0.05 && gap < 0.5)
+                    {
+                        // Add midpoint → splits into 2 cells
+                        extra.Add(Math.Round((sorted[i] + sorted[i + 1]) / 2.0, 6));
+                        // For layers ≥ 0.15 mm, also add quarter-points → 4 cells
+                        if (gap >= 0.15)
+                        {
+                            extra.Add(Math.Round(sorted[i] + gap * 0.25, 6));
+                            extra.Add(Math.Round(sorted[i] + gap * 0.75, 6));
+                        }
+                    }
+                }
+                foreach (var v in extra) zLines.Add(v);
+
                 sb.Append(string.Join(", ", zLines.Distinct().OrderBy(v => v).Select(F)));
             }
             sb.AppendLine($", {F(domZMax)}])");
@@ -694,6 +720,14 @@ namespace AntennaSimulatorApp.Services
                 foreach (var poly in shape.MergedPolygons)
                     CollectPolyEdges(poly, shapeXs, shapeYs);
             }
+
+            // Refine mesh between polygon edges: when the gap between adjacent
+            // seed lines is large relative to the smallest feature, add
+            // intermediate lines so FDTD properly resolves inter-trace coupling
+            // (critical for meander antennas).
+            AddMidpointRefinement(shapeXs);
+            AddMidpointRefinement(shapeYs);
+
             if (shapeXs.Count > 0)
                 sb.AppendLine($"mesh.AddLine('x', [{string.Join(", ", shapeXs.Select(F))}])");
             if (shapeYs.Count > 0)
@@ -1097,6 +1131,68 @@ namespace AntennaSimulatorApp.Services
                 ys.Add(Math.Round(v.Y, 6));
             }
         }
+
+        /// <summary>
+        /// Insert midpoints between adjacent seed lines whose gap is large compared
+        /// to the smallest feature.  This ensures the FDTD mesh resolves inter-trace
+        /// coupling in structures such as meander antennas.  Gaps wider than 3× the
+        /// median small-gap are bisected so every sub-gap ≤ that limit.
+        /// Only operates inside the bounding box of the original seeds (ignoring
+        /// board-outline lines far from the antenna geometry).
+        /// </summary>
+        private static void AddMidpointRefinement(SortedSet<double> lines)
+        {
+            if (lines.Count < 3) return;
+
+            var sorted = lines.ToList();
+
+            // Collect all gaps
+            var gaps = new List<double>();
+            for (int i = 0; i < sorted.Count - 1; i++)
+            {
+                double g = sorted[i + 1] - sorted[i];
+                if (g > 1e-6) gaps.Add(g);
+            }
+            if (gaps.Count < 2) return;
+
+            gaps.Sort();
+            // Use a percentile-based threshold: take the median of the lower half
+            // of gaps (i.e. the 25th percentile) as the representative small feature.
+            int q1Idx = Math.Max(0, gaps.Count / 4);
+            double refGap = gaps[q1Idx];
+
+            // Threshold: subdivide gaps larger than 2× the reference small gap,
+            // but never below 0.15 mm to avoid generating excessive mesh lines.
+            double threshold = Math.Max(refGap * 2, 0.15);
+
+            // Only refine inside the "dense" region — find the bounding box of
+            // seeds that are NOT the two extremes (board outline corners).
+            // We skip the single largest gap on each side to avoid refining
+            // the air padding between the board edge and the geometry.
+            double innerMin = sorted.Count > 2 ? sorted[1] : sorted[0];
+            double innerMax = sorted.Count > 2 ? sorted[sorted.Count - 2] : sorted[sorted.Count - 1];
+
+            var toAdd = new List<double>();
+            for (int i = 0; i < sorted.Count - 1; i++)
+            {
+                double a = sorted[i], b = sorted[i + 1];
+                // Only refine within the inner range
+                if (b <= innerMin || a >= innerMax) continue;
+                double gap = b - a;
+                if (gap > threshold)
+                {
+                    int n = (int)Math.Ceiling(gap / threshold);
+                    // Cap subdivisions to avoid explosion
+                    if (n > 10) n = 10;
+                    double step = gap / n;
+                    for (int j = 1; j < n; j++)
+                        toAdd.Add(Math.Round(a + j * step, 6));
+                }
+            }
+            foreach (var v in toAdd)
+                lines.Add(v);
+        }
+
 
         /// <summary>Generate a valid Python variable name for a dielectric material.</summary>
         private static string MaterialVarName(Layer layer)

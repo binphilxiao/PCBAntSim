@@ -54,46 +54,74 @@ mat_fr4.AddBox([-40, -100, -1.565], [40, 0, -1.365], priority=0)
 copper.AddLinPoly(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', -0.27, 0.035, priority=12)
 # carrier_CARRIER_TOP_GND_main_1
 copper.AddLinPoly(np.array([[-40, -40, 40, 40, 15, 15, -2.5, -2.5, -3, -3, -15, -15], [0, -100, -100, 0, 0, -4, -4, -4.5, -4.5, -4, -4, 0]]), 'z', -0.035, 0.035, priority=12)
-# carrier_Antenna (MIFA)_main_2
-copper.AddLinPoly(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_0
-copper.AddLinPoly(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.55, -0.55, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_1
-copper.AddLinPoly(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_2
-copper.AddLinPoly(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_3
-copper.AddLinPoly(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_4
-copper.AddLinPoly(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.4, -3.4, -3.1, -3.1]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_5
-copper.AddLinPoly(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_6
-copper.AddLinPoly(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_7
-copper.AddLinPoly(np.array([[0.1, 0.4, 0.4, 0.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_8
-copper.AddLinPoly(np.array([[0.1, 1.4, 1.4, 0.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_9
-copper.AddLinPoly(np.array([[1.1, 1.4, 1.4, 1.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_10
-copper.AddLinPoly(np.array([[1.1, 2.4, 2.4, 1.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_11
-copper.AddLinPoly(np.array([[2.1, 2.4, 2.4, 2.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_12
-copper.AddLinPoly(np.array([[2.1, 3.4, 3.4, 2.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_13
-copper.AddLinPoly(np.array([[3.1, 3.4, 3.4, 3.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_14
-copper.AddLinPoly(np.array([[3.1, 4.4, 4.4, 3.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Antenna (MIFA)_merged_2_15
-copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.25, -3.25, -0.25, -0.25]]), 'z', -0.035, 0.035, priority=15)
-# carrier_Shape_main_3
-copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.2, -3.2, -3.7, -3.7]]), 'z', -0.035, 0.035, priority=12)
+# carrier_Ant_main_2
+copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.2, -3.2, -3.85, -3.85]]), 'z', -0.035, 0.035, priority=12)
+# carrier_Antenna (MIFA)_main_3
+copper.AddLinPoly(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_0
+copper.AddLinPoly(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.4, -0.4, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_1
+copper.AddLinPoly(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_2
+copper.AddLinPoly(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.4, -0.4, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_3
+copper.AddLinPoly(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_4
+copper.AddLinPoly(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.55, -3.55, -3.25, -3.25]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_5
+copper.AddLinPoly(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_6
+copper.AddLinPoly(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.4, -0.4, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_7
+copper.AddLinPoly(np.array([[0.1, 0.4, 0.4, 0.1], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_8
+copper.AddLinPoly(np.array([[0.1, 1.4, 1.4, 0.1], [-3.55, -3.55, -3.25, -3.25]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_9
+copper.AddLinPoly(np.array([[1.1, 1.4, 1.4, 1.1], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_10
+copper.AddLinPoly(np.array([[1.1, 2.4, 2.4, 1.1], [-0.4, -0.4, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_11
+copper.AddLinPoly(np.array([[2.1, 2.4, 2.4, 2.1], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_12
+copper.AddLinPoly(np.array([[2.1, 3.4, 3.4, 2.1], [-3.55, -3.55, -3.25, -3.25]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_13
+copper.AddLinPoly(np.array([[3.1, 3.4, 3.4, 3.1], [-3.55, -3.55, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_14
+copper.AddLinPoly(np.array([[3.1, 4.4, 4.4, 3.1], [-0.4, -0.4, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
+# carrier_Antenna (MIFA)_merged_3_15
+copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.3, -3.3, -0.1, -0.1]]), 'z', -0.035, 0.035, priority=15)
 # --- Vias ---
 copper.AddCylinder([-3.6, -4.6, -1.6], [-3.6, -4.6, 0], 0.1524, priority=15)
 copper.AddCylinder([-4.2, -4.6, -1.6], [-4.2, -4.6, 0], 0.1524, priority=15)
 copper.AddCylinder([-4.8, -4.6, -1.6], [-4.8, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-5.4, -4.6, -1.6], [-5.4, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-6, -4.6, -1.6], [-6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-6.6, -4.6, -1.6], [-6.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-7.2, -4.6, -1.6], [-7.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-7.8, -4.6, -1.6], [-7.8, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-8.4, -4.6, -1.6], [-8.4, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-9, -4.6, -1.6], [-9, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-9.6, -4.6, -1.6], [-9.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-10.2, -4.6, -1.6], [-10.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-3, -4.6, -1.6], [-3, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-2.4, -4.6, -1.6], [-2.4, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-1.8, -4.6, -1.6], [-1.8, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-1.2, -4.6, -1.6], [-1.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([-0.6, -4.6, -1.6], [-0.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([0, -4.6, -1.6], [0, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([0.6, -4.6, -1.6], [0.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([1.2, -4.6, -1.6], [1.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([1.8, -4.6, -1.6], [1.8, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([2.4, -4.6, -1.6], [2.4, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([3, -4.6, -1.6], [3, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([3.6, -4.6, -1.6], [3.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([4.2, -4.6, -1.6], [4.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([4.8, -4.6, -1.6], [4.8, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([5.4, -4.6, -1.6], [5.4, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([6, -4.6, -1.6], [6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([6.6, -4.6, -1.6], [6.6, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([7.2, -4.6, -1.6], [7.2, -4.6, 0], 0.1524, priority=15)
+copper.AddCylinder([7.8, -4.6, -1.6], [7.8, -4.6, 0], 0.1524, priority=15)
 
 # --- Ports ---
 from openEMS.ports import LumpedPort
@@ -103,7 +131,7 @@ ports.append(LumpedPort(csx, 1, 50, [-2.9, -4.3, -0.235], [-2.6, -4, -0.035], 2,
 # --- Mesh ---
 mesh.AddLine('x', [-50, -40, 40, 50])
 mesh.AddLine('y', [-110, -100, 0, 10])
-mesh.AddLine('z', [-11.6, -1.6, -1.565, -1.365, -1.33, -0.27, -0.235, -0.035, 0, 10])
+mesh.AddLine('z', [-11.6, -1.6, -1.565, -1.515, -1.465, -1.415, -1.365, -1.33, -0.27, -0.235, -0.185, -0.135, -0.085, -0.035, 0, 10])
 mesh.AddLine('x', [-2.9, -2.75, -2.6])
 mesh.AddLine('y', [-4.3, -4.15, -4])
 mesh.AddLine('x', [-3.6])
@@ -112,8 +140,64 @@ mesh.AddLine('x', [-4.2])
 mesh.AddLine('y', [-4.6])
 mesh.AddLine('x', [-4.8])
 mesh.AddLine('y', [-4.6])
-mesh.AddLine('x', [-40, -15, -4.6, -3.3, -3, -2.9, -2.6, -2.5, -1.9, -1.6, -0.9, -0.6, 0.1, 0.4, 1.1, 1.4, 2.1, 2.4, 3.1, 3.4, 4.1, 4.4, 15, 40])
-mesh.AddLine('y', [-100, -4.5, -4.3, -4, -3.7, -3.4, -3.25, -3.2, -3.1, -0.55, -0.25, 0])
+mesh.AddLine('x', [-5.4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-6.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-7.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-7.8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-8.4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-9])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-9.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-10.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-3])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-2.4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-1.8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-1.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-0.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [0])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [0.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [1.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [1.8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [2.4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [3])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [3.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [4.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [4.8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [5.4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [6.6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [7.2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [7.8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-40, -15, -13.96, -12.92, -11.88, -10.84, -9.8, -8.76, -7.72, -6.68, -5.64, -4.6, -4.166667, -3.733333, -3.3, -3, -2.9, -2.6, -2.5, -2.2, -1.9, -1.6, -1.25, -0.9, -0.6, -0.25, 0.1, 0.4, 0.75, 1.1, 1.4, 1.75, 2.1, 2.4, 2.75, 3.1, 3.4, 3.75, 4.1, 4.4, 5.46, 6.52, 7.58, 8.64, 9.7, 10.76, 11.82, 12.88, 13.94, 15, 40])
+mesh.AddLine('y', [-100, -4.5, -4.4, -4.3, -4.15, -4, -3.85, -3.7, -3.55, -3.425, -3.3, -3.25, -3.2, -2.92, -2.64, -2.36, -2.08, -1.8, -1.52, -1.24, -0.96, -0.68, -0.4, -0.25, -0.1, 0])
 
 mesh.SmoothMeshLines('x', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('y', 6.25, ratio=1.5)
@@ -124,10 +208,6 @@ sim_path = sim_data_dir
 os.makedirs(sim_path, exist_ok=True)
 csx.Write2XML(os.path.join(sim_path, 'antenna.xml'))
 sim.SetCSX(csx)
-
-# --- NF2FF Recording Box ---
-from openEMS.nf2ff import nf2ff
-nf2ff_box = sim.CreateNF2FFBox()
 
 if not post_only:
     print('Starting openEMS simulation...')
@@ -173,121 +253,4 @@ try:
     print(f'S11 plot saved to {plot_path}')
 except ImportError:
     print('matplotlib not available - skipping plot.')
-
-# --- Post-Processing: Far-Field ---
-ff_freq = np.linspace(1000000000, 6000000000, 501)
-
-try:
-    _ = ports[0].uf_inc
-except:
-    for p in ports:
-        p.CalcPort(sim_path, ff_freq)
-
-ff_s11_dB = 20 * np.log10(np.abs(ports[0].uf_ref / ports[0].uf_inc))
-ff_idx_min = np.argmin(ff_s11_dB)
-f_res = ff_freq[ff_idx_min]
-print(f'Far-field at resonance: {f_res/1e9:.4f} GHz')
-
-theta = np.arange(-180, 180.5, 1)
-phi_E = 0    # E-plane (XZ)
-phi_H = 90   # H-plane (YZ)
-
-P_in = 0.5 * np.real(ports[0].uf_tot[ff_idx_min] * np.conj(ports[0].if_tot[ff_idx_min]))
-
-nf2ff_res_E = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_E, center=[0,0,0])
-E_norm = nf2ff_res_E.E_norm[0]
-Dmax_E = nf2ff_res_E.Dmax[0]
-
-nf2ff_res_H = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_H, center=[0,0,0])
-H_norm = nf2ff_res_H.E_norm[0]
-Dmax_H = nf2ff_res_H.Dmax[0]
-
-D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
-D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
-
-if P_in > 0:
-    realized_gain_E = (E_norm**2 / np.max(E_norm**2)) * nf2ff_res_E.Dmax[0]
-    realized_gain_H = (H_norm**2 / np.max(H_norm**2)) * nf2ff_res_H.Dmax[0]
-else:
-    realized_gain_E = E_norm**2 / np.max(E_norm**2) if np.max(E_norm**2) > 0 else E_norm * 0
-    realized_gain_H = H_norm**2 / np.max(H_norm**2) if np.max(H_norm**2) > 0 else H_norm * 0
-
-E_pattern_dB = 10 * np.log10(E_norm**2 / np.max(E_norm**2) + 1e-12)
-H_pattern_dB = 10 * np.log10(H_norm**2 / np.max(H_norm**2) + 1e-12)
-
-Prad = nf2ff_res_E.Prad[0]
-eff = Prad / P_in if P_in > 0 else 0
-print(f'Directivity: {D_E_dBi:.2f} dBi,  Radiation Efficiency: {eff*100:.1f}%')
-
-eplane_csv = os.path.join(results_dir, 'FarField_Eplane.csv')
-np.savetxt(eplane_csv, np.column_stack((theta, E_pattern_dB)),
-           delimiter=',', header='Theta_deg,Pattern_dB', comments='')
-print(f'E-plane pattern saved to {eplane_csv}')
-
-hplane_csv = os.path.join(results_dir, 'FarField_Hplane.csv')
-np.savetxt(hplane_csv, np.column_stack((theta, H_pattern_dB)),
-           delimiter=',', header='Theta_deg,Pattern_dB', comments='')
-print(f'H-plane pattern saved to {hplane_csv}')
-
-summary_csv = os.path.join(results_dir, 'FarField_Summary.csv')
-with open(summary_csv, 'w') as f:
-    f.write('Parameter,Value\n')
-    f.write(f'Frequency_GHz,{f_res/1e9:.6f}\n')
-    f.write(f'Directivity_dBi,{D_E_dBi:.4f}\n')
-    f.write(f'RadiationEfficiency,{eff:.6f}\n')
-    f.write(f'Prad_W,{Prad:.6e}\n')
-    f.write(f'Pin_W,{P_in:.6e}\n')
-print(f'Far-field summary saved to {summary_csv}')
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-
-    # --- Rectangular pattern plot ---
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(theta, E_pattern_dB, 'b-', linewidth=1.5, label='E-plane')
-    ax.plot(theta, H_pattern_dB, 'r--', linewidth=1.5, label='H-plane')
-    ax.set_xlabel('Theta (degrees)')
-    ax.set_ylabel('Normalized Pattern (dB)')
-    ax.set_title(f'Far-Field Pattern @ {f_res/1e9:.3f} GHz')
-    ax.set_ylim([-40, 5])
-    ax.grid(True)
-    ax.legend()
-    fig.savefig(os.path.join(results_dir, 'FarField_Rectangular.png'), dpi=150)
-    plt.close(fig)
-
-    # --- Polar pattern plot ---
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'polar': True}, figsize=(12, 5))
-    theta_rad = np.deg2rad(theta)
-    ax1.plot(theta_rad, np.clip(E_pattern_dB, -40, 0) + 40, 'b-', linewidth=1.5)
-    ax1.set_title('E-plane', pad=15)
-    ax1.set_ylim([0, 40])
-    ax2.plot(theta_rad, np.clip(H_pattern_dB, -40, 0) + 40, 'r-', linewidth=1.5)
-    ax2.set_title('H-plane', pad=15)
-    ax2.set_ylim([0, 40])
-    fig.savefig(os.path.join(results_dir, 'FarField_Polar.png'), dpi=150)
-    plt.close(fig)
-    print('Far-field pattern plots saved.')
-except ImportError:
-    print('matplotlib not available - skipping far-field plots.')
-
-# --- 3D Far-Field Pattern ---
-print('Computing full 3D far-field pattern ...')
-theta_3d = np.arange(0, 181, 5)
-phi_3d   = np.arange(0, 361, 5)
-nf2ff_3d = nf2ff_box.CalcNF2FF(sim_path, f_res, theta_3d, phi_3d, center=[0,0,0])
-E3d = nf2ff_3d.E_norm[0]
-E3d_max2 = np.max(E3d**2)
-if E3d_max2 > 0:
-    E3d_dB = 10 * np.log10(E3d**2 / E3d_max2 + 1e-12)
-else:
-    E3d_dB = np.zeros_like(E3d)
-ff3d_csv = os.path.join(results_dir, 'FarField_3D.csv')
-with open(ff3d_csv, 'w') as f3d:
-    f3d.write('Theta_deg,Phi_deg,Pattern_dB\n')
-    for ti in range(len(theta_3d)):
-        for pi in range(len(phi_3d)):
-            f3d.write(f'{theta_3d[ti]:.1f},{phi_3d[pi]:.1f},{E3d_dB[ti,pi]:.4f}\n')
-print(f'3D far-field pattern saved to {ff3d_csv}')
 

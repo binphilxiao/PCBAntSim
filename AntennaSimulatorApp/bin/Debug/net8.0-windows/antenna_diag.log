@@ -28,3 +28,38 @@
 09:17:28.363   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
 09:29:20.940 [Save] DrawnAntennas count = 1
 09:29:20.941   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:19:07.399 [Load] JSON DrawnAntennas count = 1
+10:19:07.411   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:19:08.520 [Load] Final vm.DrawnAntennas count = 1
+10:19:08.523   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:27:18.079 [Save] DrawnAntennas count = 1
+10:27:18.080   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:27:19.188 [Save] DrawnAntennas count = 1
+10:27:19.189   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:27:19.400 [Save] DrawnAntennas count = 1
+10:27:19.401   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:35:12.935 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:35:13.112 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=28 H=7
+10:35:13.161 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=28
+10:37:57.868 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=1.2
+10:37:58.002 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=28 H=7
+10:37:58.020 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=28
+10:42:05.664 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:42:05.803 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=30 H=7
+10:42:05.826 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+10:43:51.640 [Save] DrawnAntennas count = 1
+10:43:51.641   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:43:52.588 [Save] DrawnAntennas count = 1
+10:43:52.589   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:43:53.200 [Save] DrawnAntennas count = 1
+10:43:53.201   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:43:53.400 [Save] DrawnAntennas count = 1
+10:43:53.401   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:43:53.574 [Save] DrawnAntennas count = 1
+10:43:53.575   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:45:13.131 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:45:13.296 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=30 H=7
+10:45:13.332 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+13:56:13.111 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+13:56:13.263 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=30 H=7
+13:56:13.288 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
