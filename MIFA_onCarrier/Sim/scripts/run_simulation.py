@@ -397,11 +397,33 @@ try:
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.colors import LogNorm
+    from matplotlib.patches import Polygon as MplPoly
 except ImportError as _imp_err:
     print(f'[WARN] Skipping field plots: {_imp_err}')
     h5py = None
 
 if h5py is not None:
+    _shape_outlines = []
+    _shape_outlines.append({'name': 'CARRIER_TOP_GND', 'is_antenna': False, 'xy': [(-40, 0), (-40, -100), (40, -100), (40, 0), (15, 0), (15, -4), (-2.5, -4), (-2.5, -4.5), (-3, -4.5), (-3, -4), (-15, -4), (-15, 0), (-40, 0)]})
+    _shape_outlines.append({'name': 'Ant', 'is_antenna': False, 'xy': [(4.1, -3.2), (4.4, -3.2), (4.4, -3.85), (4.1, -3.85), (4.1, -3.2)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-4.6, -4.3), (-3.3, -4.3), (-3.3, -0.1), (-4.6, -0.1), (-4.6, -4.3)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-4.6, -0.4), (-2.6, -0.4), (-2.6, -0.1), (-4.6, -0.1), (-4.6, -0.4)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-2.9, -4.3), (-2.6, -4.3), (-2.6, -0.1), (-2.9, -0.1), (-2.9, -4.3)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-2.9, -0.4), (-1.6, -0.4), (-1.6, -0.1), (-2.9, -0.1), (-2.9, -0.4)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-1.9, -3.55), (-1.6, -3.55), (-1.6, -0.1), (-1.9, -0.1), (-1.9, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-1.9, -3.55), (-0.6, -3.55), (-0.6, -3.25), (-1.9, -3.25), (-1.9, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-0.9, -3.55), (-0.6, -3.55), (-0.6, -0.1), (-0.9, -0.1), (-0.9, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(-0.9, -0.4), (0.4, -0.4), (0.4, -0.1), (-0.9, -0.1), (-0.9, -0.4)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(0.1, -3.55), (0.4, -3.55), (0.4, -0.1), (0.1, -0.1), (0.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(0.1, -3.55), (1.4, -3.55), (1.4, -3.25), (0.1, -3.25), (0.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(1.1, -3.55), (1.4, -3.55), (1.4, -0.1), (1.1, -0.1), (1.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(1.1, -0.4), (2.4, -0.4), (2.4, -0.1), (1.1, -0.1), (1.1, -0.4)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(2.1, -3.55), (2.4, -3.55), (2.4, -0.1), (2.1, -0.1), (2.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(2.1, -3.55), (3.4, -3.55), (3.4, -3.25), (2.1, -3.25), (2.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(3.1, -3.55), (3.4, -3.55), (3.4, -0.1), (3.1, -0.1), (3.1, -3.55)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(3.1, -0.4), (4.4, -0.4), (4.4, -0.1), (3.1, -0.1), (3.1, -0.4)]})
+    _shape_outlines.append({'name': 'Antenna (MIFA)', 'is_antenna': True, 'xy': [(4.1, -3.3), (4.4, -3.3), (4.4, -0.1), (4.1, -0.1), (4.1, -3.3)]})
+
     def _plot_field_dump(h5_dir, name, title, cmap='hot'):
         """Read an openEMS HDF5 field dump and save a heatmap PNG."""
         h5_path = os.path.join(sim_path, name + '.h5')
@@ -410,46 +432,61 @@ if h5py is not None:
             return
         try:
             with h5py.File(h5_path, 'r') as hf:
-                # openEMS HDF5 structure:
-                #   /Mesh/x, /Mesh/y, /Mesh/z  (in metres)
-                #   /FieldData/FD/f0_real  shape (3, Nz, Ny, Nx)
-                #   /FieldData/FD/f0_imag  shape (3, Nz, Ny, Nx)
                 x = np.array(hf['/Mesh/x']) * 1e3  # m → mm
                 y = np.array(hf['/Mesh/y']) * 1e3  # m → mm
                 fd_grp = hf['/FieldData/FD']
                 re = np.array(fd_grp['f0_real'])  # (3, Nz, Ny, Nx)
                 im = np.array(fd_grp['f0_imag'])
-                # |F| = sqrt(|Fx|^2+|Fy|^2+|Fz|^2), sum over component axis 0
-                mag = np.sqrt(np.sum(re**2 + im**2, axis=0))  # (Nz, Ny, Nx)
-                # For 2D dump Nz=1, squeeze to (Ny, Nx)
+                mag = np.sqrt(np.sum(re**2 + im**2, axis=0))
                 mag = np.squeeze(mag)
                 if mag.ndim == 1:
                     print(f'[WARN] {name}: unexpected 1D field data')
                     return
-                # mag is now (Ny, Nx) — matches pcolormesh(x, y, ...) directly
                 vmax = mag.max()
                 if vmax == 0:
                     print(f'[WARN] {name}: all-zero field data')
                     return
                 vmin = max(vmax * 1e-3, mag[mag > 0].min()) if np.any(mag > 0) else 1e-10
-                # --- Auto-crop to antenna region (cells above vmin threshold) ---
-                active = mag >= vmin
-                rows = np.where(active.any(axis=1))[0]
-                cols = np.where(active.any(axis=0))[0]
-                if len(rows) > 0 and len(cols) > 0:
-                    margin_mm = 5.0
-                    x_lo = x[max(cols[0]-1, 0)] - margin_mm
-                    x_hi = x[min(cols[-1]+1, len(x)-1)] + margin_mm
-                    y_lo = y[max(rows[0]-1, 0)] - margin_mm
-                    y_hi = y[min(rows[-1]+1, len(y)-1)] + margin_mm
+
+                # --- Determine view bounds: prefer antenna shapes, then field data ---
+                _ant_shapes = [s for s in _shape_outlines if s['is_antenna']]
+                _crop_src = _ant_shapes if _ant_shapes else _shape_outlines
+                if len(_crop_src) > 0:
+                    all_sx = [px for s in _crop_src for px, _ in s['xy']]
+                    all_sy = [py for s in _crop_src for _, py in s['xy']]
+                    margin_mm = 3.0
+                    x_lo = min(all_sx) - margin_mm
+                    x_hi = max(all_sx) + margin_mm
+                    y_lo = min(all_sy) - margin_mm
+                    y_hi = max(all_sy) + margin_mm
                 else:
-                    x_lo, x_hi = x[0], x[-1]
-                    y_lo, y_hi = y[0], y[-1]
+                    active = mag >= vmin
+                    rows = np.where(active.any(axis=1))[0]
+                    cols = np.where(active.any(axis=0))[0]
+                    if len(rows) > 0 and len(cols) > 0:
+                        margin_mm = 5.0
+                        x_lo = x[max(cols[0]-1, 0)] - margin_mm
+                        x_hi = x[min(cols[-1]+1, len(x)-1)] + margin_mm
+                        y_lo = y[max(rows[0]-1, 0)] - margin_mm
+                        y_hi = y[min(rows[-1]+1, len(y)-1)] + margin_mm
+                    else:
+                        x_lo, x_hi = x[0], x[-1]
+                        y_lo, y_hi = y[0], y[-1]
+
                 fig, ax = plt.subplots(figsize=(10, 8))
                 pcm = ax.pcolormesh(x, y, mag, shading='auto', cmap=cmap,
                                     norm=LogNorm(vmin=vmin, vmax=vmax))
                 ax.set_xlim(x_lo, x_hi)
                 ax.set_ylim(y_lo, y_hi)
+
+                # --- Overlay shape outlines ---
+                for shp in _shape_outlines:
+                    ec = 'lime' if shp['is_antenna'] else 'cyan'
+                    lw = 1.5 if shp['is_antenna'] else 0.8
+                    poly = MplPoly(shp['xy'], closed=True, fill=False,
+                                   edgecolor=ec, linewidth=lw, linestyle='-')
+                    ax.add_patch(poly)
+
                 ax.set_xlabel('X (mm)')
                 ax.set_ylabel('Y (mm)')
                 ax.set_title(title)

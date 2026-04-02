@@ -1128,10 +1128,12 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("                    return");
             sb.AppendLine("                vmin = max(vmax * 1e-3, mag[mag > 0].min()) if np.any(mag > 0) else 1e-10");
             sb.AppendLine();
-            sb.AppendLine("                # --- Determine view bounds from shape outlines or field data ---");
-            sb.AppendLine("                if len(_shape_outlines) > 0:");
-            sb.AppendLine("                    all_sx = [px for s in _shape_outlines for px, _ in s['xy']]");
-            sb.AppendLine("                    all_sy = [py for s in _shape_outlines for _, py in s['xy']]");
+            sb.AppendLine("                # --- Determine view bounds: prefer antenna shapes, then field data ---");
+            sb.AppendLine("                _ant_shapes = [s for s in _shape_outlines if s['is_antenna']]");
+            sb.AppendLine("                _crop_src = _ant_shapes if _ant_shapes else _shape_outlines");
+            sb.AppendLine("                if len(_crop_src) > 0:");
+            sb.AppendLine("                    all_sx = [px for s in _crop_src for px, _ in s['xy']]");
+            sb.AppendLine("                    all_sy = [py for s in _crop_src for _, py in s['xy']]");
             sb.AppendLine("                    margin_mm = 3.0");
             sb.AppendLine("                    x_lo = min(all_sx) - margin_mm");
             sb.AppendLine("                    x_hi = max(all_sx) + margin_mm");
