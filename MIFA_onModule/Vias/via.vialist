@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Via1",
+    "IsCarrier": false,
+    "FromLayer": "TOP",
+    "ToLayer": "BOTTOM",
+    "DiameterMil": 12,
+    "X": -3.6,
+    "Y": -4.6,
+    "ShowIn3D": true
+  },
+  {
+    "Name": "Via3",
+    "IsCarrier": false,
+    "FromLayer": "TOP",
+    "ToLayer": "BOTTOM",
+    "DiameterMil": 12,
+    "X": -4.8,
+    "Y": -4.6,
+    "ShowIn3D": true
+  },
+  {
+    "Name": "Via2",
+    "IsCarrier": false,
+    "FromLayer": "TOP",
+    "ToLayer": "BOTTOM",
+    "DiameterMil": 12,
+    "X": -4.2,
+    "Y": -4.6,
+    "ShowIn3D": true
+  }
+]

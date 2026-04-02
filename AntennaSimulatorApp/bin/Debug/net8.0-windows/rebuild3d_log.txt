@@ -7,12 +7,12 @@
   Carrier Sub3-4: IsVisible=True, Type=Dielectric
   Carrier BOTTOM: IsVisible=True, Type=Signal
   >> SKIP Carrier default copper: TOP (has shapes)
-  >> ADD Carrier dielectric: Sub1-2 Z=-0.0650
+  >> ADD Carrier dielectric: Sub1-2 Z=-0.1350
   >> SKIP Carrier default copper: L2 (has shapes)
-  >> ADD Carrier dielectric: Sub2-3 Z=-0.3000
-  >> ADD Carrier default copper: L3 Z=-0.4875 hasShapes=false
-  >> ADD Carrier dielectric: Sub3-4 Z=-0.5350
-  >> ADD Carrier default copper: BOTTOM Z=-0.5825 hasShapes=false
+  >> ADD Carrier dielectric: Sub2-3 Z=-0.8000
+  >> ADD Carrier default copper: L3 Z=-1.3475 hasShapes=false
+  >> ADD Carrier dielectric: Sub3-4 Z=-1.4650
+  >> ADD Carrier default copper: BOTTOM Z=-1.5825 hasShapes=false
   Total ManualShapes=4
     shape='CARRIER_L2_GND' board=Carrier layer=L2 show3D=True merged=0 verts=9
     shape='CARRIER_TOP_GND' board=Carrier layer=TOP show3D=True merged=0 verts=13

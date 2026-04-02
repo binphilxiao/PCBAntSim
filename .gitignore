@@ -76,3 +76,34 @@ MIFA/Sim/results/
 MIFA/Sim/sim_data/
 MIFA/Sim/geometry/
 MIFA/Sim/scripts/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# HDF5 data files
+*.h5
+
+# STL mesh files
+*.stl
+
+# CSV result files
+*.csv
+
+# Image files
+*.png
+
+# XML data files
+*.xml
+
+# Simulation raw data (no extension)
+**/sim_data/et
+**/sim_data/ht
+**/sim_data/port_*
+**/sim_data/nf2ff*
+
+# 3D and geometry output directories
+**/3D/
+**/geometry/
+**/Output/
+**/Drawing/
