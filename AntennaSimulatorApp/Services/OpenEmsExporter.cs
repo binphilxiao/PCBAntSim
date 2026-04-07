@@ -709,18 +709,19 @@ namespace AntennaSimulatorApp.Services
             // Y mesh
             sb.AppendLine($"mesh.AddLine('y', [{F(domYMin)}, {F(yMin)}, {F(yMax)}, {F(domYMax)}])");
 
-            // Z mesh – add lines at effective layer boundaries only.
-            // Empty copper layers are skipped so that merged dielectric slabs
-            // produce fewer (and larger) Z gaps → bigger timestep.
+            // Z mesh – add lines only at merged dielectric slab boundaries.
+            // Empty copper layers are skipped; adjacent dielectrics merge into
+            // one slab, producing fewer Z seed lines and a bigger timestep.
             sb.Append("mesh.AddLine('z', [");
             sb.Append($"{F(domZMin)}, ");
             {
                 bool pec = ms.UsePecSheets;
                 var zLines = new List<double>();
 
-                // Carrier (top-down, z decreasing)
+                // Carrier (top-down, z decreasing) – mirror WriteCarrierGeometry logic
                 double z = 0;
                 zLines.Add(z);
+                bool carrierPending = false;
                 foreach (var layer in board.Stackup.Layers)
                 {
                     if (layer.Thickness <= 0) continue;
@@ -729,27 +730,33 @@ namespace AntennaSimulatorApp.Services
                         bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: true);
                         if (hasContent)
                         {
+                            // Flush: the accumulated dielectric slab ends here
+                            if (carrierPending) { zLines.Add(z); carrierPending = false; }
                             double t = pec ? 0 : layer.Thickness;
                             z -= t;
                             zLines.Add(z);
                         }
-                        else if (!pec)
+                        else
                         {
-                            z -= layer.Thickness; // absorbed into dielectric
+                            // Empty copper – absorbed into surrounding dielectric
+                            if (!pec) z -= layer.Thickness;
                         }
                     }
                     else
                     {
+                        // Dielectric – just move z, mark pending
                         z -= layer.Thickness;
-                        zLines.Add(z);
+                        carrierPending = true;
                     }
                 }
+                if (carrierPending) zLines.Add(z);
 
-                // Module (bottom-up, z increasing)
+                // Module (bottom-up, z increasing) – mirror WriteModuleGeometry logic
                 if (vm.HasModule)
                 {
                     double zBase = MountGap;
                     zLines.Add(zBase);
+                    bool modPending = false;
                     foreach (var layer in vm.Module.Stackup.Layers.Reverse())
                     {
                         if (layer.Thickness <= 0) continue;
@@ -758,21 +765,23 @@ namespace AntennaSimulatorApp.Services
                             bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: false);
                             if (hasContent)
                             {
+                                if (modPending) { zLines.Add(zBase); modPending = false; }
                                 double t = pec ? 0 : layer.Thickness;
                                 zBase += t;
                                 zLines.Add(zBase);
                             }
-                            else if (!pec)
+                            else
                             {
-                                zBase += layer.Thickness;
+                                if (!pec) zBase += layer.Thickness;
                             }
                         }
                         else
                         {
                             zBase += layer.Thickness;
-                            zLines.Add(zBase);
+                            modPending = true;
                         }
                     }
+                    if (modPending) zLines.Add(zBase);
                 }
 
                 sb.Append(string.Join(", ", zLines.Distinct().OrderBy(v => v).Select(F)));
@@ -951,8 +960,12 @@ namespace AntennaSimulatorApp.Services
 
             sb.AppendLine("# --- Post-Processing: S11 ---");
             sb.AppendLine($"freq = np.linspace({F(fStartHz)}, {F(fStopHz)}, {sw.NumPoints})");
-            sb.AppendLine("for p in ports:");
-            sb.AppendLine("    p.CalcPort(sim_path, freq)");
+            sb.AppendLine("try:");
+            sb.AppendLine("    for p in ports:");
+            sb.AppendLine("        p.CalcPort(sim_path, freq)");
+            sb.AppendLine("except Exception as e:");
+            sb.AppendLine("    print(f'[WARN] Port data not ready yet: {e}')");
+            sb.AppendLine("    sys.exit(0)");
             sb.AppendLine();
             sb.AppendLine("if len(ports) == 0:");
             sb.AppendLine("    print('[ERROR] No ports defined – cannot compute S11.')");
@@ -1013,8 +1026,12 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("try:");
             sb.AppendLine("    _ = ports[0].uf_inc");
             sb.AppendLine("except:");
-            sb.AppendLine($"    for p in ports:");
-            sb.AppendLine($"        p.CalcPort(sim_path, ff_freq)");
+            sb.AppendLine("    try:");
+            sb.AppendLine($"        for p in ports:");
+            sb.AppendLine($"            p.CalcPort(sim_path, ff_freq)");
+            sb.AppendLine("    except Exception as e:");
+            sb.AppendLine("        print(f'[WARN] Port data not ready yet: {e}')");
+            sb.AppendLine("        sys.exit(0)");
             sb.AppendLine();
 
             // Find resonant frequency from S11

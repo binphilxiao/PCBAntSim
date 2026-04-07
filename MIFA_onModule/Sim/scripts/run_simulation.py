@@ -147,7 +147,7 @@ ports.append(LumpedPort(csx, 1, 50, [-2.9, -4.3, 0.39], [-2.6, -4, 0.49], 2, 1.0
 # --- Mesh ---
 mesh.AddLine('x', [-50, -40, 40, 50])
 mesh.AddLine('y', [-110, -100, 0, 10])
-mesh.AddLine('z', [-11.46, -1.46, -1.26, -0.2, 0, 0.1, 0.15, 0.2, 0.39, 0.44, 0.49, 10.49])
+mesh.AddLine('z', [-11.46, -1.46, -0.2, 0, 0.1, 0.39, 0.49, 10.49])
 mesh.AddLine('x', [-5.1, 5.1])
 mesh.AddLine('y', [-15, -0])
 mesh.AddLine('x', [-2.9, -2.75, -2.6])
@@ -221,21 +221,6 @@ mesh.SmoothMeshLines('x', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('y', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('z', 1, ratio=1.4)
 
-# --- Field Dumps (frequency domain, 2-D XY slice) ---
-_fd_f0 = f0  # dump frequency
-
-Jf_dump = csx.AddDump('Jf_surface', dump_type=12, dump_mode=2, file_type=1)
-Jf_dump.SetFrequency(_fd_f0)
-Jf_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
-
-Ef_dump = csx.AddDump('Ef_surface', dump_type=10, dump_mode=2, file_type=1)
-Ef_dump.SetFrequency(_fd_f0)
-Ef_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
-
-Hf_dump = csx.AddDump('Hf_surface', dump_type=11, dump_mode=2, file_type=1)
-Hf_dump.SetFrequency(_fd_f0)
-Hf_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
-
 # --- Run Simulation ---
 sim_path = sim_data_dir
 os.makedirs(sim_path, exist_ok=True)
@@ -250,8 +235,12 @@ else:
 
 # --- Post-Processing: S11 ---
 freq = np.linspace(1000000000, 4000000000, 501)
-for p in ports:
-    p.CalcPort(sim_path, freq)
+try:
+    for p in ports:
+        p.CalcPort(sim_path, freq)
+except Exception as e:
+    print(f'[WARN] Port data not ready yet: {e}')
+    sys.exit(0)
 
 if len(ports) == 0:
     print('[ERROR] No ports defined – cannot compute S11.')
@@ -286,107 +275,4 @@ try:
     print(f'S11 plot saved to {plot_path}')
 except ImportError:
     print('matplotlib not available - skipping plot.')
-
-# --- Post-Processing: Field Dump Heatmaps ---
-try:
-    import h5py
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.colors import LogNorm
-    from matplotlib.patches import Polygon as MplPoly
-except ImportError as _imp_err:
-    print(f'[WARN] Skipping field plots: {_imp_err}')
-    h5py = None
-
-if h5py is not None:
-    _shape_outlines = []
-    _shape_outlines.append({'name': 'CARRIER_L2_GND', 'is_antenna': False, 'xy': [(-40, 0), (-40, -100), (40, -100), (40, 0), (15, 0), (15, -4), (-15, -4), (-15, 0), (-40, 0)]})
-    _shape_outlines.append({'name': 'CARRIER_TOP_GND', 'is_antenna': False, 'xy': [(-40, 0), (-40, -100), (40, -100), (40, 0), (15, 0), (15, -4), (-15, -4), (-15, 0), (-40, 0)]})
-
-    def _plot_field_dump(h5_dir, name, title, cmap='hot'):
-        """Read an openEMS HDF5 field dump and save a heatmap PNG."""
-        h5_path = os.path.join(sim_path, name + '.h5')
-        if not os.path.isfile(h5_path):
-            print(f'[WARN] Field dump not found: {h5_path}')
-            return
-        try:
-            with h5py.File(h5_path, 'r') as hf:
-                x = np.array(hf['/Mesh/x']) * 1e3  # m → mm
-                y = np.array(hf['/Mesh/y']) * 1e3  # m → mm
-                fd_grp = hf['/FieldData/FD']
-                re = np.array(fd_grp['f0_real'])  # (3, Nz, Ny, Nx)
-                im = np.array(fd_grp['f0_imag'])
-                mag = np.sqrt(np.sum(re**2 + im**2, axis=0))
-                mag = np.squeeze(mag)
-                if mag.ndim == 1:
-                    print(f'[WARN] {name}: unexpected 1D field data')
-                    return
-                vmax = mag.max()
-                if vmax == 0:
-                    print(f'[WARN] {name}: all-zero field data')
-                    return
-                vmin = max(vmax * 1e-3, mag[mag > 0].min()) if np.any(mag > 0) else 1e-10
-
-                # --- Determine view bounds: prefer antenna shapes, then field data ---
-                _ant_shapes = [s for s in _shape_outlines if s['is_antenna']]
-                _crop_src = _ant_shapes if _ant_shapes else _shape_outlines
-                if len(_crop_src) > 0:
-                    all_sx = [px for s in _crop_src for px, _ in s['xy']]
-                    all_sy = [py for s in _crop_src for _, py in s['xy']]
-                    margin_mm = 3.0
-                    x_lo = min(all_sx) - margin_mm
-                    x_hi = max(all_sx) + margin_mm
-                    y_lo = min(all_sy) - margin_mm
-                    y_hi = max(all_sy) + margin_mm
-                else:
-                    active = mag >= vmin
-                    rows = np.where(active.any(axis=1))[0]
-                    cols = np.where(active.any(axis=0))[0]
-                    if len(rows) > 0 and len(cols) > 0:
-                        margin_mm = 5.0
-                        x_lo = x[max(cols[0]-1, 0)] - margin_mm
-                        x_hi = x[min(cols[-1]+1, len(x)-1)] + margin_mm
-                        y_lo = y[max(rows[0]-1, 0)] - margin_mm
-                        y_hi = y[min(rows[-1]+1, len(y)-1)] + margin_mm
-                    else:
-                        x_lo, x_hi = x[0], x[-1]
-                        y_lo, y_hi = y[0], y[-1]
-
-                fig, ax = plt.subplots(figsize=(10, 8))
-                pcm = ax.pcolormesh(x, y, mag, shading='auto', cmap=cmap,
-                                    norm=LogNorm(vmin=vmin, vmax=vmax))
-                ax.set_xlim(x_lo, x_hi)
-                ax.set_ylim(y_lo, y_hi)
-
-                # --- Overlay shape outlines ---
-                for shp in _shape_outlines:
-                    ec = 'lime' if shp['is_antenna'] else 'cyan'
-                    lw = 1.5 if shp['is_antenna'] else 0.8
-                    poly = MplPoly(shp['xy'], closed=True, fill=False,
-                                   edgecolor=ec, linewidth=lw, linestyle='-')
-                    ax.add_patch(poly)
-
-                ax.set_xlabel('X (mm)')
-                ax.set_ylabel('Y (mm)')
-                ax.set_title(title)
-                ax.set_aspect('equal')
-                plt.colorbar(pcm, ax=ax, label='Magnitude')
-                plt.tight_layout()
-                png_path = os.path.join(results_dir, name + '.png')
-                fig.savefig(png_path, dpi=150)
-                plt.close(fig)
-                print(f'Field plot saved: {png_path}')
-                csv_path = os.path.join(results_dir, name + '.csv')
-                with open(csv_path, 'w') as csvf:
-                    csvf.write('# x_coords: ' + ','.join(f'{v:.6g}' for v in x) + '\n')
-                    csvf.write('# y_coords: ' + ','.join(f'{v:.6g}' for v in y) + '\n')
-                    for row_i in range(mag.shape[0]):
-                        csvf.write(','.join(f'{v:.6e}' for v in mag[row_i, :]) + '\n')
-        except Exception as ex:
-            print(f'[WARN] Failed to plot {name}: {ex}')
-
-    _plot_field_dump(sim_path, 'Jf_surface', 'Surface Current Density |J| (A/m)', 'hot')
-    _plot_field_dump(sim_path, 'Ef_surface', 'Electric Field |E| (V/m)', 'viridis')
-    _plot_field_dump(sim_path, 'Hf_surface', 'Magnetic Field |H| (A/m)', 'inferno')
 

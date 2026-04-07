@@ -1335,7 +1335,7 @@
       "ConvergenceDelta": 0.01
     },
     "Sweep": {
-      "SweepType": "Interpolating",
+      "SweepType": "Fast",
       "StartGHz": 1,
       "StopGHz": 4,
       "StepGHz": 0.01,

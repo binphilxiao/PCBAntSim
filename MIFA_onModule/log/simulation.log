@@ -21,62 +21,62 @@ Starting openEMS simulation...
 
 Create FDTD operator (compressed SSE + multi-threading)
 Multithreaded operator using 8 threads.
-Operator::InitDataStorage(): Storing epsR material data...
-Operator::InitDataStorage(): Storing kappa material data...
-Operator::InitDataStorage(): Storing muR material data...
-Operator::CalcTimestep_Var3: Smallest timestep (5.7494e-14s) found at position: 0 : 60;107;22
+Operator::CalcTimestep_Var3: Smallest timestep (6.28608e-14s) found at position: 0 : 60;73;20
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
 Compressing the FDTD operator... this may take a while...
 ------- Stat: FDTD Operator -------
-Dimensions		: 194x115x42 = 937020 Cells (0.93702 MCells)
-Size of Operator	: 44976960 Byte (42.8934 MiB) 
-Size of Field-Data	: 22488480 Byte (21.4467 MiB) 
+Dimensions		: 194x115x34 = 758540 Cells (0.75854 MCells)
+Size of Operator	: 36409920 Byte (34.7232 MiB) 
+Size of Field-Data	: 18204960 Byte (17.3616 MiB) 
 -----------------------------------
 Background materials (epsR/mueR/kappa/sigma): 1/1/0/0
 -----------------------------------
-Number of PEC edges	: 96363
-in x direction		: 46905
-in y direction		: 46599
-in z direction		: 2859
+Number of PEC edges	: 94471
+in x direction		: 46269
+in y direction		: 45999
+in z direction		: 2203
 -----------------------------------
-Timestep (s)		: 5.7494e-14
+Timestep (s)		: 6.28608e-14
 Timestep method name	: Rennings_2
-Nyquist criteria (TS)	: 2174
-Nyquist criteria (s)	: 1.24992e-10
+Nyquist criteria (TS)	: 1988
+Nyquist criteria (s)	: 1.24967e-10
 -----------------------------------
 SSE compression enabled	: yes
-Unique SSE operators	: 39465
+Unique SSE operators	: 32393
 -----------------------------------
 -----------------------------------
 --- Excitation Extension ---
-Voltage excitations	: 30	 (0, 0, 30)
+Voltage excitations	: 15	 (0, 0, 15)
 Current excitations	: 0	 (0, 0, 0)
-Excitation Length (TS)	: 33219
-Excitation Length (s)	: 1.90989e-09
+Excitation Length (TS)	: 30383
+Excitation Length (s)	: 1.9099e-09
 --- Uniaxial PML Extension ---
- PML range		: [0,0,0] to [4,114,41]
+ PML range		: [0,0,0] to [4,114,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [189,0,0] to [193,114,41]
+ PML range		: [189,0,0] to [193,114,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,0,0] to [188,4,41]
+ PML range		: [5,0,0] to [188,4,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,110,0] to [188,114,41]
+ PML range		: [5,110,0] to [188,114,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
  PML range		: [5,5,0] to [188,109,4]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,5,37] to [188,109,41]
+ PML range		: [5,5,29] to [188,109,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 -----------------------------------
-Creation time for operator: 9.23906 s
-FDTD simulation size: 194x115x42 --> 937020 FDTD cells 
-FDTD timestep is: 5.7494e-14 s; Nyquist rate: 2174 timesteps @4.00026e+09 Hz
+Creation time for operator: 17.7437 s
+FDTD simulation size: 194x115x34 --> 758540 FDTD cells 
+FDTD timestep is: 6.28608e-14 s; Nyquist rate: 1988 timesteps @4.00105e+09 Hz
 openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
-Excitation signal length is: 33219 timesteps (1.90989e-09s)
-Max. number of timesteps: 200000 ( --> 6.02065 * Excitation signal length)
+Excitation signal length is: 30383 timesteps (1.9099e-09s)
+Max. number of timesteps: 200000 ( --> 6.58263 * Excitation signal length)
 Create FDTD engine (compressed SSE + multi-threading)
 ---  Engine::SortExtensionByPriority() ---
  #0: Uniaxial PML Extension (1000000)
@@ -88,575 +88,61 @@ Create FDTD engine (compressed SSE + multi-threading)
  #6: Excitation Extension (-1000)
 Multithreaded engine using 8 threads. Utilization: (25;25;24;24;24;24;24;24)
 Setting up processing...
-Operator::CleanupMaterialStorage(): Delete epsR material data...
-Operator::CleanupMaterialStorage(): Delete mueR material data...
 Running FDTD engine... this may take a while... grab a cup of coffee?!?
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Traceback (most recent call last):
-  File "C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py", line 262, in <module>
-    p.CalcPort(sim_path, freq)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 194, in CalcPort
-    super(LumpedPort, self).CalcPort(sim_path, freq, ref_impedance, ref_plane_shift, signal_type)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 104, in CalcPort
-    self.ReadUIData(sim_path, freq, signal_type)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 88, in ReadUIData
-    self.u_data = UI_data(self.U_filenames, sim_path, freq, signal_type )
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 44, in __init__
-    self.ui_time.append(tmp[:,0])
-IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
+[WARN] Port data not ready yet: too many indices for array: array is 1-dimensional, but 2 were indexed
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Traceback (most recent call last):
-  File "C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py", line 262, in <module>
-    p.CalcPort(sim_path, freq)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 194, in CalcPort
-    super(LumpedPort, self).CalcPort(sim_path, freq, ref_impedance, ref_plane_shift, signal_type)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 104, in CalcPort
-    self.ReadUIData(sim_path, freq, signal_type)
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 88, in ReadUIData
-    self.u_data = UI_data(self.U_filenames, sim_path, freq, signal_type )
-  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 44, in __init__
-    self.ui_time.append(tmp[:,0])
-IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
-[@       15s] Timestep:          543 || Speed:   32.7 MC/s (2.866e-02 s/TS) || Energy: ~5.00e-22 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 1, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@       22s] Timestep:          497 || Speed:   16.7 MC/s (4.545e-02 s/TS) || Energy: ~4.35e-22 (- 0.00dB)
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -7.96 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -22.48 dBi,  Radiation Efficiency: 1.1%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-[@       34s] Timestep:         1086 || Speed:   26.5 MC/s (3.539e-02 s/TS) || Energy: ~6.88e-22 (- 0.00dB)
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -2.66 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@       58s] Timestep:         1629 || Speed:   21.9 MC/s (4.283e-02 s/TS) || Energy: ~2.05e-21 (- 0.00dB)
-Directivity: -21.04 dBi,  Radiation Efficiency: 13.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     1m18s] Timestep:         2172 || Speed:   24.5 MC/s (3.824e-02 s/TS) || Energy: ~3.13e-20 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
+[@       45s] Timestep:          994 || Speed:   16.2 MC/s (4.687e-02 s/TS) || Energy: ~5.93e-22 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -10.80 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -8.04 dBi,  Radiation Efficiency: 0.2%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     1m40s] Timestep:         2715 || Speed:   23.3 MC/s (4.026e-02 s/TS) || Energy: ~1.86e-19 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -16.14 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -6.72 dBi,  Radiation Efficiency: 0.2%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     1m59s] Timestep:         3258 || Speed:   27.7 MC/s (3.382e-02 s/TS) || Energy: ~6.17e-19 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
+[@     1m08s] Timestep:         1491 || Speed:   16.7 MC/s (4.547e-02 s/TS) || Energy: ~1.80e-21 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -25.17 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -19.47 dBi,  Radiation Efficiency: 0.2%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     2m17s] Timestep:         3801 || Speed:   27.2 MC/s (3.448e-02 s/TS) || Energy: ~1.26e-18 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -19.08 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -18.83 dBi,  Radiation Efficiency: 0.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     2m39s] Timestep:         4344 || Speed:   23.6 MC/s (3.973e-02 s/TS) || Energy: ~1.42e-18 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
+[@     1m30s] Timestep:         1988 || Speed:   16.9 MC/s (4.493e-02 s/TS) || Energy: ~2.72e-20 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -8.86 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -18.28 dBi,  Radiation Efficiency: 0.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     2m59s] Timestep:         4887 || Speed:   25.0 MC/s (3.754e-02 s/TS) || Energy: ~7.96e-19 (- 2.52dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -3.05 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -1.29 dBi,  Radiation Efficiency: 0.6%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     3m18s] Timestep:         5430 || Speed:   27.5 MC/s (3.409e-02 s/TS) || Energy: ~4.68e-18 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -8.17 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -3.28 dBi,  Radiation Efficiency: 0.2%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     3m39s] Timestep:         5973 || Speed:   23.9 MC/s (3.915e-02 s/TS) || Energy: ~3.17e-17 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
+[@     1m57s] Timestep:         2485 || Speed:   14.1 MC/s (5.386e-02 s/TS) || Energy: ~1.60e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -13.47 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -4.83 dBi,  Radiation Efficiency: 0.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     4m00s] Timestep:         6516 || Speed:   24.6 MC/s (3.802e-02 s/TS) || Energy: ~1.07e-16 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.7500 GHz,  S11 = -16.36 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.7500 GHz
-Directivity: -13.20 dBi,  Radiation Efficiency: 0.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     4m20s] Timestep:         7059 || Speed:   25.3 MC/s (3.700e-02 s/TS) || Energy: ~2.21e-16 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -20.52 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -18.23 dBi,  Radiation Efficiency: 0.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     4m40s] Timestep:         7602 || Speed:   25.1 MC/s (3.738e-02 s/TS) || Energy: ~2.80e-16 (- 0.00dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
+[@     2m23s] Timestep:         2982 || Speed:   14.3 MC/s (5.312e-02 s/TS) || Energy: ~5.29e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -11.05 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -17.86 dBi,  Radiation Efficiency: 0.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -11.05 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@     5m06s] Timestep:         8145 || Speed:   19.6 MC/s (4.781e-02 s/TS) || Energy: ~1.90e-16 (- 1.69dB)
-Directivity: -17.47 dBi,  Radiation Efficiency: 0.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -3.38 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -17.27 dBi,  Radiation Efficiency: 1.4%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-[@     5m29s] Timestep:         8688 || Speed:   22.3 MC/s (4.207e-02 s/TS) || Energy: ~1.98e-16 (- 1.50dB)
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -5.20 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -0.76 dBi,  Radiation Efficiency: 0.4%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-[@     5m49s] Timestep:         9231 || Speed:   24.9 MC/s (3.760e-02 s/TS) || Energy: ~1.21e-15 (- 0.00dB)
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -10.14 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -3.15 dBi,  Radiation Efficiency: 0.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-[@     6m13s] Timestep:         9774 || Speed:   21.4 MC/s (4.379e-02 s/TS) || Energy: ~4.24e-15 (- 0.00dB)
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -12.51 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-[@     6m33s] Timestep:        10317 || Speed:   25.7 MC/s (3.644e-02 s/TS) || Energy: ~8.78e-15 (- 0.00dB)
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -3.56 dBi,  Radiation Efficiency: 0.8%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -17.09 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@     6m54s] Timestep:        10860 || Speed:   23.7 MC/s (3.961e-02 s/TS) || Energy: ~1.16e-14 (- 0.00dB)
-Directivity: -16.63 dBi,  Radiation Efficiency: 0.6%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -12.83 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@     7m17s] Timestep:        11403 || Speed:   22.8 MC/s (4.111e-02 s/TS) || Energy: ~9.63e-15 (- 0.82dB)
-Directivity: -17.31 dBi,  Radiation Efficiency: 0.6%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -6.03 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@     7m37s] Timestep:        11946 || Speed:   24.6 MC/s (3.817e-02 s/TS) || Energy: ~5.89e-15 (- 2.96dB)
-Directivity: -16.95 dBi,  Radiation Efficiency: 1.0%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-[@     8m01s] Timestep:        12489 || Speed:   21.4 MC/s (4.383e-02 s/TS) || Energy: ~1.22e-14 (- 0.00dB)
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -6.81 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -1.12 dBi,  Radiation Efficiency: 0.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     8m24s] Timestep:        13032 || Speed:   22.5 MC/s (4.156e-02 s/TS) || Energy: ~3.94e-14 (- 0.00dB)
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -9.26 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-Directivity: -2.89 dBi,  Radiation Efficiency: 0.7%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-[@     8m42s] Timestep:        13575 || Speed:   27.6 MC/s (3.393e-02 s/TS) || Energy: ~8.04e-14 (- 0.00dB)
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.7920 GHz,  S11 = -9.25 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-[@     9m03s] Timestep:        14118 || Speed:   24.0 MC/s (3.899e-02 s/TS) || Energy: ~1.08e-13 (- 0.00dB)
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.7920 GHz
-Directivity: -10.64 dBi,  Radiation Efficiency: 1.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -12.65 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@     9m25s] Timestep:        14661 || Speed:   24.0 MC/s (3.910e-02 s/TS) || Energy: ~1.02e-13 (- 0.26dB)
-Directivity: -16.26 dBi,  Radiation Efficiency: 1.3%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@     9m44s] Timestep:        15204 || Speed:   25.8 MC/s (3.630e-02 s/TS) || Energy: ~7.45e-14 (- 1.63dB)
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -3.04 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-[@    10m01s] Timestep:        15747 || Speed:   30.6 MC/s (3.060e-02 s/TS) || Energy: ~6.94e-14 (- 1.94dB)
-Directivity: -15.34 dBi,  Radiation Efficiency: 2.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[@    10m21s] Timestep:        16290 || Speed:   25.8 MC/s (3.627e-02 s/TS) || Energy: ~1.17e-13 (- 0.00dB)
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -6.20 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 4.0000 GHz
-[@    10m32s] Timestep:        16609 || Speed:   26.4 MC/s (3.554e-02 s/TS) || Energy: ~1.62e-13 (- 0.00dB)
-Directivity: -1.37 dBi,  Radiation Efficiency: 1.5%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-[@    10m42s] Timestep:        16833 || Speed:   21.6 MC/s (4.330e-02 s/TS) || Energy: ~1.95e-13 (- 0.00dB)
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 2.7760 GHz,  S11 = -5.72 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 2.7760 GHz
-[@    11m02s] Timestep:        17376 || Speed:   24.7 MC/s (3.787e-02 s/TS) || Energy: ~2.55e-13 (- 0.00dB)
-Directivity: -5.03 dBi,  Radiation Efficiency: 1.4%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -7.92 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-[@    11m22s] Timestep:        17919 || Speed:   25.1 MC/s (3.734e-02 s/TS) || Energy: ~2.68e-13 (- 0.00dB)
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-Directivity: -14.89 dBi,  Radiation Efficiency: 2.8%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-[@    11m43s] Timestep:        18462 || Speed:   24.9 MC/s (3.770e-02 s/TS) || Energy: ~2.53e-13 (- 0.26dB)
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 1.0000 GHz,  S11 = -5.60 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
-Far-field at resonance: 1.0000 GHz
-HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
-  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5F.c line 793 in H5Fopen(): unable to open file
-    major: File accessibility
-    minor: Unable to open file
-  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3500 in H5VL_file_open(): open failed
-    major: Virtual Object Layer
-    minor: Can't open object
-  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3465 in H5VL__file_open(): open failed
-    major: Virtual Object Layer
-    minor: Can't open object
-  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_file.c line 100 in H5VL__native_file_open(): unable to open file
-    major: File accessibility
-    minor: Unable to open file
-  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fint.c line 1707 in H5F_open(): unable to read superblock
-    major: File accessibility
-    minor: Read failed
-  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fsuper.c line 621 in H5F__super_read(): truncated file: eof = 8193104, sblock->base_addr = 0, stored_eof = 8426992
-    major: File accessibility
-    minor: File has been truncated
-HDF5_File_Reader::OpenGroup: opening the given file C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\sim_data\nf2ff_H_4.h5 failed
-[@    12m03s] Timestep:        19005 || Speed:   25.4 MC/s (3.694e-02 s/TS) || Energy: ~2.43e-13 (- 0.44dB)
-Directivity: -14.27 dBi,  Radiation Efficiency: 3.8%
-E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
-H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
-Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
-Far-field pattern plots saved.
-Computing full 3D far-field pattern ...
-3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
-[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-Resonance: 4.0000 GHz,  S11 = -2.43 dB
-S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
-[@    12m24s] Timestep:        19548 || Speed:   24.5 MC/s (3.830e-02 s/TS) || Energy: ~2.48e-13 (- 0.35dB)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
