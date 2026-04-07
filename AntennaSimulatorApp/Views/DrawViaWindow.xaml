@@ -71,11 +71,19 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- ── Left panel: via list + editor ── -->
-                        <DockPanel Grid.Column="0"
-                                   Margin="0,0,8,0">
+                        <Grid Grid.Column="0"
+                              Margin="0,0,8,0">
+                                <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="160"
+                                                        MinHeight="80"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"
+                                                        MinHeight="80"/>
+                                </Grid.RowDefinitions>
 
                                 <!-- Toolbar -->
-                                <StackPanel DockPanel.Dock="Top"
+                                <StackPanel Grid.Row="0"
                                             Orientation="Horizontal"
                                             Margin="0,0,0,4">
                                         <Button Content="＋ Add Via"
@@ -94,8 +102,7 @@
 
                                 <!-- Via list -->
                                 <DataGrid x:Name="ViaGrid"
-                                          DockPanel.Dock="Top"
-                                          Height="160"
+                                          Grid.Row="1"
                                           AutoGenerateColumns="False"
                                           CanUserAddRows="False"
                                           SelectionMode="Single"
@@ -129,8 +136,17 @@
                                         </DataGrid.Columns>
                                 </DataGrid>
 
+                                <!-- GridSplitter -->
+                                <GridSplitter Grid.Row="2"
+                                              Height="5"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Center"
+                                              Background="#CCCCCC"
+                                              Margin="0,2"/>
+
                                 <!-- ── Editor for selected via ── -->
-                                <GroupBox Header="Via Properties"
+                                <GroupBox Grid.Row="3"
+                                          Header="Via Properties"
                                           Padding="6">
                                         <Grid x:Name="EditorPanel">
                                                 <Grid.RowDefinitions>
@@ -246,7 +262,7 @@
                                                            TextWrapping="Wrap"/>
                                         </Grid>
                                 </GroupBox>
-                        </DockPanel>
+                        </Grid>
 
                         <!-- ── Right panel: 2D top-view preview ── -->
                         <GroupBox Grid.Column="1"

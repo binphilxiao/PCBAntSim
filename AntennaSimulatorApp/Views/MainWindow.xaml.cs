@@ -351,6 +351,7 @@ public partial class MainWindow : Window
         foreach (var shape in vm.ManualShapes)
         {
             if (!shape.ShowIn3D) continue;
+            if (!shape.IsCarrier && !vm.HasModule) continue;
             // Find which stackup this shape targets
             var stackup = shape.IsCarrier ? vm.CarrierBoard.Stackup : vm.Module.Stackup;
             var targetLayer = stackup.Layers.FirstOrDefault(l => l.Name == shape.LayerName);
@@ -391,10 +392,11 @@ public partial class MainWindow : Window
             }
         }
 
-        // - Vias (highest priority � rendered on top) ----------------------
+        // - Vias (highest priority — rendered on top) ----------------------
         foreach (var via in vm.Vias)
         {
             if (!via.ShowIn3D) continue;
+            if (!via.IsCarrier && !vm.HasModule) continue;
             var stackup = via.IsCarrier ? vm.CarrierBoard.Stackup : vm.Module.Stackup;
             var fromLayer = stackup.Layers.FirstOrDefault(l => l.Name == via.FromLayer);
             var toLayer   = stackup.Layers.FirstOrDefault(l => l.Name == via.ToLayer);
@@ -416,21 +418,26 @@ public partial class MainWindow : Window
         }
 
         // - Solder joints (module bottom → carrier top, in the mount gap) --
-        if (vm.HasModule)
         {
-            // carrier top layer bottom face Z
             var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
-            // module bottom layer top face Z
-            var moduleLayers = vm.Module.Stackup.Layers.ToList();
-            var moduleBottomLayer = moduleLayers.LastOrDefault(l => l.IsConductive);
-
-            if (carrierTopLayer != null && moduleBottomLayer != null)
+            if (carrierTopLayer != null)
             {
                 double zCarrierTopFace = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true, MountGap);
                 double zCarrierBot = zCarrierTopFace - carrierTopLayer.Thickness;
-                double zModuleBotFace = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap);
 
-                double sjTop = zModuleBotFace;
+                double sjTop;
+                if (vm.HasModule)
+                {
+                    var moduleLayers = vm.Module.Stackup.Layers.ToList();
+                    var moduleBottomLayer = moduleLayers.LastOrDefault(l => l.IsConductive);
+                    sjTop = moduleBottomLayer != null
+                        ? ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap)
+                        : zCarrierTopFace + MountGap;
+                }
+                else
+                {
+                    sjTop = zCarrierTopFace + MountGap;
+                }
                 double sjBot = zCarrierBot;
 
                 foreach (var sj in vm.SolderJoints)
@@ -867,18 +874,29 @@ public partial class MainWindow : Window
 
         const double OrbitStep = 5.0;   // degrees per key press
         const double ZoomStep  = 0.12;  // fraction of distance per key press
+        const double PanStep   = 2.0;   // mm per key press
 
         switch (e.Key)
         {
-            case Key.Left:  if (!shift) { OrbitCamera(-OrbitStep, 0); e.Handled = true; } break;
-            case Key.Right: if (!shift) { OrbitCamera(+OrbitStep, 0); e.Handled = true; } break;
+            case Key.Left:
+                if (shift) { OrbitCamera(-OrbitStep, 0); }
+                else       { PanCamera(-PanStep, 0); }
+                e.Handled = true;
+                break;
+            case Key.Right:
+                if (shift) { OrbitCamera(+OrbitStep, 0); }
+                else       { PanCamera(+PanStep, 0); }
+                e.Handled = true;
+                break;
             case Key.Up:
-                if (!shift) { OrbitCamera(0, +OrbitStep); e.Handled = true; }
-                else        { ZoomCamera(1.0 - ZoomStep);  e.Handled = true; }
+                if (shift) { ZoomCamera(1.0 - ZoomStep); }
+                else       { PanCamera(0, +PanStep); }
+                e.Handled = true;
                 break;
             case Key.Down:
-                if (!shift) { OrbitCamera(0, -OrbitStep); e.Handled = true; }
-                else        { ZoomCamera(1.0 + ZoomStep);  e.Handled = true; }
+                if (shift) { ZoomCamera(1.0 + ZoomStep); }
+                else       { PanCamera(0, -PanStep); }
+                e.Handled = true;
                 break;
         }
     }
@@ -927,6 +945,30 @@ public partial class MainWindow : Window
 
         cam.Position      = target + arm;
         cam.LookDirection = target - cam.Position;
+    }
+
+    /// <summary>
+    /// Pan the camera perpendicular to the look direction.
+    /// <paramref name="dx"/> moves along the camera-right axis (positive = right).
+    /// <paramref name="dy"/> moves along the camera-up axis (positive = up).
+    /// </summary>
+    private void PanCamera(double dx, double dy)
+    {
+        if (!(Viewport3D.Camera is PerspectiveCamera cam)) return;
+
+        var look = cam.LookDirection;
+        look.Normalize();
+
+        // Camera right = look × up
+        var right = Vector3D.CrossProduct(look, cam.UpDirection);
+        right.Normalize();
+
+        // Camera true-up = right × look
+        var up = Vector3D.CrossProduct(right, look);
+        up.Normalize();
+
+        var offset = right * dx + up * dy;
+        cam.Position += offset;
     }
 
     /// <summary>
@@ -1248,6 +1290,7 @@ public partial class MainWindow : Window
         foreach (var shape in vm.ManualShapes)
         {
             if (!shape.ShowIn3D) continue;
+            if (!shape.IsCarrier && !vm.HasModule) continue;
             var stackup = shape.IsCarrier ? vm.CarrierBoard.Stackup : vm.Module.Stackup;
             var targetLayer = stackup.Layers.FirstOrDefault(l => l.Name == shape.LayerName);
             if (targetLayer == null) continue;
@@ -1275,6 +1318,7 @@ public partial class MainWindow : Window
         foreach (var via in vm.Vias)
         {
             if (!via.ShowIn3D) continue;
+            if (!via.IsCarrier && !vm.HasModule) continue;
             var stackup = via.IsCarrier ? vm.CarrierBoard.Stackup : vm.Module.Stackup;
             var fromLayer = stackup.Layers.FirstOrDefault(l => l.Name == via.FromLayer);
             var toLayer   = stackup.Layers.FirstOrDefault(l => l.Name == via.ToLayer);
@@ -1296,23 +1340,32 @@ public partial class MainWindow : Window
         }
 
         // - Solder Joints -----------------------------------------------
-        if (vm.HasModule)
         {
             var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
-            var expModuleLayers = vm.Module.Stackup.Layers.ToList();
-            var moduleBottomLayer = expModuleLayers.LastOrDefault(l => l.IsConductive);
-
-            if (carrierTopLayer != null && moduleBottomLayer != null)
+            if (carrierTopLayer != null)
             {
                 double zCarrierTopFace = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true, MountGap);
                 double zCarrierBot = zCarrierTopFace - carrierTopLayer.Thickness;
-                double zModuleBotFace = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap);
+
+                double sjTop;
+                if (vm.HasModule)
+                {
+                    var expModuleLayers = vm.Module.Stackup.Layers.ToList();
+                    var moduleBottomLayer = expModuleLayers.LastOrDefault(l => l.IsConductive);
+                    sjTop = moduleBottomLayer != null
+                        ? ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, MountGap)
+                        : zCarrierTopFace + MountGap;
+                }
+                else
+                {
+                    sjTop = zCarrierTopFace + MountGap;
+                }
 
                 foreach (var sj in vm.SolderJoints)
                 {
                     if (!sj.ShowIn3D) continue;
                     double radius = sj.DiameterMm / 2.0;
-                    var sjMesh = BuildCylinderMesh(sj.X, sj.Y, zCarrierBot, zModuleBotFace, radius, 16);
+                    var sjMesh = BuildCylinderMesh(sj.X, sj.Y, zCarrierBot, sjTop, radius, 16);
                     var sjMat  = new DiffuseMaterial(new SolidColorBrush(Color.FromRgb(0xC0, 0xB0, 0x60)));
                     var sjModel = new GeometryModel3D(sjMesh, sjMat) { BackMaterial = sjMat };
                     solderJointVis.Children.Add(new ModelVisual3D { Content = sjModel });

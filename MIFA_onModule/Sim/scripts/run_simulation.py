@@ -15,7 +15,7 @@ geometry_dir = os.path.join(sim_base, 'geometry')
 sim_data_dir = os.path.join(sim_base, 'sim_data')
 results_dir  = os.path.join(sim_base, 'results')
 
-openems_path = r'c:\Users\abing\OneDrive\Desktop\PCBAntSim\openEMS'
+openems_path = r'C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS'
 if openems_path and os.path.isdir(openems_path):
     os.add_dll_directory(openems_path)
     print(f'openEMS found: {openems_path}')
@@ -65,46 +65,83 @@ mat_fr4.AddBox([-5.1, -15, 0.615], [5.1, -0, 0.665], priority=0)
 copper.AddLinPoly(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.495, 0.035, priority=12)
 # module_MODULE_TOP_GND_main_1
 copper.AddLinPoly(np.array([[-3.3, 5.1, 5.1, -2.4, -2.4, -3.1, -3.1, -3.3, -3.3, -5.1, -5.1], [-7, -7, -4.4, -4.4, -4.7, -4.7, -4.4, -4.4, -4, -4, -7]]), 'z', 0.665, 0.035, priority=12)
-# module_Antenna (MIFA)_main_2
-copper.AddLinPoly(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_0
-copper.AddLinPoly(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_1
-copper.AddLinPoly(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_2
-copper.AddLinPoly(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_3
-copper.AddLinPoly(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_4
-copper.AddLinPoly(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_5
-copper.AddLinPoly(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_6
-copper.AddLinPoly(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_7
-copper.AddLinPoly(np.array([[0.1, 0.4, 0.4, 0.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_8
-copper.AddLinPoly(np.array([[0.1, 1.4, 1.4, 0.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_9
-copper.AddLinPoly(np.array([[1.1, 1.4, 1.4, 1.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_10
-copper.AddLinPoly(np.array([[1.1, 2.4, 2.4, 1.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_11
-copper.AddLinPoly(np.array([[2.1, 2.4, 2.4, 2.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_12
-copper.AddLinPoly(np.array([[2.1, 3.4, 3.4, 2.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_13
-copper.AddLinPoly(np.array([[3.1, 3.4, 3.4, 3.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_14
-copper.AddLinPoly(np.array([[3.1, 4.4, 4.4, 3.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_Antenna (MIFA)_merged_2_15
-copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.25, -3.25, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
-# module_MIFA_COPPER_main_3
+# module_MIFA_COPPER_main_2
 copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.2, -3.2, -3.7, -3.7]]), 'z', 0.665, 0.035, priority=12)
+# module_Antenna (MIFA)_main_3
+copper.AddLinPoly(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_0
+copper.AddLinPoly(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_1
+copper.AddLinPoly(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_2
+copper.AddLinPoly(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_3
+copper.AddLinPoly(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_4
+copper.AddLinPoly(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_5
+copper.AddLinPoly(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_6
+copper.AddLinPoly(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_7
+copper.AddLinPoly(np.array([[0.1, 0.4, 0.4, 0.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_8
+copper.AddLinPoly(np.array([[0.1, 1.4, 1.4, 0.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_9
+copper.AddLinPoly(np.array([[1.1, 1.4, 1.4, 1.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_10
+copper.AddLinPoly(np.array([[1.1, 2.4, 2.4, 1.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_11
+copper.AddLinPoly(np.array([[2.1, 2.4, 2.4, 2.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_12
+copper.AddLinPoly(np.array([[2.1, 3.4, 3.4, 2.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_13
+copper.AddLinPoly(np.array([[3.1, 3.4, 3.4, 3.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_14
+copper.AddLinPoly(np.array([[3.1, 4.4, 4.4, 3.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_Antenna (MIFA)_merged_3_15
+copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.25, -3.25, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+# module_MODULE_BOT_main_4
+copper.AddLinPoly(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.1, 0.035, priority=12)
 # --- Vias ---
 copper.AddCylinder([-3.6, -4.6, 0.1], [-3.6, -4.6, 0.7], 0.1524, priority=15)
 copper.AddCylinder([-4.8, -4.6, 0.1], [-4.8, -4.6, 0.7], 0.1524, priority=15)
 copper.AddCylinder([-4.2, -4.6, 0.1], [-4.2, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([-2, -4.6, 0.1], [-2, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([-1, -4.6, 0.1], [-1, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([0, -4.6, 0.1], [0, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([1, -4.6, 0.1], [1, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([2, -4.6, 0.1], [2, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([3, -4.6, 0.1], [3, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([4, -4.6, 0.1], [4, -4.6, 0.7], 0.1524, priority=15)
+copper.AddCylinder([0, -4.6, -1.6], [0, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([1, -4.6, -1.6], [1, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([2, -4.6, -1.6], [2, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([3, -4.6, -1.6], [3, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([4, -4.6, -1.6], [4, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([5, -4.6, -1.6], [5, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([6, -4.6, -1.6], [6, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([7, -4.6, -1.6], [7, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([8, -4.6, -1.6], [8, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([9, -4.6, -1.6], [9, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([10, -4.6, -1.6], [10, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-1, -4.6, -1.6], [-1, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-2, -4.6, -1.6], [-2, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-3, -4.6, -1.6], [-3, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-4, -4.6, -1.6], [-4, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-5, -4.6, -1.6], [-5, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-6, -4.6, -1.6], [-6, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-7, -4.6, -1.6], [-7, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-8, -4.6, -1.6], [-8, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-9, -4.6, -1.6], [-9, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-10, -4.6, -1.6], [-10, -4.6, 0], 0.254, priority=15)
+
+# --- Solder Joints (module bottom → carrier top) ---
+copper.AddCylinder([0, -4.6, -0.035], [0, -4.6, 0.135], 0.381, priority=15)
+copper.AddCylinder([2, -4.6, -0.035], [2, -4.6, 0.135], 0.381, priority=15)
+copper.AddCylinder([4, -4.6, -0.035], [4, -4.6, 0.135], 0.381, priority=15)
+copper.AddCylinder([-2, -4.6, -0.035], [-2, -4.6, 0.135], 0.381, priority=15)
+copper.AddCylinder([-4, -4.6, -0.035], [-4, -4.6, 0.135], 0.381, priority=15)
 
 # --- Ports ---
 from openEMS.ports import LumpedPort
@@ -114,7 +151,7 @@ ports.append(LumpedPort(csx, 1, 50, [-2.9, -4.3, 0.53], [-2.6, -4, 0.665], 2, 1.
 # --- Mesh ---
 mesh.AddLine('x', [-50, -40, 40, 50])
 mesh.AddLine('y', [-110, -100, 0, 10])
-mesh.AddLine('z', [-11.6, -1.6, -1.565, -1.365, -1.33, -0.27, -0.235, -0.035, 0, 0.1, 0.135, 0.185, 0.22, 0.27, 0.305, 0.495, 0.53, 0.58, 0.615, 0.665, 0.7, 10.7])
+mesh.AddLine('z', [-11.6, -1.6, -1.565, -1.515, -1.465, -1.415, -1.365, -1.33, -0.27, -0.235, -0.185, -0.135, -0.085, -0.035, 0, 0.05, 0.1, 0.135, 0.185, 0.22, 0.245, 0.27, 0.305, 0.3525, 0.4, 0.4475, 0.495, 0.53, 0.555, 0.58, 0.615, 0.64, 0.665, 0.7, 10.7])
 mesh.AddLine('x', [-5.1, 5.1])
 mesh.AddLine('y', [-15, -0])
 mesh.AddLine('x', [-2.9, -2.75, -2.6])
@@ -125,12 +162,83 @@ mesh.AddLine('x', [-4.8])
 mesh.AddLine('y', [-4.6])
 mesh.AddLine('x', [-4.2])
 mesh.AddLine('y', [-4.6])
-mesh.AddLine('x', [-40, -15, -5.1, -4.6, -3.3, -3.1, -2.9, -2.6, -2.4, -1.9, -1.6, -0.9, -0.6, 0.1, 0.4, 1.1, 1.4, 2.1, 2.4, 3.1, 3.4, 4.1, 4.4, 5.1, 15, 40])
-mesh.AddLine('y', [-100, -15, -7, -4.7, -4.4, -4.3, -4, -3.7, -3.4, -3.25, -3.2, -3.1, -0.55, -0.25, 0])
+mesh.AddLine('x', [-2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-1])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [0])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [1])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [3])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [0])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [1])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [3])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [5])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [7])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [9])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [10])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-1])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-2])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-3])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-4])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-5])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-6])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-7])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-8])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-9])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-10])
+mesh.AddLine('y', [-4.6])
+mesh.AddLine('x', [-40, -15, -14.01, -13.02, -12.03, -11.04, -10.05, -9.06, -8.07, -7.08, -6.09, -5.1, -4.6, -4.166667, -3.733333, -3.3, -3.1, -2.9, -2.6, -2.4, -1.9, -1.6, -1.25, -0.9, -0.6, -0.25, 0.1, 0.4, 0.75, 1.1, 1.4, 1.75, 2.1, 2.4, 2.75, 3.1, 3.4, 3.75, 4.1, 4.4, 4.75, 5.1, 6.09, 7.08, 8.07, 9.06, 10.05, 11.04, 12.03, 13.02, 14.01, 15, 40])
+mesh.AddLine('y', [-100, -15, -14.2, -13.4, -12.6, -11.8, -11, -10.2, -9.4, -8.6, -7.8, -7, -6.7125, -6.425, -6.1375, -5.85, -5.5625, -5.275, -4.9875, -4.7, -4.4, -4.3, -4, -3.7, -3.55, -3.4, -3.25, -3.2, -3.1, -2.816667, -2.533333, -2.25, -1.966667, -1.683333, -1.4, -1.116667, -0.833333, -0.55, -0.4, -0.25, 0])
 
 mesh.SmoothMeshLines('x', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('y', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('z', 0.5, ratio=1.4)
+
+# --- Field Dumps (frequency domain, 2-D XY slice) ---
+_fd_f0 = f0  # dump frequency
+
+Jf_dump = csx.AddDump('Jf_surface', dump_type=12, dump_mode=2, file_type=1)
+Jf_dump.SetFrequency(_fd_f0)
+Jf_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
+
+Ef_dump = csx.AddDump('Ef_surface', dump_type=10, dump_mode=2, file_type=1)
+Ef_dump.SetFrequency(_fd_f0)
+Ef_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
+
+Hf_dump = csx.AddDump('Hf_surface', dump_type=11, dump_mode=2, file_type=1)
+Hf_dump.SetFrequency(_fd_f0)
+Hf_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
 
 # --- Run Simulation ---
 sim_path = sim_data_dir
@@ -144,7 +252,7 @@ nf2ff_box = sim.CreateNF2FFBox()
 
 if not post_only:
     print('Starting openEMS simulation...')
-    sim.Run(sim_path, verbose=2, numThreads=4)
+    sim.Run(sim_path, verbose=2, numThreads=8)
 else:
     print('Post-processing only (--post-only mode)')
 
@@ -303,4 +411,107 @@ with open(ff3d_csv, 'w') as f3d:
         for pi in range(len(phi_3d)):
             f3d.write(f'{theta_3d[ti]:.1f},{phi_3d[pi]:.1f},{E3d_dB[ti,pi]:.4f}\n')
 print(f'3D far-field pattern saved to {ff3d_csv}')
+
+# --- Post-Processing: Field Dump Heatmaps ---
+try:
+    import h5py
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import LogNorm
+    from matplotlib.patches import Polygon as MplPoly
+except ImportError as _imp_err:
+    print(f'[WARN] Skipping field plots: {_imp_err}')
+    h5py = None
+
+if h5py is not None:
+    _shape_outlines = []
+    _shape_outlines.append({'name': 'CARRIER_L2_GND', 'is_antenna': False, 'xy': [(-40, 0), (-40, -100), (40, -100), (40, 0), (15, 0), (15, -4), (-15, -4), (-15, 0), (-40, 0)]})
+    _shape_outlines.append({'name': 'CARRIER_TOP_GND', 'is_antenna': False, 'xy': [(-40, 0), (-40, -100), (40, -100), (40, 0), (15, 0), (15, -4), (-15, -4), (-15, 0), (-40, 0)]})
+
+    def _plot_field_dump(h5_dir, name, title, cmap='hot'):
+        """Read an openEMS HDF5 field dump and save a heatmap PNG."""
+        h5_path = os.path.join(sim_path, name + '.h5')
+        if not os.path.isfile(h5_path):
+            print(f'[WARN] Field dump not found: {h5_path}')
+            return
+        try:
+            with h5py.File(h5_path, 'r') as hf:
+                x = np.array(hf['/Mesh/x']) * 1e3  # m → mm
+                y = np.array(hf['/Mesh/y']) * 1e3  # m → mm
+                fd_grp = hf['/FieldData/FD']
+                re = np.array(fd_grp['f0_real'])  # (3, Nz, Ny, Nx)
+                im = np.array(fd_grp['f0_imag'])
+                mag = np.sqrt(np.sum(re**2 + im**2, axis=0))
+                mag = np.squeeze(mag)
+                if mag.ndim == 1:
+                    print(f'[WARN] {name}: unexpected 1D field data')
+                    return
+                vmax = mag.max()
+                if vmax == 0:
+                    print(f'[WARN] {name}: all-zero field data')
+                    return
+                vmin = max(vmax * 1e-3, mag[mag > 0].min()) if np.any(mag > 0) else 1e-10
+
+                # --- Determine view bounds: prefer antenna shapes, then field data ---
+                _ant_shapes = [s for s in _shape_outlines if s['is_antenna']]
+                _crop_src = _ant_shapes if _ant_shapes else _shape_outlines
+                if len(_crop_src) > 0:
+                    all_sx = [px for s in _crop_src for px, _ in s['xy']]
+                    all_sy = [py for s in _crop_src for _, py in s['xy']]
+                    margin_mm = 3.0
+                    x_lo = min(all_sx) - margin_mm
+                    x_hi = max(all_sx) + margin_mm
+                    y_lo = min(all_sy) - margin_mm
+                    y_hi = max(all_sy) + margin_mm
+                else:
+                    active = mag >= vmin
+                    rows = np.where(active.any(axis=1))[0]
+                    cols = np.where(active.any(axis=0))[0]
+                    if len(rows) > 0 and len(cols) > 0:
+                        margin_mm = 5.0
+                        x_lo = x[max(cols[0]-1, 0)] - margin_mm
+                        x_hi = x[min(cols[-1]+1, len(x)-1)] + margin_mm
+                        y_lo = y[max(rows[0]-1, 0)] - margin_mm
+                        y_hi = y[min(rows[-1]+1, len(y)-1)] + margin_mm
+                    else:
+                        x_lo, x_hi = x[0], x[-1]
+                        y_lo, y_hi = y[0], y[-1]
+
+                fig, ax = plt.subplots(figsize=(10, 8))
+                pcm = ax.pcolormesh(x, y, mag, shading='auto', cmap=cmap,
+                                    norm=LogNorm(vmin=vmin, vmax=vmax))
+                ax.set_xlim(x_lo, x_hi)
+                ax.set_ylim(y_lo, y_hi)
+
+                # --- Overlay shape outlines ---
+                for shp in _shape_outlines:
+                    ec = 'lime' if shp['is_antenna'] else 'cyan'
+                    lw = 1.5 if shp['is_antenna'] else 0.8
+                    poly = MplPoly(shp['xy'], closed=True, fill=False,
+                                   edgecolor=ec, linewidth=lw, linestyle='-')
+                    ax.add_patch(poly)
+
+                ax.set_xlabel('X (mm)')
+                ax.set_ylabel('Y (mm)')
+                ax.set_title(title)
+                ax.set_aspect('equal')
+                plt.colorbar(pcm, ax=ax, label='Magnitude')
+                plt.tight_layout()
+                png_path = os.path.join(results_dir, name + '.png')
+                fig.savefig(png_path, dpi=150)
+                plt.close(fig)
+                print(f'Field plot saved: {png_path}')
+                csv_path = os.path.join(results_dir, name + '.csv')
+                with open(csv_path, 'w') as csvf:
+                    csvf.write('# x_coords: ' + ','.join(f'{v:.6g}' for v in x) + '\n')
+                    csvf.write('# y_coords: ' + ','.join(f'{v:.6g}' for v in y) + '\n')
+                    for row_i in range(mag.shape[0]):
+                        csvf.write(','.join(f'{v:.6e}' for v in mag[row_i, :]) + '\n')
+        except Exception as ex:
+            print(f'[WARN] Failed to plot {name}: {ex}')
+
+    _plot_field_dump(sim_path, 'Jf_surface', 'Surface Current Density |J| (A/m)', 'hot')
+    _plot_field_dump(sim_path, 'Ef_surface', 'Electric Field |E| (V/m)', 'viridis')
+    _plot_field_dump(sim_path, 'Hf_surface', 'Magnetic Field |H| (A/m)', 'inferno')
 

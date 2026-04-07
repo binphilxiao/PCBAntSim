@@ -1,7 +1,7 @@
 {
-  "Name": "CARRIER_TOP_GND",
+  "Name": "CARRIER_L2_GND",
   "Board": "Carrier",
-  "LayerName": "TOP",
+  "LayerName": "L2",
   "Vertices": [
     [
       -40,
@@ -25,22 +25,6 @@
     ],
     [
       15,
-      -4
-    ],
-    [
-      -2.5,
-      -4
-    ],
-    [
-      -2.5,
-      -4.5
-    ],
-    [
-      -3,
-      -4.5
-    ],
-    [
-      -3,
       -4
     ],
     [

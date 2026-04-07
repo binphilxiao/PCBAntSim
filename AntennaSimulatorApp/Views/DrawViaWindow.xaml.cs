@@ -566,10 +566,7 @@ namespace AntennaSimulatorApp.Views
                 PreviewCanvas.Children.Add(new Line { X1 = cx - cr, Y1 = cy, X2 = cx + cr, Y2 = cy, Stroke = Brushes.DarkRed, StrokeThickness = 0.8 });
                 PreviewCanvas.Children.Add(new Line { X1 = cx, Y1 = cy - cr, X2 = cx, Y2 = cy + cr, Stroke = Brushes.DarkRed, StrokeThickness = 0.8 });
 
-                var label = new TextBlock { Text = v.Name, FontSize = 10, Foreground = isSel ? Brushes.Red : Brushes.Black };
-                Canvas.SetLeft(label, cx + rPx + 3);
-                Canvas.SetTop(label,  cy - 7);
-                PreviewCanvas.Children.Add(label);
+
             }
 
             // ── Legend ───────
