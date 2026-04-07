@@ -40,8 +40,8 @@
     shape='CARRIER_L2_GND' board=Carrier layer=L2 show3D=True merged=0 verts=9
     shape='CARRIER_TOP_GND' board=Carrier layer=TOP show3D=True merged=0 verts=9
     shape='MIFA_COPPER' board=Module layer=TOP show3D=True merged=0 verts=5
-    shape='Antenna (MIFA)' board=Module layer=TOP show3D=True merged=16 verts=5
     shape='MODULE_BOT' board=Module layer=BOTTOM show3D=True merged=0 verts=5
+    shape='Antenna (MIFA)' board=Module layer=TOP show3D=True merged=16 verts=5
   Shape 'MODULE_L3_GND': GerberShapes=1, MergedPolygons=0, Vertices=5
     GerberShape[0]: pts=4, isClear=False
   >> grp.Children.Count=1 (3D meshes from shape)
@@ -62,6 +62,10 @@
     GerberShape[0]: pts=4, isClear=False
   >> grp.Children.Count=1 (3D meshes from shape)
   >> ADD Copper shape: MIFA_COPPER layer=TOP
+  Shape 'MODULE_BOT': GerberShapes=1, MergedPolygons=0, Vertices=5
+    GerberShape[0]: pts=4, isClear=False
+  >> grp.Children.Count=1 (3D meshes from shape)
+  >> ADD Copper shape: MODULE_BOT layer=BOTTOM
   Shape 'Antenna (MIFA)': GerberShapes=17, MergedPolygons=16, Vertices=5
     GerberShape[0]: pts=4, isClear=False
     GerberShape[1]: pts=4, isClear=False
@@ -82,7 +86,3 @@
     GerberShape[16]: pts=4, isClear=False
   >> grp.Children.Count=17 (3D meshes from shape)
   >> ADD Antenna shape: Antenna (MIFA) layer=TOP
-  Shape 'MODULE_BOT': GerberShapes=1, MergedPolygons=0, Vertices=5
-    GerberShape[0]: pts=4, isClear=False
-  >> grp.Children.Count=1 (3D meshes from shape)
-  >> ADD Copper shape: MODULE_BOT layer=BOTTOM

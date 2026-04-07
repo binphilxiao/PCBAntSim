@@ -681,31 +681,9 @@ namespace AntennaSimulatorApp.Services
                     }
                 }
 
-                // Insert midpoints in thin dielectric substrates so each gets
-                // at least 2–4 cells.  Without this, layers thinner than the Z
-                // maxRes (0.5 mm) end up with only 1 cell – too coarse for
-                // field gradient resolution (e.g. Sub1-2 at 0.2 mm).
-                var sorted = zLines.Distinct().OrderBy(v => v).ToList();
-                var extra = new List<double>();
-                for (int i = 0; i < sorted.Count - 1; i++)
-                {
-                    double gap = sorted[i + 1] - sorted[i];
-                    // Target dielectric layers: thicker than the thinnest sub-layers
-                    // (>0.06 mm avoids float-precision hits on 0.05 mm layers)
-                    // but thin enough to be single-cell under maxRes.
-                    if (gap > 0.06 && gap < 0.5)
-                    {
-                        // Add midpoint → splits into 2 cells
-                        extra.Add(Math.Round((sorted[i] + sorted[i + 1]) / 2.0, 6));
-                        // For layers ≥ 0.15 mm, also add quarter-points → 4 cells
-                        if (gap >= 0.15)
-                        {
-                            extra.Add(Math.Round(sorted[i] + gap * 0.25, 6));
-                            extra.Add(Math.Round(sorted[i] + gap * 0.75, 6));
-                        }
-                    }
-                }
-                foreach (var v in extra) zLines.Add(v);
+                // Z refinement is controlled entirely by SmoothMeshLines('z', ZMaxStepMm).
+                // Layer boundary lines are already seeded above; SmoothMeshLines
+                // will interpolate additional lines where gaps exceed ZMaxStepMm.
 
                 sb.Append(string.Join(", ", zLines.Distinct().OrderBy(v => v).Select(F)));
             }
