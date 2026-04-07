@@ -46,112 +46,112 @@ copper = csx.AddMetal('Copper')
 mat_fr4 = csx.AddMaterial('mat_fr4', epsilon=4.3, kappa=0.02)
 
 # --- Carrier Board Geometry ---
-mat_fr4.AddBox([-40, -100, -0.235], [40, 0, -0.035], priority=0)
-mat_fr4.AddBox([-40, -100, -1.33], [40, 0, -0.27], priority=0)
-mat_fr4.AddBox([-40, -100, -1.565], [40, 0, -1.365], priority=0)
+mat_fr4.AddBox([-40, -100, -0.2], [40, 0, 0], priority=0)
+mat_fr4.AddBox([-40, -100, -1.26], [40, 0, -0.2], priority=0)
+mat_fr4.AddBox([-40, -100, -1.46], [40, 0, -1.26], priority=0)
 
 # carrier_CARRIER_L2_GND_main_0
-copper.AddLinPoly(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', -0.27, 0.035, priority=12)
+copper.AddPolygon(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', -0.2, priority=12)
 # carrier_CARRIER_TOP_GND_main_1
-copper.AddLinPoly(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', -0.035, 0.035, priority=12)
+copper.AddPolygon(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', 0, priority=12)
 # --- RF Module Geometry ---
-mat_fr4.AddBox([-5.1, -15, 0.135], [5.1, -0, 0.185], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.22], [5.1, -0, 0.27], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.305], [5.1, -0, 0.495], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.53], [5.1, -0, 0.58], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.615], [5.1, -0, 0.665], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.1], [5.1, -0, 0.15], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.15], [5.1, -0, 0.2], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.2], [5.1, -0, 0.39], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.39], [5.1, -0, 0.44], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.44], [5.1, -0, 0.49], priority=0)
 
 # module_MODULE_L3_GND_main_0
-copper.AddLinPoly(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.495, 0.035, priority=12)
+copper.AddPolygon(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.39, priority=12)
 # module_MODULE_TOP_GND_main_1
-copper.AddLinPoly(np.array([[-3.3, 5.1, 5.1, -2.4, -2.4, -3.1, -3.1, -3.3, -3.3, -5.1, -5.1], [-7, -7, -4.4, -4.4, -4.7, -4.7, -4.4, -4.4, -4, -4, -7]]), 'z', 0.665, 0.035, priority=12)
+copper.AddPolygon(np.array([[-3.3, 5.1, 5.1, -2.4, -2.4, -3.1, -3.1, -3.3, -3.3, -5.1, -5.1], [-7, -7, -4.4, -4.4, -4.7, -4.7, -4.4, -4.4, -4, -4, -7]]), 'z', 0.49, priority=12)
 # module_MIFA_COPPER_main_2
-copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.2, -3.2, -3.7, -3.7]]), 'z', 0.665, 0.035, priority=12)
+copper.AddPolygon(np.array([[4.1, 4.4, 4.4, 4.1], [-3.2, -3.2, -3.7, -3.7]]), 'z', 0.49, priority=12)
 # module_Antenna (MIFA)_main_3
-copper.AddLinPoly(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-4.6, -3.3, -3.3, -4.6], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_0
-copper.AddLinPoly(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-4.6, -2.6, -2.6, -4.6], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_1
-copper.AddLinPoly(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-2.9, -2.6, -2.6, -2.9], [-4.3, -4.3, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_2
-copper.AddLinPoly(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-2.9, -1.6, -1.6, -2.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_3
-copper.AddLinPoly(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-1.9, -1.6, -1.6, -1.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_4
-copper.AddLinPoly(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-1.9, -0.6, -0.6, -1.9], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_5
-copper.AddLinPoly(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-0.9, -0.6, -0.6, -0.9], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_6
-copper.AddLinPoly(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[-0.9, 0.4, 0.4, -0.9], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_7
-copper.AddLinPoly(np.array([[0.1, 0.4, 0.4, 0.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[0.1, 0.4, 0.4, 0.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_8
-copper.AddLinPoly(np.array([[0.1, 1.4, 1.4, 0.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[0.1, 1.4, 1.4, 0.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_9
-copper.AddLinPoly(np.array([[1.1, 1.4, 1.4, 1.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[1.1, 1.4, 1.4, 1.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_10
-copper.AddLinPoly(np.array([[1.1, 2.4, 2.4, 1.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[1.1, 2.4, 2.4, 1.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_11
-copper.AddLinPoly(np.array([[2.1, 2.4, 2.4, 2.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[2.1, 2.4, 2.4, 2.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_12
-copper.AddLinPoly(np.array([[2.1, 3.4, 3.4, 2.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[2.1, 3.4, 3.4, 2.1], [-3.4, -3.4, -3.1, -3.1]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_13
-copper.AddLinPoly(np.array([[3.1, 3.4, 3.4, 3.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[3.1, 3.4, 3.4, 3.1], [-3.4, -3.4, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_14
-copper.AddLinPoly(np.array([[3.1, 4.4, 4.4, 3.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[3.1, 4.4, 4.4, 3.1], [-0.55, -0.55, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_Antenna (MIFA)_merged_3_15
-copper.AddLinPoly(np.array([[4.1, 4.4, 4.4, 4.1], [-3.25, -3.25, -0.25, -0.25]]), 'z', 0.665, 0.035, priority=15)
+copper.AddPolygon(np.array([[4.1, 4.4, 4.4, 4.1], [-3.25, -3.25, -0.25, -0.25]]), 'z', 0.49, priority=15)
 # module_MODULE_BOT_main_4
-copper.AddLinPoly(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.1, 0.035, priority=12)
+copper.AddPolygon(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.1, priority=12)
 # --- Vias ---
-copper.AddCylinder([-3.6, -4.6, 0.1], [-3.6, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([-4.8, -4.6, 0.1], [-4.8, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([-4.2, -4.6, 0.1], [-4.2, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([-2, -4.6, 0.1], [-2, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([-1, -4.6, 0.1], [-1, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([0, -4.6, 0.1], [0, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([1, -4.6, 0.1], [1, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([2, -4.6, 0.1], [2, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([3, -4.6, 0.1], [3, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([4, -4.6, 0.1], [4, -4.6, 0.7], 0.1524, priority=15)
-copper.AddCylinder([0, -4.6, -1.6], [0, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([1, -4.6, -1.6], [1, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([2, -4.6, -1.6], [2, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([3, -4.6, -1.6], [3, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([4, -4.6, -1.6], [4, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([5, -4.6, -1.6], [5, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([6, -4.6, -1.6], [6, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([7, -4.6, -1.6], [7, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([8, -4.6, -1.6], [8, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([9, -4.6, -1.6], [9, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([10, -4.6, -1.6], [10, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-1, -4.6, -1.6], [-1, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-2, -4.6, -1.6], [-2, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-3, -4.6, -1.6], [-3, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-4, -4.6, -1.6], [-4, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-5, -4.6, -1.6], [-5, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-6, -4.6, -1.6], [-6, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-7, -4.6, -1.6], [-7, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-8, -4.6, -1.6], [-8, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-9, -4.6, -1.6], [-9, -4.6, 0], 0.254, priority=15)
-copper.AddCylinder([-10, -4.6, -1.6], [-10, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-3.6, -4.6, 0.1], [-3.6, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([-4.8, -4.6, 0.1], [-4.8, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([-4.2, -4.6, 0.1], [-4.2, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([-2, -4.6, 0.1], [-2, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([-1, -4.6, 0.1], [-1, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([0, -4.6, 0.1], [0, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([1, -4.6, 0.1], [1, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([2, -4.6, 0.1], [2, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([3, -4.6, 0.1], [3, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([4, -4.6, 0.1], [4, -4.6, 0.49], 0.1524, priority=15)
+copper.AddCylinder([0, -4.6, -1.46], [0, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([1, -4.6, -1.46], [1, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([2, -4.6, -1.46], [2, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([3, -4.6, -1.46], [3, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([4, -4.6, -1.46], [4, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([5, -4.6, -1.46], [5, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([6, -4.6, -1.46], [6, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([7, -4.6, -1.46], [7, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([8, -4.6, -1.46], [8, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([9, -4.6, -1.46], [9, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([10, -4.6, -1.46], [10, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-1, -4.6, -1.46], [-1, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-2, -4.6, -1.46], [-2, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-3, -4.6, -1.46], [-3, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-4, -4.6, -1.46], [-4, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-5, -4.6, -1.46], [-5, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-6, -4.6, -1.46], [-6, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-7, -4.6, -1.46], [-7, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-8, -4.6, -1.46], [-8, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-9, -4.6, -1.46], [-9, -4.6, 0], 0.254, priority=15)
+copper.AddCylinder([-10, -4.6, -1.46], [-10, -4.6, 0], 0.254, priority=15)
 
 # --- Solder Joints (module bottom → carrier top) ---
-copper.AddCylinder([0, -4.6, -0.035], [0, -4.6, 0.135], 0.381, priority=15)
-copper.AddCylinder([2, -4.6, -0.035], [2, -4.6, 0.135], 0.381, priority=15)
-copper.AddCylinder([4, -4.6, -0.035], [4, -4.6, 0.135], 0.381, priority=15)
-copper.AddCylinder([-2, -4.6, -0.035], [-2, -4.6, 0.135], 0.381, priority=15)
-copper.AddCylinder([-4, -4.6, -0.035], [-4, -4.6, 0.135], 0.381, priority=15)
+copper.AddCylinder([0, -4.6, 0], [0, -4.6, 0.1], 0.381, priority=15)
+copper.AddCylinder([2, -4.6, 0], [2, -4.6, 0.1], 0.381, priority=15)
+copper.AddCylinder([4, -4.6, 0], [4, -4.6, 0.1], 0.381, priority=15)
+copper.AddCylinder([-2, -4.6, 0], [-2, -4.6, 0.1], 0.381, priority=15)
+copper.AddCylinder([-4, -4.6, 0], [-4, -4.6, 0.1], 0.381, priority=15)
 
 # --- Ports ---
 from openEMS.ports import LumpedPort
 ports = []
-ports.append(LumpedPort(csx, 1, 50, [-2.9, -4.3, 0.53], [-2.6, -4, 0.665], 2, 1.0, priority=50))
+ports.append(LumpedPort(csx, 1, 50, [-2.9, -4.3, 0.39], [-2.6, -4, 0.49], 2, 1.0, priority=50))
 
 # --- Mesh ---
 mesh.AddLine('x', [-50, -40, 40, 50])
 mesh.AddLine('y', [-110, -100, 0, 10])
-mesh.AddLine('z', [-11.6, -1.6, -1.565, -1.515, -1.465, -1.415, -1.365, -1.33, -0.27, -0.235, -0.185, -0.135, -0.085, -0.035, 0, 0.05, 0.1, 0.135, 0.185, 0.22, 0.245, 0.27, 0.305, 0.3525, 0.4, 0.4475, 0.495, 0.53, 0.555, 0.58, 0.615, 0.64, 0.665, 0.7, 10.7])
+mesh.AddLine('z', [-11.46, -1.46, -1.41, -1.36, -1.31, -1.26, -0.2, -0.15, -0.1, -0.05, 0, 0.05, 0.1, 0.15, 0.2, 0.2475, 0.295, 0.3425, 0.39, 0.44, 0.49, 10.49])
 mesh.AddLine('x', [-5.1, 5.1])
 mesh.AddLine('y', [-15, -0])
 mesh.AddLine('x', [-2.9, -2.75, -2.6])
@@ -218,8 +218,8 @@ mesh.AddLine('x', [-9])
 mesh.AddLine('y', [-4.6])
 mesh.AddLine('x', [-10])
 mesh.AddLine('y', [-4.6])
-mesh.AddLine('x', [-40, -15, -14.01, -13.02, -12.03, -11.04, -10.05, -9.06, -8.07, -7.08, -6.09, -5.1, -4.6, -4.166667, -3.733333, -3.3, -3.1, -2.9, -2.6, -2.4, -1.9, -1.6, -1.25, -0.9, -0.6, -0.25, 0.1, 0.4, 0.75, 1.1, 1.4, 1.75, 2.1, 2.4, 2.75, 3.1, 3.4, 3.75, 4.1, 4.4, 4.75, 5.1, 6.09, 7.08, 8.07, 9.06, 10.05, 11.04, 12.03, 13.02, 14.01, 15, 40])
-mesh.AddLine('y', [-100, -15, -14.2, -13.4, -12.6, -11.8, -11, -10.2, -9.4, -8.6, -7.8, -7, -6.7125, -6.425, -6.1375, -5.85, -5.5625, -5.275, -4.9875, -4.7, -4.4, -4.3, -4, -3.7, -3.55, -3.4, -3.25, -3.2, -3.1, -2.816667, -2.533333, -2.25, -1.966667, -1.683333, -1.4, -1.116667, -0.833333, -0.55, -0.4, -0.25, 0])
+mesh.AddLine('x', [-40, -15, -14.67, -14.34, -14.01, -13.68, -13.35, -13.02, -12.69, -12.36, -12.03, -11.7, -11.37, -11.04, -10.71, -10.38, -10.05, -9.72, -9.39, -9.06, -8.73, -8.4, -8.07, -7.74, -7.41, -7.08, -6.75, -6.42, -6.09, -5.76, -5.43, -5.1, -4.933333, -4.766667, -4.6, -4.455556, -4.311111, -4.166667, -4.022222, -3.877778, -3.733333, -3.588889, -3.444444, -3.3, -3.233333, -3.166667, -3.1, -3.033333, -2.966667, -2.9, -2.8, -2.7, -2.6, -2.533333, -2.466667, -2.4, -2.233333, -2.066667, -1.9, -1.8, -1.7, -1.6, -1.483333, -1.366667, -1.25, -1.133333, -1.016667, -0.9, -0.8, -0.7, -0.6, -0.483333, -0.366667, -0.25, -0.133333, -0.016667, 0.1, 0.2, 0.3, 0.4, 0.516667, 0.633333, 0.75, 0.866667, 0.983333, 1.1, 1.2, 1.3, 1.4, 1.516667, 1.633333, 1.75, 1.866667, 1.983333, 2.1, 2.2, 2.3, 2.4, 2.516667, 2.633333, 2.75, 2.866667, 2.983333, 3.1, 3.2, 3.3, 3.4, 3.516667, 3.633333, 3.75, 3.866667, 3.983333, 4.1, 4.2, 4.3, 4.4, 4.516667, 4.633333, 4.75, 4.866667, 4.983333, 5.1, 5.43, 5.76, 6.09, 6.42, 6.75, 7.08, 7.41, 7.74, 8.07, 8.4, 8.73, 9.06, 9.39, 9.72, 10.05, 10.38, 10.71, 11.04, 11.37, 11.7, 12.03, 12.36, 12.69, 13.02, 13.35, 13.68, 14.01, 14.34, 14.67, 15, 40])
+mesh.AddLine('y', [-100, -15, -14.733333, -14.466667, -14.2, -13.933333, -13.666667, -13.4, -13.133333, -12.866667, -12.6, -12.333333, -12.066667, -11.8, -11.533333, -11.266667, -11, -10.733333, -10.466667, -10.2, -9.933333, -9.666667, -9.4, -9.133333, -8.866667, -8.6, -8.333333, -8.066667, -7.8, -7.533333, -7.266667, -7, -6.904167, -6.808333, -6.7125, -6.616667, -6.520833, -6.425, -6.329167, -6.233333, -6.1375, -6.041667, -5.945833, -5.85, -5.754167, -5.658333, -5.5625, -5.466667, -5.370833, -5.275, -5.179167, -5.083333, -4.9875, -4.891667, -4.795833, -4.7, -4.6, -4.5, -4.4, -4.35, -4.3, -4.2, -4.1, -4, -3.9, -3.8, -3.7, -3.6, -3.5, -3.4, -3.35, -3.3, -3.25, -3.2, -3.15, -3.1, -3.005556, -2.911111, -2.816667, -2.722222, -2.627778, -2.533333, -2.438889, -2.344444, -2.25, -2.155556, -2.061111, -1.966667, -1.872222, -1.777778, -1.683333, -1.588889, -1.494444, -1.4, -1.305556, -1.211111, -1.116667, -1.022222, -0.927778, -0.833333, -0.738889, -0.644444, -0.55, -0.45, -0.35, -0.25, -0.166667, -0.083333, 0])
 
 mesh.SmoothMeshLines('x', 6.25, ratio=1.5)
 mesh.SmoothMeshLines('y', 6.25, ratio=1.5)
@@ -230,15 +230,15 @@ _fd_f0 = f0  # dump frequency
 
 Jf_dump = csx.AddDump('Jf_surface', dump_type=12, dump_mode=2, file_type=1)
 Jf_dump.SetFrequency(_fd_f0)
-Jf_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
+Jf_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
 
 Ef_dump = csx.AddDump('Ef_surface', dump_type=10, dump_mode=2, file_type=1)
 Ef_dump.SetFrequency(_fd_f0)
-Ef_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
+Ef_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
 
 Hf_dump = csx.AddDump('Hf_surface', dump_type=11, dump_mode=2, file_type=1)
 Hf_dump.SetFrequency(_fd_f0)
-Hf_dump.AddBox([-40, -100, 0.7], [40, 0, 0.7])
+Hf_dump.AddBox([-40, -100, 0.49], [40, 0, 0.49])
 
 # --- Run Simulation ---
 sim_path = sim_data_dir

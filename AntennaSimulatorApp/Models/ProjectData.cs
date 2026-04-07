@@ -210,6 +210,9 @@ namespace AntennaSimulatorApp.Models
         public double MeshFreqGHz        { get; set; } = 2.4;
         public int    CellsPerWavelength { get; set; } = 20;
         public double MinStepMm          { get; set; } = 0.05;
+        public double ZMaxStepMm         { get; set; } = 0.5;
+        public int    MinCellsPerTrace   { get; set; } = 3;
+        public bool   UsePecSheets       { get; set; } = true;
         public int    MaxAdaptivePasses  { get; set; } = 10;
         public double ConvergenceDelta   { get; set; } = 0.01;
     }

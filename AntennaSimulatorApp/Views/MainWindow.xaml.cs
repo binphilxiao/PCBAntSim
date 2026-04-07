@@ -1109,6 +1109,12 @@ public partial class MainWindow : Window
         if (dlg.ShowDialog() != true) return;
 
         string outputDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
+        // The exporter creates a scripts/ subfolder inside outputDir.
+        // If the user picked a file already inside a "scripts" folder,
+        // step up so we don't double-nest (scripts/scripts/).
+        if (System.IO.Path.GetFileName(outputDir)
+                .Equals("scripts", StringComparison.OrdinalIgnoreCase))
+            outputDir = System.IO.Path.GetDirectoryName(outputDir)!;
 
         try
         {

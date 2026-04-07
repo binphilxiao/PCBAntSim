@@ -260,6 +260,9 @@ namespace AntennaSimulatorApp.Services
                     MeshFreqGHz        = s.Mesh.MeshFreqGHz,
                     CellsPerWavelength = s.Mesh.CellsPerWavelength,
                     MinStepMm          = s.Mesh.MinStepMm,
+                    ZMaxStepMm         = s.Mesh.ZMaxStepMm,
+                    MinCellsPerTrace   = s.Mesh.MinCellsPerTrace,
+                    UsePecSheets       = s.Mesh.UsePecSheets,
                     MaxAdaptivePasses  = s.Mesh.MaxAdaptivePasses,
                     ConvergenceDelta   = s.Mesh.ConvergenceDelta,
                 },
@@ -544,6 +547,9 @@ namespace AntennaSimulatorApp.Services
             sim.Mesh.MeshFreqGHz        = dto.Mesh.MeshFreqGHz;
             sim.Mesh.CellsPerWavelength = dto.Mesh.CellsPerWavelength;
             sim.Mesh.MinStepMm          = dto.Mesh.MinStepMm;
+            sim.Mesh.ZMaxStepMm         = dto.Mesh.ZMaxStepMm;
+            sim.Mesh.MinCellsPerTrace   = dto.Mesh.MinCellsPerTrace;
+            sim.Mesh.UsePecSheets       = dto.Mesh.UsePecSheets;
             sim.Mesh.MaxAdaptivePasses  = dto.Mesh.MaxAdaptivePasses;
             sim.Mesh.ConvergenceDelta   = dto.Mesh.ConvergenceDelta;
 

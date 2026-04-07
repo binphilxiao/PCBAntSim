@@ -242,6 +242,7 @@ namespace AntennaSimulatorApp.Services
             double yMin = -board.Width;
             double yMax =  0;
 
+            bool pec = vm.SimSettings.Mesh.UsePecSheets;
             double zFace = 0.0;
             int layerIdx = 0;
 
@@ -249,7 +250,10 @@ namespace AntennaSimulatorApp.Services
             {
                 if (layer.Thickness <= 0) { layerIdx++; continue; }
 
-                double zBot = zFace - layer.Thickness;
+                // When PEC sheets are enabled, copper layers have zero thickness —
+                // the copper plane sits at zFace and dielectrics expand to fill the gap.
+                double effectiveThickness = (pec && layer.IsConductive) ? 0 : layer.Thickness;
+                double zBot = zFace - effectiveThickness;
 
                 if (layer.IsConductive)
                 {
@@ -278,7 +282,7 @@ namespace AntennaSimulatorApp.Services
                         $"[{F(xMax)}, {F(yMax)}, {F(zFace)}], priority=0)");
                 }
 
-                zFace -= layer.Thickness;
+                zFace -= effectiveThickness;
                 layerIdx++;
             }
             sb.AppendLine();
@@ -312,6 +316,7 @@ namespace AntennaSimulatorApp.Services
 
             // Module layers iterate bottom-to-top (reversed)
             double zBase = MountGap;
+            bool pec = vm.SimSettings.Mesh.UsePecSheets;
             var layers = mod.Stackup.Layers.ToList();
             int layerIdx = 0;
 
@@ -319,7 +324,8 @@ namespace AntennaSimulatorApp.Services
             {
                 if (layer.Thickness <= 0) { layerIdx++; continue; }
 
-                double zTop = zBase + layer.Thickness;
+                double effectiveThickness = (pec && layer.IsConductive) ? 0 : layer.Thickness;
+                double zTop = zBase + effectiveThickness;
 
                 if (layer.IsConductive)
                 {
@@ -384,6 +390,7 @@ namespace AntennaSimulatorApp.Services
             if (vm.Vias.Count == 0) return;
 
             sb.AppendLine("# --- Vias ---");
+            bool pec = vm.SimSettings.Mesh.UsePecSheets;
             int idx = 0;
             foreach (var via in vm.Vias)
             {
@@ -397,10 +404,12 @@ namespace AntennaSimulatorApp.Services
                 var toL   = stackup.Layers.FirstOrDefault(l => l.Name == via.ToLayer);
                 if (fromL == null || toL == null) continue;
 
-                double z1 = ComputeLayerZFace(stackup.Layers, fromL, via.IsCarrier);
-                double z2 = ComputeLayerZFace(stackup.Layers, toL,   via.IsCarrier);
+                double z1 = ComputeLayerZFace(stackup.Layers, fromL, via.IsCarrier, pec);
+                double z2 = ComputeLayerZFace(stackup.Layers, toL,   via.IsCarrier, pec);
+                double fromThk = (pec && fromL.IsConductive) ? 0 : fromL.Thickness;
+                double toThk   = (pec && toL.IsConductive)   ? 0 : toL.Thickness;
                 double zTop = Math.Max(z1, z2);
-                double zBot = Math.Min(z1 - fromL.Thickness, z2 - toL.Thickness);
+                double zBot = Math.Min(z1 - fromThk, z2 - toThk);
                 double radius = via.DiameterMm / 2.0;
 
                 sb.AppendLine($"copper.AddCylinder(" +
@@ -420,6 +429,8 @@ namespace AntennaSimulatorApp.Services
 
             sb.AppendLine("# --- Solder Joints (module bottom → carrier top) ---");
 
+            bool pec = vm.SimSettings.Mesh.UsePecSheets;
+
             // carrier top layer
             var carrierTopLayer = vm.CarrierBoard.Stackup.Layers.FirstOrDefault(l => l.IsConductive);
             // module bottom layer
@@ -427,9 +438,10 @@ namespace AntennaSimulatorApp.Services
             var moduleBottomLayer = moduleLayers.LastOrDefault(l => l.IsConductive);
             if (carrierTopLayer == null || moduleBottomLayer == null) return;
 
-            double zCarrierTop = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true);
-            double zCarrierBot = zCarrierTop - carrierTopLayer.Thickness;
-            double zModuleBot  = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false);
+            double zCarrierTop = ComputeLayerZFace(vm.CarrierBoard.Stackup.Layers, carrierTopLayer, true, pec);
+            double carrierThk  = (pec && carrierTopLayer.IsConductive) ? 0 : carrierTopLayer.Thickness;
+            double zCarrierBot = zCarrierTop - carrierThk;
+            double zModuleBot  = ComputeLayerZFace(vm.Module.Stackup.Layers, moduleBottomLayer, false, pec);
 
             foreach (var sj in vm.SolderJoints)
             {
@@ -510,10 +522,13 @@ namespace AntennaSimulatorApp.Services
                 }
 
                 // Z faces of each copper layer
-                double zFromTop = ComputeLayerZFace(stackup.Layers, fromL, isCarrier);
-                double zFromBot = zFromTop - fromL.Thickness;
-                double zToTop   = ComputeLayerZFace(stackup.Layers, toL,   isCarrier);
-                double zToBot   = zToTop - toL.Thickness;
+                bool pec = vm.SimSettings.Mesh.UsePecSheets;
+                double zFromTop = ComputeLayerZFace(stackup.Layers, fromL, isCarrier, pec);
+                double fromThk  = (pec && fromL.IsConductive) ? 0 : fromL.Thickness;
+                double zFromBot = zFromTop - fromThk;
+                double zToTop   = ComputeLayerZFace(stackup.Layers, toL,   isCarrier, pec);
+                double toThk    = (pec && toL.IsConductive)   ? 0 : toL.Thickness;
+                double zToBot   = zToTop - toThk;
 
                 int direction;
                 switch (port.IntegLine)
@@ -593,11 +608,18 @@ namespace AntennaSimulatorApp.Services
             double yMin = -board.Width;
             double yMax =  0;
 
-            // Z extents
+            // Z extents (account for PEC sheets: copper has zero thickness)
+            bool pecZ = ms.UsePecSheets;
+            double carrierThickness = board.Stackup.Layers
+                .Sum(l => (pecZ && l.IsConductive) ? 0 : l.Thickness);
             double zTop = 0;
-            double zBot = -board.Stackup.TotalThickness;
+            double zBot = -carrierThickness;
             if (vm.HasModule)
-                zTop = MountGap + vm.Module.Stackup.TotalThickness;
+            {
+                double modThickness = vm.Module.Stackup.Layers
+                    .Sum(l => (pecZ && l.IsConductive) ? 0 : l.Thickness);
+                zTop = MountGap + modThickness;
+            }
 
             // Simulation domain extents
             double domXMin, domXMax, domYMin, domYMax, domZMin, domZMax;
@@ -637,12 +659,14 @@ namespace AntennaSimulatorApp.Services
             sb.Append("mesh.AddLine('z', [");
             sb.Append($"{F(domZMin)}, ");
             {
+                bool pec = ms.UsePecSheets;
                 double z = 0;
                 var zLines = new List<double>();
                 foreach (var layer in board.Stackup.Layers)
                 {
+                    double t = (pec && layer.IsConductive) ? 0 : layer.Thickness;
                     zLines.Add(z);
-                    z -= layer.Thickness;
+                    z -= t;
                     zLines.Add(z);
                 }
                 if (vm.HasModule)
@@ -650,8 +674,9 @@ namespace AntennaSimulatorApp.Services
                     double zBase = MountGap;
                     foreach (var layer in vm.Module.Stackup.Layers.Reverse())
                     {
+                        double t = (pec && layer.IsConductive) ? 0 : layer.Thickness;
                         zLines.Add(zBase);
-                        zBase += layer.Thickness;
+                        zBase += t;
                         zLines.Add(zBase);
                     }
                 }
@@ -665,9 +690,10 @@ namespace AntennaSimulatorApp.Services
                 for (int i = 0; i < sorted.Count - 1; i++)
                 {
                     double gap = sorted[i + 1] - sorted[i];
-                    // Target dielectric layers: thicker than copper (>0.05 mm)
+                    // Target dielectric layers: thicker than the thinnest sub-layers
+                    // (>0.06 mm avoids float-precision hits on 0.05 mm layers)
                     // but thin enough to be single-cell under maxRes.
-                    if (gap > 0.05 && gap < 0.5)
+                    if (gap > 0.06 && gap < 0.5)
                     {
                         // Add midpoint → splits into 2 cells
                         extra.Add(Math.Round((sorted[i] + sorted[i + 1]) / 2.0, 6));
@@ -730,15 +756,20 @@ namespace AntennaSimulatorApp.Services
             // seed lines is large relative to the smallest feature, add
             // intermediate lines so FDTD properly resolves inter-trace coupling
             // (critical for meander antennas).
-            AddMidpointRefinement(shapeXs);
-            AddMidpointRefinement(shapeYs);
+            AddMidpointRefinement(shapeXs, ms.MinStepMm);
+            AddMidpointRefinement(shapeYs, ms.MinStepMm);
 
             // Ensure narrow gaps (trace widths) have at least N cells across.
             if (ms.MinCellsPerTrace >= 2)
             {
-                SubdivideNarrowGaps(shapeXs, ms.MinCellsPerTrace, maxRes: 3e8 / (ms.MeshFreqGHz * 1e9) * 1e3 / Math.Max(ms.CellsPerWavelength, 1));
-                SubdivideNarrowGaps(shapeYs, ms.MinCellsPerTrace, maxRes: 3e8 / (ms.MeshFreqGHz * 1e9) * 1e3 / Math.Max(ms.CellsPerWavelength, 1));
+                double xyMaxRes = 3e8 / (ms.MeshFreqGHz * 1e9) * 1e3 / Math.Max(ms.CellsPerWavelength, 1);
+                SubdivideNarrowGaps(shapeXs, ms.MinCellsPerTrace, maxRes: xyMaxRes, minCellSize: ms.MinStepMm);
+                SubdivideNarrowGaps(shapeYs, ms.MinCellsPerTrace, maxRes: xyMaxRes, minCellSize: ms.MinStepMm);
             }
+
+            // Final guarantee: remove any lines that are closer than MinStepMm.
+            EnforceMinStep(shapeXs, ms.MinStepMm);
+            EnforceMinStep(shapeYs, ms.MinStepMm);
 
             if (shapeXs.Count > 0)
                 sb.AppendLine($"mesh.AddLine('x', [{string.Join(", ", shapeXs.Select(F))}])");
@@ -772,7 +803,18 @@ namespace AntennaSimulatorApp.Services
             double yMin = -board.Width;
             double yMax =  0;
             // Antenna surface Z (top of TOP copper for carrier, top of module if present)
-            double zSurface = vm.HasModule ? MountGap + vm.Module.Stackup.TotalThickness : 0;
+            bool pecFd = vm.SimSettings.Mesh.UsePecSheets;
+            double zSurface;
+            if (vm.HasModule)
+            {
+                double modThk = vm.Module.Stackup.Layers
+                    .Sum(l => (pecFd && l.IsConductive) ? 0 : l.Thickness);
+                zSurface = MountGap + modThk;
+            }
+            else
+            {
+                zSurface = 0;
+            }
 
             sb.AppendLine("# --- Field Dumps (frequency domain, 2-D XY slice) ---");
             sb.AppendLine($"_fd_f0 = f0  # dump frequency");
@@ -1236,9 +1278,11 @@ namespace AntennaSimulatorApp.Services
                     .FirstOrDefault(l => l.Name == shape.LayerName);
                 if (targetLayer == null) continue;
 
-                double zFace = ComputeLayerZFace(stackup.Layers, targetLayer, isCarrier);
-                double zBase = zFace - targetLayer.Thickness;
-                double thickness = targetLayer.Thickness;
+                bool pec = vm.SimSettings.Mesh.UsePecSheets;
+                double zFace = ComputeLayerZFace(stackup.Layers, targetLayer, isCarrier, pec);
+                double effThk = (pec && targetLayer.IsConductive) ? 0 : targetLayer.Thickness;
+                double zBase = zFace - effThk;
+                double thickness = effThk;
                 int priority = isAnt ? 15 : 12;
 
                 // Main polygon
@@ -1284,8 +1328,18 @@ namespace AntennaSimulatorApp.Services
             var ys = string.Join(", ", pts.Select(p => F(p.Y)));
 
             sb.AppendLine($"# {comment}");
-            sb.AppendLine($"copper.AddLinPoly(np.array([[{xs}], [{ys}]]), " +
-                $"'z', {F(zBase)}, {F(thickness)}, priority={priority})");
+            if (Math.Abs(thickness) < 1e-9)
+            {
+                // Zero-thickness PEC sheet: use AddPolygon (2D surface)
+                // AddLinPoly with thickness=0 is ignored by openEMS.
+                sb.AppendLine($"copper.AddPolygon(np.array([[{xs}], [{ys}]]), " +
+                    $"'z', {F(zBase)}, priority={priority})");
+            }
+            else
+            {
+                sb.AppendLine($"copper.AddLinPoly(np.array([[{xs}], [{ys}]]), " +
+                    $"'z', {F(zBase)}, {F(thickness)}, priority={priority})");
+            }
         }
 
         private static void ExportGerberLayerStl(
@@ -1366,7 +1420,7 @@ namespace AntennaSimulatorApp.Services
         /// Only operates inside the bounding box of the original seeds (ignoring
         /// board-outline lines far from the antenna geometry).
         /// </summary>
-        private static void AddMidpointRefinement(SortedSet<double> lines)
+        private static void AddMidpointRefinement(SortedSet<double> lines, double minStep = 0.05)
         {
             if (lines.Count < 3) return;
 
@@ -1390,6 +1444,8 @@ namespace AntennaSimulatorApp.Services
             // Threshold: subdivide gaps larger than 2× the reference small gap,
             // but never below 0.15 mm to avoid generating excessive mesh lines.
             double threshold = Math.Max(refGap * 2, 0.15);
+            // Also ensure subdivisions never produce cells smaller than minStep.
+            if (threshold < minStep) threshold = minStep;
 
             // Only refine inside the "dense" region — find the bounding box of
             // seeds that are NOT the two extremes (board outline corners).
@@ -1405,12 +1461,14 @@ namespace AntennaSimulatorApp.Services
                 // Only refine within the inner range
                 if (b <= innerMin || a >= innerMax) continue;
                 double gap = b - a;
-                if (gap > threshold)
+                if (gap > threshold + 1e-9)
                 {
                     int n = (int)Math.Ceiling(gap / threshold);
-                    // Cap subdivisions to avoid explosion
                     if (n > 10) n = 10;
                     double step = gap / n;
+                    // Reduce subdivisions until each cell >= minStep
+                    while (n > 1 && step < minStep - 1e-9) { n--; step = gap / n; }
+                    if (n <= 1) continue;
                     for (int j = 1; j < n; j++)
                         toAdd.Add(Math.Round(a + j * step, 6));
                 }
@@ -1425,7 +1483,7 @@ namespace AntennaSimulatorApp.Services
         /// <paramref name="minCells"/> mesh intervals.  Gaps that already have enough
         /// intervals or that are wider than the normal mesh resolution are skipped.
         /// </summary>
-        private static void SubdivideNarrowGaps(SortedSet<double> lines, int minCells, double maxRes)
+        private static void SubdivideNarrowGaps(SortedSet<double> lines, int minCells, double maxRes, double minCellSize = 0.05)
         {
             if (lines.Count < 2 || minCells < 2) return;
 
@@ -1440,18 +1498,38 @@ namespace AntennaSimulatorApp.Services
                 // Only refine gaps narrower than the normal mesh cell size — these
                 // correspond to trace widths that would otherwise get ≤ 1 cell.
                 if (gap >= maxRes) continue;
+                // Compute how many cells we can fit while keeping each >= minCellSize.
+                int n = minCells;
+                while (n > 1 && gap / n < minCellSize - 1e-9) n--;
+                if (n <= 1) continue;   // gap is already small enough
 
-                // How many sub-cells does this gap currently have? Since polygon
-                // edges form the boundaries, the gap itself is one cell.  We need
-                // to insert (minCells - 1) intermediate lines to get minCells cells.
-                int needed = minCells - 1;
-                double step = gap / minCells;
-                for (int j = 1; j <= needed; j++)
+                double step = gap / n;
+                for (int j = 1; j < n; j++)
                     toAdd.Add(Math.Round(a + j * step, 6));
             }
 
             foreach (var v in toAdd)
                 lines.Add(v);
+        }
+
+        /// <summary>
+        /// Remove intermediate lines that are closer than <paramref name="minStep"/>
+        /// to their neighbour.  Original polygon-edge lines (which existed before
+        /// refinement/subdivision) are never removed — only the inserted midpoints.
+        /// Guarantees every gap in the final set &gt;= minStep.
+        /// </summary>
+        private static void EnforceMinStep(SortedSet<double> lines, double minStep)
+        {
+            if (lines.Count < 3 || minStep <= 0) return;
+            var sorted = lines.ToList();
+            var toRemove = new List<double>();
+            for (int i = 1; i < sorted.Count - 1; i++)
+            {
+                if (sorted[i] - sorted[i - 1] < minStep - 1e-9)
+                    toRemove.Add(sorted[i]);
+            }
+            foreach (var v in toRemove)
+                lines.Remove(v);
         }
 
 
@@ -1477,9 +1555,12 @@ namespace AntennaSimulatorApp.Services
         /// <summary>
         /// Z coordinate of the TOP face of <paramref name="target"/> in the stackup.
         /// Same logic as MainWindow.ComputeLayerZFace.
+        /// When <paramref name="usePecSheets"/> is true, conductive layer thickness
+        /// is treated as zero so the copper plane sits at the interface.
         /// </summary>
         private static double ComputeLayerZFace(
-            IEnumerable<Layer> layers, Layer target, bool isCarrier = true)
+            IEnumerable<Layer> layers, Layer target, bool isCarrier = true,
+            bool usePecSheets = false)
         {
             if (isCarrier)
             {
@@ -1487,7 +1568,8 @@ namespace AntennaSimulatorApp.Services
                 foreach (var l in layers)
                 {
                     if (l == target) return z;
-                    z -= l.Thickness;
+                    double t = (usePecSheets && l.IsConductive) ? 0 : l.Thickness;
+                    z -= t;
                 }
             }
             else
@@ -1495,7 +1577,8 @@ namespace AntennaSimulatorApp.Services
                 double zBase = MountGap;
                 foreach (var l in layers.Reverse())
                 {
-                    double top = zBase + l.Thickness;
+                    double t = (usePecSheets && l.IsConductive) ? 0 : l.Thickness;
+                    double top = zBase + t;
                     if (l == target) return top;
                     zBase = top;
                 }

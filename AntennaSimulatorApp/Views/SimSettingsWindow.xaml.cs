@@ -139,6 +139,7 @@ namespace AntennaSimulatorApp.Views
             MinStepBox.Text         = m.MinStepMm.ToString("G5");
             ZMaxStepBox.Text        = m.ZMaxStepMm.ToString("G5");
             MinCellsPerTraceBox.Text = m.MinCellsPerTrace.ToString();
+            PecSheetsCheck.IsChecked = m.UsePecSheets;
             MaxPassesBox.Text       = m.MaxAdaptivePasses.ToString();
             ConvDeltaBox.Text       = m.ConvergenceDelta.ToString("G4");
 
@@ -215,6 +216,7 @@ namespace AntennaSimulatorApp.Views
             m.MinStepMm          = ParseDouble(MinStepBox.Text, 0.05);
             m.ZMaxStepMm         = ParseDouble(ZMaxStepBox.Text, 0.5);
             m.MinCellsPerTrace   = ParseInt(MinCellsPerTraceBox.Text, 3);
+            m.UsePecSheets       = PecSheetsCheck.IsChecked == true;
             m.MaxAdaptivePasses  = ParseInt(MaxPassesBox.Text, 10);
             m.ConvergenceDelta   = ParseDouble(ConvDeltaBox.Text, 0.01);
 

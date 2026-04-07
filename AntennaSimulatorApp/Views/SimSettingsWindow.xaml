@@ -601,6 +601,17 @@
                             </StackPanel>
                         </GroupBox>
 
+                        <GroupBox Header="Copper Modelling">
+                            <StackPanel>
+                                <CheckBox x:Name="PecSheetsCheck"
+                                          Content="Use zero-thickness PEC sheets for copper layers"
+                                          IsChecked="True"
+                                          Margin="0,2"/>
+                                <TextBlock Style="{StaticResource Hint}"
+                                           Text="Replaces 3D copper boxes (0.035 mm) with zero-thickness PEC planes. Greatly reduces Z mesh cells and simulation time. Disable only if copper thickness affects your design (e.g. thick copper RF shields)."/>
+                            </StackPanel>
+                        </GroupBox>
+
                         <GroupBox Header="Mesh Parameters">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -641,14 +652,14 @@
 
                                 <Label Grid.Row="2"
                                        Grid.Column="0"
-                                       Content="Min mesh step (mm) *:"/>
+                                       Content="Min mesh step XY (mm):"/>
                                 <TextBox Grid.Row="2"
                                          Grid.Column="1"
                                          x:Name="MinStepBox"/>
                                 <TextBlock Grid.Row="2"
                                            Grid.Column="2"
                                            Style="{StaticResource Hint}"
-                                           Text="  prevents excessively fine cells; ≈ copper thickness"/>
+                                           Text="  minimum XY cell size after trace subdivision"/>
 
                                 <Label Grid.Row="3"
                                        Grid.Column="0"
@@ -663,7 +674,7 @@
 
                                 <Label Grid.Row="4"
                                        Grid.Column="0"
-                                       Content="Min cells per trace width:"/>
+                                       Content="Min cells per trace (XY):"/>
                                 <TextBox Grid.Row="4"
                                          Grid.Column="1"
                                          x:Name="MinCellsPerTraceBox"/>

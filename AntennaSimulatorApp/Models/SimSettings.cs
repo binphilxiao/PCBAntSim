@@ -137,6 +137,7 @@ namespace AntennaSimulatorApp.Models
         private double _minStepMm        = 0.05;
         private double _zMaxStepMm       = 0.5;
         private int    _minCellsPerTrace  = 3;
+        private bool   _usePecSheets     = true;
         private int    _maxPasses        = 10;
         private double _convergenceDelta = 0.01;
 
@@ -148,6 +149,8 @@ namespace AntennaSimulatorApp.Models
         public double ZMaxStepMm         { get => _zMaxStepMm;       set { _zMaxStepMm       = value; OnPropertyChanged(); } }
         /// <summary>Minimum number of FDTD cells across each trace width (default 3).</summary>
         public int    MinCellsPerTrace   { get => _minCellsPerTrace; set { _minCellsPerTrace = value; OnPropertyChanged(); } }
+        /// <summary>Export copper layers as zero-thickness PEC sheets (faster simulation).</summary>
+        public bool   UsePecSheets       { get => _usePecSheets;     set { _usePecSheets     = value; OnPropertyChanged(); } }
         public int    MaxAdaptivePasses { get => _maxPasses;        set { _maxPasses        = value; OnPropertyChanged(); } }
         /// <summary>Convergence delta for S-parameter between passes (e.g. 0.01 → 1%).</summary>
         public double ConvergenceDelta  { get => _convergenceDelta; set { _convergenceDelta = value; OnPropertyChanged(); } }
