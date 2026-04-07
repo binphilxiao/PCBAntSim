@@ -1335,7 +1335,7 @@
       "ConvergenceDelta": 0.01
     },
     "Sweep": {
-      "SweepType": "Fast",
+      "SweepType": "Interpolating",
       "StartGHz": 1,
       "StopGHz": 4,
       "StepGHz": 0.01,
@@ -1347,9 +1347,9 @@
       "NumThreads": 0
     },
     "FieldDumps": {
-      "EnableSurfaceCurrent": true,
-      "EnableEField": true,
-      "EnableHField": true,
+      "EnableSurfaceCurrent": false,
+      "EnableEField": false,
+      "EnableHField": false,
       "OverlayShapeOutline": true
     }
   }

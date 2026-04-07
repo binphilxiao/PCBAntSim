@@ -24,7 +24,7 @@ Multithreaded operator using 8 threads.
 Operator::CalcTimestep_Var3: Smallest timestep (6.28608e-14s) found at position: 0 : 60;73;20
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 54, column 1.
 Compressing the FDTD operator... this may take a while...
 ------- Stat: FDTD Operator -------
 Dimensions		: 194x115x34 = 758540 Cells (0.75854 MCells)
@@ -71,7 +71,7 @@ Excitation Length (s)	: 1.9099e-09
  PML range		: [5,5,29] to [188,109,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 -----------------------------------
-Creation time for operator: 17.7437 s
+Creation time for operator: 17.033 s
 FDTD simulation size: 194x115x34 --> 758540 FDTD cells 
 FDTD timestep is: 6.28608e-14 s; Nyquist rate: 1988 timesteps @4.00105e+09 Hz
 openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
@@ -95,54 +95,243 @@ Post-processing only (--post-only mode)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 1, column 1.
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-[@       22s] Timestep:          497 || Speed:   16.7 MC/s (4.545e-02 s/TS) || Energy: ~4.35e-22 (- 0.00dB)
-Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
+[@       21s] Timestep:          497 || Speed:   17.5 MC/s (4.341e-02 s/TS) || Energy: ~4.35e-22 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
-[@       45s] Timestep:          994 || Speed:   16.2 MC/s (4.687e-02 s/TS) || Energy: ~5.93e-22 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@       43s] Timestep:          994 || Speed:   17.5 MC/s (4.335e-02 s/TS) || Energy: ~5.93e-22 (- 0.00dB)
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
-[@     1m08s] Timestep:         1491 || Speed:   16.7 MC/s (4.547e-02 s/TS) || Energy: ~1.80e-21 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
+[@     1m04s] Timestep:         1491 || Speed:   17.3 MC/s (4.384e-02 s/TS) || Energy: ~1.80e-21 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
-[@     1m30s] Timestep:         1988 || Speed:   16.9 MC/s (4.493e-02 s/TS) || Energy: ~2.72e-20 (- 0.00dB)
+[@     1m26s] Timestep:         1988 || Speed:   17.5 MC/s (4.338e-02 s/TS) || Energy: ~2.72e-20 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
-[@     1m57s] Timestep:         2485 || Speed:   14.1 MC/s (5.386e-02 s/TS) || Energy: ~1.60e-19 (- 0.00dB)
+[@     1m48s] Timestep:         2485 || Speed:   17.2 MC/s (4.417e-02 s/TS) || Energy: ~1.60e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
-[@     2m23s] Timestep:         2982 || Speed:   14.3 MC/s (5.312e-02 s/TS) || Energy: ~5.29e-19 (- 0.00dB)
+[@     2m09s] Timestep:         2982 || Speed:   17.5 MC/s (4.330e-02 s/TS) || Energy: ~5.29e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
+[@     2m31s] Timestep:         3479 || Speed:   17.9 MC/s (4.240e-02 s/TS) || Energy: ~1.07e-18 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 8, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 8, column 1.
+[@     2m53s] Timestep:         3976 || Speed:   17.0 MC/s (4.459e-02 s/TS) || Energy: ~1.19e-18 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
+[@     3m15s] Timestep:         4473 || Speed:   17.3 MC/s (4.397e-02 s/TS) || Energy: ~6.70e-19 (- 2.50dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 10, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 10, column 1.
+[@     3m36s] Timestep:         4970 || Speed:   17.4 MC/s (4.371e-02 s/TS) || Energy: ~4.16e-18 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 11, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 11, column 1.
+[@     3m59s] Timestep:         5467 || Speed:   16.7 MC/s (4.545e-02 s/TS) || Energy: ~2.76e-17 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 12, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 12, column 1.
+[@     4m20s] Timestep:         5964 || Speed:   17.4 MC/s (4.356e-02 s/TS) || Energy: ~9.25e-17 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 13, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 13, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@     4m44s] Timestep:         6461 || Speed:   16.1 MC/s (4.714e-02 s/TS) || Energy: ~1.89e-16 (- 0.00dB)
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+[@     5m06s] Timestep:         6958 || Speed:   17.2 MC/s (4.413e-02 s/TS) || Energy: ~2.35e-16 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 15, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 15, column 1.
+[@     5m27s] Timestep:         7455 || Speed:   17.7 MC/s (4.295e-02 s/TS) || Energy: ~1.56e-16 (- 1.77dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 16, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 16, column 1.
+[@     5m49s] Timestep:         7952 || Speed:   17.3 MC/s (4.372e-02 s/TS) || Energy: ~1.76e-16 (- 1.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 17, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 17, column 1.
+[@     6m10s] Timestep:         8449 || Speed:   17.7 MC/s (4.282e-02 s/TS) || Energy: ~1.07e-15 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 18, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 18, column 1.
+[@     6m32s] Timestep:         8946 || Speed:   17.3 MC/s (4.384e-02 s/TS) || Energy: ~3.69e-15 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 19, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 19, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@     6m55s] Timestep:         9443 || Speed:   16.3 MC/s (4.653e-02 s/TS) || Energy: ~7.50e-15 (- 0.00dB)
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
+[@     7m18s] Timestep:         9940 || Speed:   16.6 MC/s (4.574e-02 s/TS) || Energy: ~9.77e-15 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 21, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 21, column 1.
+[@     7m40s] Timestep:        10437 || Speed:   16.7 MC/s (4.551e-02 s/TS) || Energy: ~7.93e-15 (- 0.91dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 22, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 22, column 1.
+[@     8m03s] Timestep:        10934 || Speed:   16.9 MC/s (4.480e-02 s/TS) || Energy: ~4.94e-15 (- 2.96dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 23, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 23, column 1.
+[@     8m25s] Timestep:        11431 || Speed:   16.7 MC/s (4.536e-02 s/TS) || Energy: ~1.10e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
+[@     8m47s] Timestep:        11928 || Speed:   17.4 MC/s (4.366e-02 s/TS) || Energy: ~3.45e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 25, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 25, column 1.
+[@     9m08s] Timestep:        12425 || Speed:   17.7 MC/s (4.283e-02 s/TS) || Energy: ~6.89e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 26, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 26, column 1.
+[@     9m30s] Timestep:        12922 || Speed:   17.2 MC/s (4.423e-02 s/TS) || Energy: ~9.10e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 27, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 27, column 1.
+[@     9m53s] Timestep:        13419 || Speed:   16.7 MC/s (4.552e-02 s/TS) || Energy: ~8.41e-14 (- 0.35dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 28, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 28, column 1.
+[@    10m15s] Timestep:        13916 || Speed:   17.4 MC/s (4.364e-02 s/TS) || Energy: ~6.14e-14 (- 1.71dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
+[@    10m37s] Timestep:        14413 || Speed:   16.9 MC/s (4.475e-02 s/TS) || Energy: ~6.01e-14 (- 1.81dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 30, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 30, column 1.
+[@    11m00s] Timestep:        14910 || Speed:   16.3 MC/s (4.665e-02 s/TS) || Energy: ~1.02e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 31, column 1.
+[@    11m13s] Timestep:        15191 || Speed:   16.1 MC/s (4.707e-02 s/TS) || Energy: ~1.39e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 31, column 1.
+[@    11m24s] Timestep:        15407 || Speed:   15.1 MC/s (5.034e-02 s/TS) || Energy: ~1.67e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 32, column 1.
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 32, column 1.
+
+────────────────────────────────────────────────────────────
+[STOPPED] Simulation was terminated.
+[INFO] Running post-processing...
