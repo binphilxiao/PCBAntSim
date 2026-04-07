@@ -733,6 +733,13 @@ namespace AntennaSimulatorApp.Services
             AddMidpointRefinement(shapeXs);
             AddMidpointRefinement(shapeYs);
 
+            // Ensure narrow gaps (trace widths) have at least N cells across.
+            if (ms.MinCellsPerTrace >= 2)
+            {
+                SubdivideNarrowGaps(shapeXs, ms.MinCellsPerTrace, maxRes: 3e8 / (ms.MeshFreqGHz * 1e9) * 1e3 / Math.Max(ms.CellsPerWavelength, 1));
+                SubdivideNarrowGaps(shapeYs, ms.MinCellsPerTrace, maxRes: 3e8 / (ms.MeshFreqGHz * 1e9) * 1e3 / Math.Max(ms.CellsPerWavelength, 1));
+            }
+
             if (shapeXs.Count > 0)
                 sb.AppendLine($"mesh.AddLine('x', [{string.Join(", ", shapeXs.Select(F))}])");
             if (shapeYs.Count > 0)
@@ -745,7 +752,7 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine();
             sb.AppendLine($"mesh.SmoothMeshLines('x', {F(maxRes)}, ratio=1.5)");
             sb.AppendLine($"mesh.SmoothMeshLines('y', {F(maxRes)}, ratio=1.5)");
-            sb.AppendLine($"mesh.SmoothMeshLines('z', {F(Math.Min(maxRes, 0.5))}, ratio=1.4)");
+            sb.AppendLine($"mesh.SmoothMeshLines('z', {F(Math.Min(maxRes, ms.ZMaxStepMm))}, ratio=1.4)");
             sb.AppendLine();
         }
 
@@ -1408,6 +1415,41 @@ namespace AntennaSimulatorApp.Services
                         toAdd.Add(Math.Round(a + j * step, 6));
                 }
             }
+            foreach (var v in toAdd)
+                lines.Add(v);
+        }
+
+        /// <summary>
+        /// Ensure every gap narrower than <paramref name="maxRes"/> (i.e. gaps that
+        /// represent trace widths rather than open-space regions) contains at least
+        /// <paramref name="minCells"/> mesh intervals.  Gaps that already have enough
+        /// intervals or that are wider than the normal mesh resolution are skipped.
+        /// </summary>
+        private static void SubdivideNarrowGaps(SortedSet<double> lines, int minCells, double maxRes)
+        {
+            if (lines.Count < 2 || minCells < 2) return;
+
+            var sorted = lines.ToList();
+            var toAdd = new List<double>();
+
+            for (int i = 0; i < sorted.Count - 1; i++)
+            {
+                double a = sorted[i], b = sorted[i + 1];
+                double gap = b - a;
+                if (gap < 1e-6) continue;
+                // Only refine gaps narrower than the normal mesh cell size — these
+                // correspond to trace widths that would otherwise get ≤ 1 cell.
+                if (gap >= maxRes) continue;
+
+                // How many sub-cells does this gap currently have? Since polygon
+                // edges form the boundaries, the gap itself is one cell.  We need
+                // to insert (minCells - 1) intermediate lines to get minCells cells.
+                int needed = minCells - 1;
+                double step = gap / minCells;
+                for (int j = 1; j <= needed; j++)
+                    toAdd.Add(Math.Round(a + j * step, 6));
+            }
+
             foreach (var v in toAdd)
                 lines.Add(v);
         }

@@ -137,6 +137,8 @@ namespace AntennaSimulatorApp.Views
             MeshFreqBox.Text        = m.MeshFreqGHz.ToString("G5");
             CellsPerWLBox.Text      = m.CellsPerWavelength.ToString();
             MinStepBox.Text         = m.MinStepMm.ToString("G5");
+            ZMaxStepBox.Text        = m.ZMaxStepMm.ToString("G5");
+            MinCellsPerTraceBox.Text = m.MinCellsPerTrace.ToString();
             MaxPassesBox.Text       = m.MaxAdaptivePasses.ToString();
             ConvDeltaBox.Text       = m.ConvergenceDelta.ToString("G4");
 
@@ -211,6 +213,8 @@ namespace AntennaSimulatorApp.Views
             m.MeshFreqGHz        = ParseDouble(MeshFreqBox.Text,  2.4);
             m.CellsPerWavelength = ParseInt(CellsPerWLBox.Text, 20);
             m.MinStepMm          = ParseDouble(MinStepBox.Text, 0.05);
+            m.ZMaxStepMm         = ParseDouble(ZMaxStepBox.Text, 0.5);
+            m.MinCellsPerTrace   = ParseInt(MinCellsPerTraceBox.Text, 3);
             m.MaxAdaptivePasses  = ParseInt(MaxPassesBox.Text, 10);
             m.ConvergenceDelta   = ParseDouble(ConvDeltaBox.Text, 0.01);
 

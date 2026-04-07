@@ -1,0 +1,1918 @@
+Python:  python
+Script:  C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py
+WorkDir: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim
+────────────────────────────────────────────────────────────
+
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Starting openEMS simulation...
+ ---------------------------------------------------------------------- 
+ | openEMS 64bit -- version v0.0.36
+ | (C) 2010-2023 Thorsten Liebig <thorsten.liebig@gmx.de>  GPL license
+ ---------------------------------------------------------------------- 
+	Used external libraries:
+		CSXCAD -- Version: v0.6.3
+		hdf5   -- Version: 1.12.0
+		          compiled against: HDF5 library version: 1.12.0
+		tinyxml -- compiled against: 2.6.2
+		fparser
+		boost  -- compiled against: 1_72
+		vtk -- Version: 8.2.0
+		       compiled against: 8.2.0
+
+Create FDTD operator (compressed SSE + multi-threading)
+Multithreaded operator using 8 threads.
+Operator::InitDataStorage(): Storing epsR material data...
+Operator::InitDataStorage(): Storing kappa material data...
+Operator::InitDataStorage(): Storing muR material data...
+Operator::CalcTimestep_Var3: Smallest timestep (2.58334e-14s) found at position: 2 : 79;48;52
+Compressing the FDTD operator... this may take a while...
+------- Stat: FDTD Operator -------
+Dimensions		: 94x68x92 = 588064 Cells (0.588064 MCells)
+Size of Operator	: 28227072 Byte (26.9194 MiB) 
+Size of Field-Data	: 14113536 Byte (13.4597 MiB) 
+-----------------------------------
+Background materials (epsR/mueR/kappa/sigma): 1/1/0/0
+-----------------------------------
+Number of PEC edges	: 55814
+in x direction		: 20297
+in y direction		: 20969
+in z direction		: 14548
+-----------------------------------
+Timestep (s)		: 2.58334e-14
+Timestep method name	: Rennings_2
+Nyquist criteria (TS)	: 3225
+Nyquist criteria (s)	: 8.33126e-11
+-----------------------------------
+SSE compression enabled	: yes
+Unique SSE operators	: 57947
+-----------------------------------
+-----------------------------------
+--- Excitation Extension ---
+Voltage excitations	: 45	 (0, 0, 45)
+Current excitations	: 0	 (0, 0, 0)
+Excitation Length (TS)	: 44358
+Excitation Length (s)	: 1.14592e-09
+--- Uniaxial PML Extension ---
+ PML range		: [0,0,0] to [8,67,91]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [85,0,0] to [93,67,91]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,0,0] to [84,8,91]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,59,0] to [84,67,91]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,0] to [84,58,8]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,83] to [84,58,91]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+-----------------------------------
+Creation time for operator: 7.20037 s
+FDTD simulation size: 94x68x92 --> 588064 FDTD cells 
+FDTD timestep is: 2.58334e-14 s; Nyquist rate: 3225 timesteps @6.00149e+09 Hz
+openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
+Excitation signal length is: 44358 timesteps (1.14592e-09s)
+Max. number of timesteps: 200000 ( --> 4.50877 * Excitation signal length)
+Create FDTD engine (compressed SSE + multi-threading)
+---  Engine::SortExtensionByPriority() ---
+ #0: Uniaxial PML Extension (1000000)
+ #1: Uniaxial PML Extension (1000000)
+ #2: Uniaxial PML Extension (1000000)
+ #3: Uniaxial PML Extension (1000000)
+ #4: Uniaxial PML Extension (1000000)
+ #5: Uniaxial PML Extension (1000000)
+ #6: Excitation Extension (-1000)
+Multithreaded engine using 8 threads. Utilization: (12;12;12;12;12;12;11;11)
+Setting up processing...
+Operator::CleanupMaterialStorage(): Delete epsR material data...
+Operator::CleanupMaterialStorage(): Delete mueR material data...
+Running FDTD engine... this may take a while... grab a cup of coffee?!?
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Traceback (most recent call last):
+  File "C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py", line 262, in <module>
+    p.CalcPort(sim_path, freq)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 194, in CalcPort
+    super(LumpedPort, self).CalcPort(sim_path, freq, ref_impedance, ref_plane_shift, signal_type)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 104, in CalcPort
+    self.ReadUIData(sim_path, freq, signal_type)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 88, in ReadUIData
+    self.u_data = UI_data(self.U_filenames, sim_path, freq, signal_type )
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 44, in __init__
+    self.ui_time.append(tmp[:,0])
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Traceback (most recent call last):
+  File "C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py", line 262, in <module>
+    p.CalcPort(sim_path, freq)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 194, in CalcPort
+    super(LumpedPort, self).CalcPort(sim_path, freq, ref_impedance, ref_plane_shift, signal_type)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 104, in CalcPort
+    self.ReadUIData(sim_path, freq, signal_type)
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 88, in ReadUIData
+    self.u_data = UI_data(self.U_filenames, sim_path, freq, signal_type )
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\ports.py", line 44, in __init__
+    self.ui_time.append(tmp[:,0])
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed
+[@       14s] Timestep:          806 || Speed:   32.5 MC/s (1.811e-02 s/TS) || Energy: ~6.69e-21 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -8.84 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@       32s] Timestep:         1612 || Speed:   27.2 MC/s (2.163e-02 s/TS) || Energy: ~2.83e-20 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -13.53 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@       52s] Timestep:         2418 || Speed:   23.5 MC/s (2.498e-02 s/TS) || Energy: ~5.42e-20 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -24.83 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     1m11s] Timestep:         3224 || Speed:   24.7 MC/s (2.378e-02 s/TS) || Energy: ~4.73e-20 (- 0.59dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -4.52 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -12.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     1m29s] Timestep:         4030 || Speed:   26.4 MC/s (2.229e-02 s/TS) || Energy: ~1.78e-19 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -5.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@     1m46s] Timestep:         4836 || Speed:   26.8 MC/s (2.191e-02 s/TS) || Energy: ~2.00e-18 (- 0.00dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -9.38 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     2m03s] Timestep:         5642 || Speed:   28.6 MC/s (2.053e-02 s/TS) || Energy: ~1.07e-17 (- 0.00dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -6.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -12.71 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     2m23s] Timestep:         6448 || Speed:   23.3 MC/s (2.524e-02 s/TS) || Energy: ~3.52e-17 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -16.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
+  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gdeprec.c line 1226 in H5Gget_objtype_by_idx(): can't get object info
+    major: Symbol table
+    minor: Inappropriate type
+  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 5641 in H5VL_object_get(): get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 5604 in H5VL__object_get(): get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_object.c line 267 in H5VL__native_object_get(): group not found
+    major: Object header
+    minor: Object not found
+  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gloc.c line 568 in H5G_loc_find_by_idx(): can't find object
+    major: Symbol table
+    minor: Object not found
+  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gtraverse.c line 855 in H5G_traverse(): internal path traversal failed
+    major: Symbol table
+    minor: Object not found
+  #006: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gtraverse.c line 769 in H5G__traverse_real(): traversal operator failed
+    major: Symbol table
+    minor: Can't move to next iterator location
+  #007: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gloc.c line 502 in H5G__loc_find_by_idx_cb(): link not found
+    major: Symbol table
+    minor: Object not found
+  #008: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gobj.c line 1206 in H5G_obj_lookup_by_idx(): can't locate object
+    major: Symbol table
+    minor: Object not found
+  #009: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gstab.c line 986 in H5G__stab_lookup_by_idx(): unable to protect symbol table heap
+    major: Symbol table
+    minor: Protected metadata error
+  #010: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5HL.c line 364 in H5HL_protect(): unable to load heap data block
+    major: Heap
+    minor: Unable to protect metadata
+  #011: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5AC.c line 1312 in H5AC_protect(): H5C_protect() failed
+    major: Object cache
+    minor: Unable to protect metadata
+  #012: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 2346 in H5C_protect(): can't load entry
+    major: Object cache
+    minor: Unable to load metadata into cache
+  #013: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 6598 in H5C_load_entry(): Can't read image*
+    major: Object cache
+    minor: Read failed
+  #014: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fio.c line 161 in H5F_block_read(): read through page buffer failed
+    major: Low-level I/O
+    minor: Read failed
+  #015: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5PB.c line 736 in H5PB_read(): read through metadata accumulator failed
+    major: Page Buffering
+    minor: Read failed
+  #016: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Faccum.c line 212 in H5F__accum_read(): driver read request failed
+    major: Low-level I/O
+    minor: Read failed
+  #017: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5FDint.c line 193 in H5FD_read(): addr overflow, addr = 436128, size = 352, eoa = 435856
+    major: Invalid arguments to routine
+    minor: Address overflowed
+HDF5_File_Reader::GetTDVectorData: invalid timestep found!
+HDF5_File_Reader::CalcFDVectorData: error, no TD data found...
+Traceback (most recent call last):
+  File "C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py", line 400, in <module>
+    nf2ff_3d = nf2ff_box.CalcNF2FF(sim_path, f_res, theta_3d, phi_3d, center=[0,0,0])
+  File "C:\Users\Bin Xiao\AppData\Local\Programs\Python\Python310\lib\site-packages\openEMS\nf2ff.py", line 143, in CalcNF2FF
+    raise Exception('CalcNF2FF:: Unable to analyse files!')
+Exception: CalcNF2FF:: Unable to analyse files!
+[@     2m41s] Timestep:         7254 || Speed:   27.3 MC/s (2.151e-02 s/TS) || Energy: ~7.53e-17 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -23.77 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -23.77 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     3m01s] Timestep:         8060 || Speed:   23.9 MC/s (2.465e-02 s/TS) || Energy: ~9.91e-17 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -16.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -16.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     3m20s] Timestep:         8866 || Speed:   24.2 MC/s (2.428e-02 s/TS) || Energy: ~6.77e-17 (- 1.66dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -3.82 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -7.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     3m40s] Timestep:         9672 || Speed:   24.1 MC/s (2.442e-02 s/TS) || Energy: ~1.40e-16 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -5.64 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     3m58s] Timestep:        10478 || Speed:   25.8 MC/s (2.278e-02 s/TS) || Energy: ~1.07e-15 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -9.47 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -9.47 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+[@     4m16s] Timestep:        11284 || Speed:   26.0 MC/s (2.259e-02 s/TS) || Energy: ~4.24e-15 (- 0.00dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -13.33 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     4m36s] Timestep:        12090 || Speed:   24.3 MC/s (2.419e-02 s/TS) || Energy: ~1.03e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.1900 GHz,  S11 = -15.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.1900 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     4m53s] Timestep:        12896 || Speed:   27.3 MC/s (2.155e-02 s/TS) || Energy: ~1.66e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -23.71 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     5m09s] Timestep:        13702 || Speed:   29.6 MC/s (1.990e-02 s/TS) || Energy: ~1.72e-14 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -12.29 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+[@     5m26s] Timestep:        14508 || Speed:   29.1 MC/s (2.022e-02 s/TS) || Energy: ~1.03e-14 (- 2.21dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -3.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     5m44s] Timestep:        15314 || Speed:   25.9 MC/s (2.267e-02 s/TS) || Energy: ~1.25e-14 (- 1.38dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     6m01s] Timestep:        16120 || Speed:   26.9 MC/s (2.185e-02 s/TS) || Energy: ~5.86e-14 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -8.62 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     6m19s] Timestep:        16926 || Speed:   26.5 MC/s (2.218e-02 s/TS) || Energy: ~1.71e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -10.86 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     6m37s] Timestep:        17732 || Speed:   26.4 MC/s (2.231e-02 s/TS) || Energy: ~3.14e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -12.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     6m55s] Timestep:        18538 || Speed:   26.5 MC/s (2.223e-02 s/TS) || Energy: ~3.90e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -17.67 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     7m12s] Timestep:        19344 || Speed:   28.1 MC/s (2.093e-02 s/TS) || Energy: ~3.30e-13 (- 0.72dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -9.92 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+[@     7m29s] Timestep:        20150 || Speed:   28.8 MC/s (2.044e-02 s/TS) || Energy: ~1.96e-13 (- 2.99dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -3.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     7m45s] Timestep:        20956 || Speed:   28.6 MC/s (2.053e-02 s/TS) || Energy: ~1.70e-13 (- 3.60dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     8m03s] Timestep:        21762 || Speed:   27.3 MC/s (2.157e-02 s/TS) || Energy: ~3.86e-13 (- 0.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -6.25 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.1%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     8m12s] Timestep:        22179 || Speed:   25.6 MC/s (2.293e-02 s/TS) || Energy: ~5.73e-13 (- 0.00dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     8m20s] Timestep:        22568 || Speed:   28.1 MC/s (2.092e-02 s/TS) || Energy: ~7.57e-13 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 4.2600 GHz,  S11 = -6.13 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 4.2600 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     8m38s] Timestep:        23374 || Speed:   26.4 MC/s (2.227e-02 s/TS) || Energy: ~1.03e-12 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.6600 GHz,  S11 = -6.56 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.6600 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@     8m56s] Timestep:        24180 || Speed:   26.1 MC/s (2.254e-02 s/TS) || Energy: ~1.02e-12 (- 0.04dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -9.44 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@     9m13s] Timestep:        24986 || Speed:   28.2 MC/s (2.086e-02 s/TS) || Energy: ~8.01e-13 (- 1.09dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -8.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -6.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+[@     9m31s] Timestep:        25792 || Speed:   26.4 MC/s (2.228e-02 s/TS) || Energy: ~6.05e-13 (- 2.30dB)
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -3.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.0000 GHz
+HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
+  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5F.c line 793 in H5Fopen(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3500 in H5VL_file_open(): open failed
+    major: Virtual Object Layer
+    minor: Can't open object
+  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3465 in H5VL__file_open(): open failed
+    major: Virtual Object Layer
+    minor: Can't open object
+  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_file.c line 100 in H5VL__native_file_open(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fint.c line 1707 in H5F_open(): unable to read superblock
+    major: File accessibility
+    minor: Read failed
+  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fsuper.c line 621 in H5F__super_read(): truncated file: eof = 1539808, sblock->base_addr = 0, stored_eof = 1586256
+    major: File accessibility
+    minor: File has been truncated
+HDF5_File_Reader::OpenGroup: opening the given file C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\sim_data\nf2ff_E_0.h5 failed
+[@     9m48s] Timestep:        26598 || Speed:   27.3 MC/s (2.151e-02 s/TS) || Energy: ~5.81e-13 (- 2.48dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -13.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 4.6900 GHz,  S11 = -2.08 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 4.6900 GHz
+[@    10m06s] Timestep:        27404 || Speed:   27.3 MC/s (2.155e-02 s/TS) || Energy: ~6.72e-13 (- 1.85dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    10m23s] Timestep:        28210 || Speed:   27.5 MC/s (2.137e-02 s/TS) || Energy: ~7.27e-13 (- 1.51dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 3.5100 GHz,  S11 = -3.15 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 3.5100 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    10m42s] Timestep:        29016 || Speed:   25.4 MC/s (2.317e-02 s/TS) || Energy: ~6.82e-13 (- 1.79dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -3.30 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -5.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    11m01s] Timestep:        29822 || Speed:   25.0 MC/s (2.355e-02 s/TS) || Energy: ~6.04e-13 (- 2.31dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4400 GHz,  S11 = -3.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.4400 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -7.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    11m19s] Timestep:        30628 || Speed:   26.3 MC/s (2.233e-02 s/TS) || Energy: ~5.88e-13 (- 2.43dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.0400 GHz,  S11 = -3.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.0400 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -12.1%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    11m36s] Timestep:        31434 || Speed:   26.7 MC/s (2.199e-02 s/TS) || Energy: ~6.52e-13 (- 1.98dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.9300 GHz,  S11 = -2.89 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 1.9300 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -17.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@    11m55s] Timestep:        32240 || Speed:   25.1 MC/s (2.345e-02 s/TS) || Energy: ~7.32e-13 (- 1.48dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4000 GHz,  S11 = -2.74 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.4000 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -12.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    12m13s] Timestep:        33046 || Speed:   26.0 MC/s (2.258e-02 s/TS) || Energy: ~7.56e-13 (- 1.34dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.5600 GHz,  S11 = -3.02 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.5600 GHz
+[@    12m31s] Timestep:        33852 || Speed:   26.7 MC/s (2.203e-02 s/TS) || Energy: ~7.05e-13 (- 1.64dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -6.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4700 GHz,  S11 = -3.42 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.4700 GHz
+[@    12m49s] Timestep:        34658 || Speed:   26.8 MC/s (2.190e-02 s/TS) || Energy: ~6.12e-13 (- 2.26dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.3700 GHz,  S11 = -3.73 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.3700 GHz
+[@    13m07s] Timestep:        35464 || Speed:   26.5 MC/s (2.222e-02 s/TS) || Energy: ~5.32e-13 (- 2.87dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    13m28s] Timestep:        36270 || Speed:   22.3 MC/s (2.638e-02 s/TS) || Energy: ~5.00e-13 (- 3.13dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4700 GHz,  S11 = -3.65 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.4700 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -9.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@    13m50s] Timestep:        37076 || Speed:   21.5 MC/s (2.739e-02 s/TS) || Energy: ~5.20e-13 (- 2.96dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.7100 GHz,  S11 = -3.69 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.7100 GHz
+[@    14m09s] Timestep:        37882 || Speed:   24.6 MC/s (2.388e-02 s/TS) || Energy: ~5.64e-13 (- 2.61dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -12.3%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.8300 GHz,  S11 = -4.07 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.8300 GHz
+[@    14m28s] Timestep:        38688 || Speed:   25.5 MC/s (2.306e-02 s/TS) || Energy: ~5.95e-13 (- 2.38dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -7.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -5.02 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    14m46s] Timestep:        39494 || Speed:   26.7 MC/s (2.202e-02 s/TS) || Energy: ~5.87e-13 (- 2.44dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 6.0000 GHz
+Directivity: 2.99 dBi,  Radiation Efficiency: 4.1%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    15m06s] Timestep:        40300 || Speed:   24.0 MC/s (2.455e-02 s/TS) || Energy: ~5.38e-13 (- 2.82dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.7700 GHz,  S11 = -5.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.7700 GHz
+[@    15m22s] Timestep:        41106 || Speed:   28.9 MC/s (2.036e-02 s/TS) || Energy: ~4.67e-13 (- 3.43dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.7500 GHz,  S11 = -5.48 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.7500 GHz
+[@    15m41s] Timestep:        41912 || Speed:   24.8 MC/s (2.367e-02 s/TS) || Energy: ~4.07e-13 (- 4.03dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    15m59s] Timestep:        42718 || Speed:   26.2 MC/s (2.241e-02 s/TS) || Energy: ~3.78e-13 (- 4.35dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.8300 GHz,  S11 = -5.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.8300 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -8.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@    16m16s] Timestep:        43524 || Speed:   27.8 MC/s (2.113e-02 s/TS) || Energy: ~3.82e-13 (- 4.30dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.8900 GHz,  S11 = -5.65 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.8900 GHz
+[@    16m35s] Timestep:        44330 || Speed:   24.8 MC/s (2.373e-02 s/TS) || Energy: ~4.05e-13 (- 4.05dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -9.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9200 GHz,  S11 = -6.14 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9200 GHz
+[@    16m54s] Timestep:        45136 || Speed:   25.8 MC/s (2.282e-02 s/TS) || Energy: ~4.21e-13 (- 3.88dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -7.8%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9200 GHz,  S11 = -6.72 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9200 GHz
+[@    17m12s] Timestep:        45942 || Speed:   25.9 MC/s (2.267e-02 s/TS) || Energy: ~4.14e-13 (- 3.95dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -5.1%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9000 GHz,  S11 = -7.22 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9000 GHz
+[@    17m31s] Timestep:        46748 || Speed:   24.7 MC/s (2.380e-02 s/TS) || Energy: ~3.82e-13 (- 4.31dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.8900 GHz,  S11 = -7.53 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.8900 GHz
+[@    17m50s] Timestep:        47554 || Speed:   25.6 MC/s (2.296e-02 s/TS) || Energy: ~3.35e-13 (- 4.87dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    18m08s] Timestep:        48360 || Speed:   25.4 MC/s (2.318e-02 s/TS) || Energy: ~2.93e-13 (- 5.46dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.8800 GHz,  S11 = -7.59 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.8800 GHz
+[@    18m25s] Timestep:        49166 || Speed:   28.3 MC/s (2.075e-02 s/TS) || Energy: ~2.68e-13 (- 5.84dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    18m42s] Timestep:        49972 || Speed:   27.5 MC/s (2.141e-02 s/TS) || Energy: ~2.66e-13 (- 5.87dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9300 GHz,  S11 = -7.92 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9300 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -7.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    19m00s] Timestep:        50778 || Speed:   27.2 MC/s (2.163e-02 s/TS) || Energy: ~2.79e-13 (- 5.66dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -8.45 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m17s] Timestep:        51584 || Speed:   28.2 MC/s (2.089e-02 s/TS) || Energy: ~2.92e-13 (- 5.47dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -3.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    19m35s] Timestep:        52390 || Speed:   25.8 MC/s (2.281e-02 s/TS) || Energy: ~2.92e-13 (- 5.48dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9300 GHz,  S11 = -9.66 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9300 GHz
+[@    19m51s] Timestep:        53196 || Speed:   29.4 MC/s (2.004e-02 s/TS) || Energy: ~2.72e-13 (- 5.77dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    20m09s] Timestep:        54002 || Speed:   26.5 MC/s (2.217e-02 s/TS) || Energy: ~2.40e-13 (- 6.32dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9200 GHz,  S11 = -10.13 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9200 GHz
+[@    20m26s] Timestep:        54808 || Speed:   28.5 MC/s (2.062e-02 s/TS) || Energy: ~2.08e-13 (- 6.94dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -1.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    20m44s] Timestep:        55614 || Speed:   25.1 MC/s (2.339e-02 s/TS) || Energy: ~1.89e-13 (- 7.37dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9300 GHz,  S11 = -10.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9300 GHz
+[@    21m03s] Timestep:        56420 || Speed:   25.5 MC/s (2.304e-02 s/TS) || Energy: ~1.86e-13 (- 7.43dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -10.48 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+[@    21m21s] Timestep:        57226 || Speed:   26.0 MC/s (2.260e-02 s/TS) || Energy: ~1.95e-13 (- 7.23dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -5.1%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    21m39s] Timestep:        58032 || Speed:   25.9 MC/s (2.267e-02 s/TS) || Energy: ~2.04e-13 (- 7.02dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -11.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    21m56s] Timestep:        58838 || Speed:   28.7 MC/s (2.046e-02 s/TS) || Energy: ~2.05e-13 (- 7.00dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.0%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    22m13s] Timestep:        59644 || Speed:   27.5 MC/s (2.139e-02 s/TS) || Energy: ~1.94e-13 (- 7.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -12.92 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+Directivity: 8.85 dBi,  Radiation Efficiency: 0.9%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@    22m31s] Timestep:        60450 || Speed:   26.9 MC/s (2.187e-02 s/TS) || Energy: ~1.73e-13 (- 7.75dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -13.06 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
+  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gdeprec.c line 903 in H5Gget_num_objs(): unable to get group info
+    major: Symbol table
+    minor: Can't get value
+  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 4294 in H5VL_group_get(): group get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 4257 in H5VL__group_get(): group get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_group.c line 178 in H5VL__native_group_get(): can't retrieve group info
+    major: Symbol table
+    minor: Can't get value
+  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gobj.c line 768 in H5G__obj_info(): can't count objects
+    major: Symbol table
+    minor: Can't count elements
+  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gstab.c line 633 in H5G__stab_count(): iteration operator failed
+    major: Symbol table
+    minor: Unable to initialize object
+  #006: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5B.c line 1212 in H5B_iterate(): B-tree iteration failed
+    major: B-Tree node
+    minor: Iteration failed
+  #007: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5B.c line 1168 in H5B__iterate_helper(): B-tree iteration failed
+    major: B-Tree node
+    minor: Iteration failed
+  #008: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gnode.c line 1057 in H5G__node_sumup(): unable to load symbol table node
+    major: Symbol table
+    minor: Unable to load metadata into cache
+  #009: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5AC.c line 1312 in H5AC_protect(): H5C_protect() failed
+    major: Object cache
+    minor: Unable to protect metadata
+  #010: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 2346 in H5C_protect(): can't load entry
+    major: Object cache
+    minor: Unable to load metadata into cache
+  #011: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 6598 in H5C_load_entry(): Can't read image*
+    major: Object cache
+    minor: Read failed
+  #012: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fio.c line 161 in H5F_block_read(): read through page buffer failed
+    major: Low-level I/O
+    minor: Read failed
+  #013: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5PB.c line 736 in H5PB_read(): read through metadata accumulator failed
+    major: Page Buffering
+    minor: Read failed
+  #014: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Faccum.c line 212 in H5F__accum_read(): driver read request failed
+    major: Low-level I/O
+    minor: Read failed
+  #015: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5FDint.c line 193 in H5FD_read(): addr overflow, addr = 3537344, size = 328, eoa = 3537072
+    major: Invalid arguments to routine
+    minor: Address overflowed
+HDF5_File_Reader::GetTDVectorData: can't read number of datasets
+[@    22m49s] Timestep:        61256 || Speed:   25.9 MC/s (2.273e-02 s/TS) || Energy: ~1.50e-13 (- 8.35dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    23m07s] Timestep:        62062 || Speed:   25.8 MC/s (2.277e-02 s/TS) || Energy: ~1.35e-13 (- 8.83dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9400 GHz,  S11 = -13.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9400 GHz
+[@    23m25s] Timestep:        62868 || Speed:   26.7 MC/s (2.202e-02 s/TS) || Energy: ~1.30e-13 (- 8.99dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    23m43s] Timestep:        63674 || Speed:   26.5 MC/s (2.216e-02 s/TS) || Energy: ~1.35e-13 (- 8.82dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -14.13 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -2.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+[@    24m01s] Timestep:        64480 || Speed:   26.5 MC/s (2.216e-02 s/TS) || Energy: ~1.43e-13 (- 8.56dB)
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -15.01 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    24m19s] Timestep:        65286 || Speed:   26.8 MC/s (2.195e-02 s/TS) || Energy: ~1.47e-13 (- 8.46dB)
+Directivity: 8.49 dBi,  Radiation Efficiency: 1.2%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    24m37s] Timestep:        66092 || Speed:   26.3 MC/s (2.233e-02 s/TS) || Energy: ~1.40e-13 (- 8.66dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -16.45 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    24m55s] Timestep:        66898 || Speed:   25.2 MC/s (2.337e-02 s/TS) || Energy: ~1.25e-13 (- 9.17dB)
+Directivity: 5.42 dBi,  Radiation Efficiency: 2.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    25m14s] Timestep:        67704 || Speed:   26.2 MC/s (2.244e-02 s/TS) || Energy: ~1.07e-13 (- 9.83dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -16.63 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    25m31s] Timestep:        68510 || Speed:   27.1 MC/s (2.167e-02 s/TS) || Energy: ~9.47e-14 (-10.36dB)
+Directivity: 10.94 dBi,  Radiation Efficiency: 0.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -16.73 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
+  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gdeprec.c line 1226 in H5Gget_objtype_by_idx(): can't get object info
+    major: Symbol table
+    minor: Inappropriate type
+  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 5641 in H5VL_object_get(): get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 5604 in H5VL__object_get(): get failed
+    major: Virtual Object Layer
+    minor: Can't get value
+  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_object.c line 267 in H5VL__native_object_get(): group not found
+    major: Object header
+    minor: Object not found
+  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gloc.c line 568 in H5G_loc_find_by_idx(): can't find object
+    major: Symbol table
+    minor: Object not found
+  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gtraverse.c line 855 in H5G_traverse(): internal path traversal failed
+    major: Symbol table
+    minor: Object not found
+  #006: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gtraverse.c line 769 in H5G__traverse_real(): traversal operator failed
+    major: Symbol table
+    minor: Can't move to next iterator location
+  #007: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gloc.c line 502 in H5G__loc_find_by_idx_cb(): link not found
+    major: Symbol table
+    minor: Object not found
+  #008: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gobj.c line 1206 in H5G_obj_lookup_by_idx(): can't locate object
+    major: Symbol table
+    minor: Object not found
+  #009: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Gstab.c line 986 in H5G__stab_lookup_by_idx(): unable to protect symbol table heap
+    major: Symbol table
+    minor: Protected metadata error
+  #010: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5HL.c line 364 in H5HL_protect(): unable to load heap data block
+    major: Heap
+    minor: Unable to protect metadata
+  #011: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5AC.c line 1312 in H5AC_protect(): H5C_protect() failed
+    major: Object cache
+    minor: Unable to protect metadata
+  #012: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 2346 in H5C_protect(): can't load entry
+    major: Object cache
+    minor: Unable to load metadata into cache
+  #013: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5C.c line 6598 in H5C_load_entry(): Can't read image*
+    major: Object cache
+    minor: Read failed
+  #014: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fio.c line 161 in H5F_block_read(): read through page buffer failed
+    major: Low-level I/O
+    minor: Read failed
+  #015: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5PB.c line 736 in H5PB_read(): read through metadata accumulator failed
+    major: Page Buffering
+    minor: Read failed
+  #016: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Faccum.c line 212 in H5F__accum_read(): driver read request failed
+    major: Low-level I/O
+    minor: Read failed
+  #017: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5FDint.c line 193 in H5FD_read(): addr overflow, addr = 4001824, size = 2816, eoa = 4001552
+    major: Invalid arguments to routine
+    minor: Address overflowed
+HDF5_File_Reader::GetTDVectorData: invalid timestep found!
+[@    25m50s] Timestep:        69316 || Speed:   25.1 MC/s (2.344e-02 s/TS) || Energy: ~9.19e-14 (-10.49dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:327: RuntimeWarning: invalid value encountered in log10
+  D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -4.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    26m07s] Timestep:        70122 || Speed:   27.3 MC/s (2.154e-02 s/TS) || Energy: ~9.62e-14 (-10.29dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9600 GHz,  S11 = -17.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9600 GHz
+[@    26m25s] Timestep:        70928 || Speed:   26.5 MC/s (2.223e-02 s/TS) || Energy: ~1.02e-13 (-10.04dB)
+C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\scripts\run_simulation.py:326: RuntimeWarning: invalid value encountered in log10
+  D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
+Directivity: nan dBi,  Radiation Efficiency: -0.6%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+HDF5-DIAG: Error detected in HDF5 (1.12.0) thread 0:
+  #000: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5F.c line 793 in H5Fopen(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #001: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3500 in H5VL_file_open(): open failed
+    major: Virtual Object Layer
+    minor: Can't open object
+  #002: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLcallback.c line 3465 in H5VL__file_open(): open failed
+    major: Virtual Object Layer
+    minor: Can't open object
+  #003: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5VLnative_file.c line 100 in H5VL__native_file_open(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #004: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fint.c line 1707 in H5F_open(): unable to read superblock
+    major: File accessibility
+    minor: Read failed
+  #005: C:\Users\liebig\Downloads\hdf5-1.12.0\src\H5Fsuper.c line 621 in H5F__super_read(): truncated file: eof = 4248736, sblock->base_addr = 0, stored_eof = 4296384
+    major: File accessibility
+    minor: File has been truncated
+HDF5_File_Reader::OpenGroup: opening the given file C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\sim_data\nf2ff_E_5.h5 failed
+[@    26m46s] Timestep:        71734 || Speed:   22.8 MC/s (2.583e-02 s/TS) || Energy: ~1.03e-13 (- 9.99dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -20.26 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    27m06s] Timestep:        72540 || Speed:   23.5 MC/s (2.502e-02 s/TS) || Energy: ~9.78e-14 (-10.22dB)
+Directivity: 5.57 dBi,  Radiation Efficiency: 2.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    27m28s] Timestep:        73346 || Speed:   22.2 MC/s (2.644e-02 s/TS) || Energy: ~8.77e-14 (-10.69dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -21.64 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    27m45s] Timestep:        74152 || Speed:   26.9 MC/s (2.183e-02 s/TS) || Energy: ~7.67e-14 (-11.28dB)
+Directivity: 4.36 dBi,  Radiation Efficiency: 3.7%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    28m04s] Timestep:        74958 || Speed:   25.4 MC/s (2.313e-02 s/TS) || Energy: ~6.85e-14 (-11.77dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9500 GHz,  S11 = -21.73 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9500 GHz
+[@    28m21s] Timestep:        75764 || Speed:   27.7 MC/s (2.124e-02 s/TS) || Energy: ~6.51e-14 (-11.99dB)
+Directivity: 14.33 dBi,  Radiation Efficiency: 0.4%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+[@    28m39s] Timestep:        76570 || Speed:   26.4 MC/s (2.229e-02 s/TS) || Energy: ~6.61e-14 (-11.92dB)
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[@    28m55s] Timestep:        77376 || Speed:   29.3 MC/s (2.010e-02 s/TS) || Energy: ~6.93e-14 (-11.72dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9600 GHz,  S11 = -25.33 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9600 GHz
+[@    29m12s] Timestep:        78182 || Speed:   27.7 MC/s (2.120e-02 s/TS) || Energy: ~7.13e-14 (-11.59dB)
+Directivity: 6.46 dBi,  Radiation Efficiency: 2.5%
+E-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Eplane.csv
+H-plane pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Hplane.csv
+Far-field summary saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_Summary.csv
+Far-field pattern plots saved.
+Computing full 3D far-field pattern ...
+3D far-field pattern saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\FarField_3D.csv
+[WARN] Failed to plot Jf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Ef_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+[WARN] Failed to plot Hf_surface: "Unable to synchronously open object (object 'f0_real' doesn't exist)"
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.9600 GHz,  S11 = -27.38 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    29m37s] Timestep:        78988 || Speed:   19.0 MC/s (3.099e-02 s/TS) || Energy: ~6.95e-14 (-11.70dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+Far-field at resonance: 2.9600 GHz
+
+[STOPPED] Simulation was cancelled by user.
+
+────────────────────────────────────────────────────────────
+[STOPPED] Simulation was terminated.

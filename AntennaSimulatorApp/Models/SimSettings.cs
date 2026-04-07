@@ -135,6 +135,8 @@ namespace AntennaSimulatorApp.Models
         private double _meshFreqGHz      = 2.4;
         private int    _cellsPerWL       = 20;
         private double _minStepMm        = 0.05;
+        private double _zMaxStepMm       = 0.5;
+        private int    _minCellsPerTrace  = 3;
         private int    _maxPasses        = 10;
         private double _convergenceDelta = 0.01;
 
@@ -142,6 +144,10 @@ namespace AntennaSimulatorApp.Models
         public double MeshFreqGHz       { get => _meshFreqGHz;      set { _meshFreqGHz      = value; OnPropertyChanged(); } }
         public int    CellsPerWavelength{ get => _cellsPerWL;       set { _cellsPerWL       = value; OnPropertyChanged(); } }
         public double MinStepMm         { get => _minStepMm;        set { _minStepMm        = value; OnPropertyChanged(); } }
+        /// <summary>Maximum mesh step in Z direction (mm). Controls SmoothMeshLines for Z axis.</summary>
+        public double ZMaxStepMm         { get => _zMaxStepMm;       set { _zMaxStepMm       = value; OnPropertyChanged(); } }
+        /// <summary>Minimum number of FDTD cells across each trace width (default 3).</summary>
+        public int    MinCellsPerTrace   { get => _minCellsPerTrace; set { _minCellsPerTrace = value; OnPropertyChanged(); } }
         public int    MaxAdaptivePasses { get => _maxPasses;        set { _maxPasses        = value; OnPropertyChanged(); } }
         /// <summary>Convergence delta for S-parameter between passes (e.g. 0.01 → 1%).</summary>
         public double ConvergenceDelta  { get => _convergenceDelta; set { _convergenceDelta = value; OnPropertyChanged(); } }

@@ -24,6 +24,9 @@ namespace AntennaSimulatorApp.Views
         private bool _postProcessRunning;
         private S11ResultWindow? _liveResultWindow;
 
+        // Log file
+        private StreamWriter? _logWriter;
+
         // Regex to match openEMS timestep output: "[@ 1234]" or "Timestep: 1234"
         private static readonly Regex _tsRegex = new(
             @"(?:\[@\s*(\d+)\]|Timestep:\s*(\d+))",
@@ -64,6 +67,17 @@ namespace AntennaSimulatorApp.Views
                 TxtStatus.Text = "Error: Script not found";
                 return;
             }
+
+            // Create log file in project log/ folder
+            try
+            {
+                string projectDir = Path.GetDirectoryName(_simDir)!;
+                string logDir = Path.Combine(projectDir, "log");
+                Directory.CreateDirectory(logDir);
+                string logPath = Path.Combine(logDir, "simulation.log");
+                _logWriter = new StreamWriter(logPath, append: false) { AutoFlush = true };
+            }
+            catch { /* ignore log file errors */ }
 
             AppendLine($"Python:  {pythonExe}");
             AppendLine($"Script:  {_scriptPath}");
@@ -171,6 +185,9 @@ namespace AntennaSimulatorApp.Views
                     // Run final post-processing on partial data
                     RunPostProcessAsync(isFinal: true);
                 }
+
+                // Close log file
+                try { _logWriter?.Close(); _logWriter = null; } catch { }
             });
         }
 
@@ -315,6 +332,7 @@ namespace AntennaSimulatorApp.Views
         {
             TxtConsole.AppendText(text + Environment.NewLine);
             TxtConsole.ScrollToEnd();
+            try { _logWriter?.WriteLine(text); } catch { }
         }
 
         private string? FindPython()

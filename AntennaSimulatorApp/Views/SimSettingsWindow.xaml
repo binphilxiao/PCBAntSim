@@ -613,6 +613,8 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Row="0"
@@ -650,11 +652,33 @@
 
                                 <Label Grid.Row="3"
                                        Grid.Column="0"
-                                       Content="Max adaptive passes *:"/>
+                                       Content="Z max step (mm):"/>
                                 <TextBox Grid.Row="3"
                                          Grid.Column="1"
-                                         x:Name="MaxPassesBox"/>
+                                         x:Name="ZMaxStepBox"/>
                                 <TextBlock Grid.Row="3"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  max mesh spacing in Z (stackup) direction; default 0.5"/>
+
+                                <Label Grid.Row="4"
+                                       Grid.Column="0"
+                                       Content="Min cells per trace width:"/>
+                                <TextBox Grid.Row="4"
+                                         Grid.Column="1"
+                                         x:Name="MinCellsPerTraceBox"/>
+                                <TextBlock Grid.Row="4"
+                                           Grid.Column="2"
+                                           Style="{StaticResource Hint}"
+                                           Text="  ensure at least N cells across each narrow trace; 0 = off"/>
+
+                                <Label Grid.Row="5"
+                                       Grid.Column="0"
+                                       Content="Max adaptive passes *:"/>
+                                <TextBox Grid.Row="5"
+                                         Grid.Column="1"
+                                         x:Name="MaxPassesBox"/>
+                                <TextBlock Grid.Row="5"
                                            Grid.Column="2"
                                            Style="{StaticResource Hint}"
                                            Text="  convergence delta = ΔS &lt; threshold between passes"/>
