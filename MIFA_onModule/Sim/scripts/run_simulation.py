@@ -47,19 +47,15 @@ mat_fr4 = csx.AddMaterial('mat_fr4', epsilon=4.3, kappa=0.02)
 
 # --- Carrier Board Geometry ---
 mat_fr4.AddBox([-40, -100, -0.2], [40, 0, 0], priority=0)
-mat_fr4.AddBox([-40, -100, -1.26], [40, 0, -0.2], priority=0)
-mat_fr4.AddBox([-40, -100, -1.46], [40, 0, -1.26], priority=0)
+mat_fr4.AddBox([-40, -100, -1.46], [40, 0, -0.2], priority=0)
 
 # carrier_CARRIER_L2_GND_main_0
 copper.AddPolygon(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', -0.2, priority=12)
 # carrier_CARRIER_TOP_GND_main_1
 copper.AddPolygon(np.array([[-40, -40, 40, 40, 15, 15, -15, -15], [0, -100, -100, 0, 0, -4, -4, 0]]), 'z', 0, priority=12)
 # --- RF Module Geometry ---
-mat_fr4.AddBox([-5.1, -15, 0.1], [5.1, -0, 0.15], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.15], [5.1, -0, 0.2], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.2], [5.1, -0, 0.39], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.39], [5.1, -0, 0.44], priority=0)
-mat_fr4.AddBox([-5.1, -15, 0.44], [5.1, -0, 0.49], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.1], [5.1, -0, 0.39], priority=0)
+mat_fr4.AddBox([-5.1, -15, 0.39], [5.1, -0, 0.49], priority=0)
 
 # module_MODULE_L3_GND_main_0
 copper.AddPolygon(np.array([[-5.1, -5.1, 5.1, 5.1], [-4, -15, -15, -4]]), 'z', 0.39, priority=12)
@@ -246,10 +242,6 @@ os.makedirs(sim_path, exist_ok=True)
 csx.Write2XML(os.path.join(sim_path, 'antenna.xml'))
 sim.SetCSX(csx)
 
-# --- NF2FF Recording Box ---
-from openEMS.nf2ff import nf2ff
-nf2ff_box = sim.CreateNF2FFBox()
-
 if not post_only:
     print('Starting openEMS simulation...')
     sim.Run(sim_path, verbose=2, numThreads=8)
@@ -294,123 +286,6 @@ try:
     print(f'S11 plot saved to {plot_path}')
 except ImportError:
     print('matplotlib not available - skipping plot.')
-
-# --- Post-Processing: Far-Field ---
-ff_freq = np.linspace(1000000000, 4000000000, 501)
-
-try:
-    _ = ports[0].uf_inc
-except:
-    for p in ports:
-        p.CalcPort(sim_path, ff_freq)
-
-ff_s11_dB = 20 * np.log10(np.abs(ports[0].uf_ref / ports[0].uf_inc))
-ff_idx_min = np.argmin(ff_s11_dB)
-f_res = ff_freq[ff_idx_min]
-print(f'Far-field at resonance: {f_res/1e9:.4f} GHz')
-
-theta = np.arange(-180, 180.5, 1)
-phi_E = 0    # E-plane (XZ)
-phi_H = 90   # H-plane (YZ)
-
-P_in = 0.5 * np.real(ports[0].uf_tot[ff_idx_min] * np.conj(ports[0].if_tot[ff_idx_min]))
-
-nf2ff_res_E = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_E, center=[0,0,0])
-E_norm = nf2ff_res_E.E_norm[0]
-Dmax_E = nf2ff_res_E.Dmax[0]
-
-nf2ff_res_H = nf2ff_box.CalcNF2FF(sim_path, f_res, theta, phi_H, center=[0,0,0])
-H_norm = nf2ff_res_H.E_norm[0]
-Dmax_H = nf2ff_res_H.Dmax[0]
-
-D_E_dBi = 10 * np.log10(nf2ff_res_E.Dmax[0])
-D_H_dBi = 10 * np.log10(nf2ff_res_H.Dmax[0])
-
-if P_in > 0:
-    realized_gain_E = (E_norm**2 / np.max(E_norm**2)) * nf2ff_res_E.Dmax[0]
-    realized_gain_H = (H_norm**2 / np.max(H_norm**2)) * nf2ff_res_H.Dmax[0]
-else:
-    realized_gain_E = E_norm**2 / np.max(E_norm**2) if np.max(E_norm**2) > 0 else E_norm * 0
-    realized_gain_H = H_norm**2 / np.max(H_norm**2) if np.max(H_norm**2) > 0 else H_norm * 0
-
-E_pattern_dB = 10 * np.log10(E_norm**2 / np.max(E_norm**2) + 1e-12)
-H_pattern_dB = 10 * np.log10(H_norm**2 / np.max(H_norm**2) + 1e-12)
-
-Prad = nf2ff_res_E.Prad[0]
-eff = Prad / P_in if P_in > 0 else 0
-print(f'Directivity: {D_E_dBi:.2f} dBi,  Radiation Efficiency: {eff*100:.1f}%')
-
-eplane_csv = os.path.join(results_dir, 'FarField_Eplane.csv')
-np.savetxt(eplane_csv, np.column_stack((theta, E_pattern_dB)),
-           delimiter=',', header='Theta_deg,Pattern_dB', comments='')
-print(f'E-plane pattern saved to {eplane_csv}')
-
-hplane_csv = os.path.join(results_dir, 'FarField_Hplane.csv')
-np.savetxt(hplane_csv, np.column_stack((theta, H_pattern_dB)),
-           delimiter=',', header='Theta_deg,Pattern_dB', comments='')
-print(f'H-plane pattern saved to {hplane_csv}')
-
-summary_csv = os.path.join(results_dir, 'FarField_Summary.csv')
-with open(summary_csv, 'w') as f:
-    f.write('Parameter,Value\n')
-    f.write(f'Frequency_GHz,{f_res/1e9:.6f}\n')
-    f.write(f'Directivity_dBi,{D_E_dBi:.4f}\n')
-    f.write(f'RadiationEfficiency,{eff:.6f}\n')
-    f.write(f'Prad_W,{Prad:.6e}\n')
-    f.write(f'Pin_W,{P_in:.6e}\n')
-print(f'Far-field summary saved to {summary_csv}')
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-
-    # --- Rectangular pattern plot ---
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(theta, E_pattern_dB, 'b-', linewidth=1.5, label='E-plane')
-    ax.plot(theta, H_pattern_dB, 'r--', linewidth=1.5, label='H-plane')
-    ax.set_xlabel('Theta (degrees)')
-    ax.set_ylabel('Normalized Pattern (dB)')
-    ax.set_title(f'Far-Field Pattern @ {f_res/1e9:.3f} GHz')
-    ax.set_ylim([-40, 5])
-    ax.grid(True)
-    ax.legend()
-    fig.savefig(os.path.join(results_dir, 'FarField_Rectangular.png'), dpi=150)
-    plt.close(fig)
-
-    # --- Polar pattern plot ---
-    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'polar': True}, figsize=(12, 5))
-    theta_rad = np.deg2rad(theta)
-    ax1.plot(theta_rad, np.clip(E_pattern_dB, -40, 0) + 40, 'b-', linewidth=1.5)
-    ax1.set_title('E-plane', pad=15)
-    ax1.set_ylim([0, 40])
-    ax2.plot(theta_rad, np.clip(H_pattern_dB, -40, 0) + 40, 'r-', linewidth=1.5)
-    ax2.set_title('H-plane', pad=15)
-    ax2.set_ylim([0, 40])
-    fig.savefig(os.path.join(results_dir, 'FarField_Polar.png'), dpi=150)
-    plt.close(fig)
-    print('Far-field pattern plots saved.')
-except ImportError:
-    print('matplotlib not available - skipping far-field plots.')
-
-# --- 3D Far-Field Pattern ---
-print('Computing full 3D far-field pattern ...')
-theta_3d = np.arange(0, 181, 5)
-phi_3d   = np.arange(0, 361, 5)
-nf2ff_3d = nf2ff_box.CalcNF2FF(sim_path, f_res, theta_3d, phi_3d, center=[0,0,0])
-E3d = nf2ff_3d.E_norm[0]
-E3d_max2 = np.max(E3d**2)
-if E3d_max2 > 0:
-    E3d_dB = 10 * np.log10(E3d**2 / E3d_max2 + 1e-12)
-else:
-    E3d_dB = np.zeros_like(E3d)
-ff3d_csv = os.path.join(results_dir, 'FarField_3D.csv')
-with open(ff3d_csv, 'w') as f3d:
-    f3d.write('Theta_deg,Phi_deg,Pattern_dB\n')
-    for ti in range(len(theta_3d)):
-        for pi in range(len(phi_3d)):
-            f3d.write(f'{theta_3d[ti]:.1f},{phi_3d[pi]:.1f},{E3d_dB[ti,pi]:.4f}\n')
-print(f'3D far-field pattern saved to {ff3d_csv}')
 
 # --- Post-Processing: Field Dump Heatmaps ---
 try:

@@ -243,47 +243,80 @@ namespace AntennaSimulatorApp.Services
             double yMax =  0;
 
             bool pec = vm.SimSettings.Mesh.UsePecSheets;
+
+            // Build effective layer list: skip copper layers that have no content
+            // and merge adjacent dielectric layers when the copper between them is empty.
+            var layers = board.Stackup.Layers;
             double zFace = 0.0;
-            int layerIdx = 0;
+            double pendingDielectricThickness = 0;
+            string? pendingMatVar = null;
+            double pendingZTop = 0;
 
-            foreach (var layer in board.Stackup.Layers)
+            foreach (var layer in layers)
             {
-                if (layer.Thickness <= 0) { layerIdx++; continue; }
-
-                // When PEC sheets are enabled, copper layers have zero thickness —
-                // the copper plane sits at zFace and dielectrics expand to fill the gap.
-                double effectiveThickness = (pec && layer.IsConductive) ? 0 : layer.Thickness;
-                double zBot = zFace - effectiveThickness;
+                if (layer.Thickness <= 0) continue;
 
                 if (layer.IsConductive)
                 {
-                    if (layer.HasGerber)
+                    bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: true);
+
+                    if (hasContent)
                     {
-                        ExportGerberLayerStl(stlDir, stlEntries, getGerberData,
-                            layer, zFace, $"carrier_gerber_L{layerIdx}");
-                    }
-                    else if (includeDefaultCopper)
-                    {
-                        bool hasShapes = vm.ManualShapes.Any(s =>
-                            s.IsCarrier && s.LayerName == layer.Name);
-                        if (!hasShapes)
+                        // Flush pending dielectric before this copper layer
+                        if (pendingDielectricThickness > 0 && pendingMatVar != null)
                         {
-                            sb.AppendLine($"copper.AddBox(" +
-                                $"[{F(xMin)}, {F(yMin)}, {F(zBot)}], " +
-                                $"[{F(xMax)}, {F(yMax)}, {F(zFace)}], priority=10)");
+                            double dBot = pendingZTop - pendingDielectricThickness;
+                            sb.AppendLine($"{pendingMatVar}.AddBox(" +
+                                $"[{F(xMin)}, {F(yMin)}, {F(dBot)}], " +
+                                $"[{F(xMax)}, {F(yMax)}, {F(pendingZTop)}], priority=0)");
+                            pendingDielectricThickness = 0;
+                            pendingMatVar = null;
                         }
+
+                        double effectiveThickness = pec ? 0 : layer.Thickness;
+                        double zBot = zFace - effectiveThickness;
+
+                        if (layer.HasGerber)
+                        {
+                            ExportGerberLayerStl(stlDir, stlEntries, getGerberData,
+                                layer, zFace, $"carrier_gerber_{layer.Name}");
+                        }
+
+                        zFace -= effectiveThickness;
+                    }
+                    else
+                    {
+                        // No content — skip this copper layer entirely (PEC or not).
+                        // Its thickness becomes part of the adjacent dielectric.
+                        if (!pec)
+                        {
+                            // When not using PEC, the physical copper thickness is
+                            // absorbed into the surrounding dielectric (minor approx).
+                            pendingDielectricThickness += layer.Thickness;
+                        }
+                        // When PEC, copper thickness is 0 anyway — nothing to add.
                     }
                 }
                 else
                 {
-                    string matVar = MaterialVarName(layer);
-                    sb.AppendLine($"{matVar}.AddBox(" +
-                        $"[{F(xMin)}, {F(yMin)}, {F(zBot)}], " +
-                        $"[{F(xMax)}, {F(yMax)}, {F(zFace)}], priority=0)");
+                    // Dielectric layer — accumulate
+                    if (pendingDielectricThickness == 0)
+                    {
+                        pendingZTop = zFace;
+                        pendingMatVar = MaterialVarName(layer);
+                    }
+                    pendingDielectricThickness += layer.Thickness;
+                    zFace -= layer.Thickness;
                 }
+            }
 
-                zFace -= effectiveThickness;
-                layerIdx++;
+            // Flush remaining dielectric
+            if (pendingDielectricThickness > 0 && pendingMatVar != null)
+            {
+                double dBot = pendingZTop - pendingDielectricThickness;
+                sb.AppendLine($"{pendingMatVar}.AddBox(" +
+                    $"[{F(xMin)}, {F(yMin)}, {F(dBot)}], " +
+                    $"[{F(xMax)}, {F(yMax)}, {F(pendingZTop)}], priority=0)");
             }
             sb.AppendLine();
 
@@ -304,58 +337,79 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("# --- RF Module Geometry ---");
             var mod = vm.Module;
 
-            // Map module position to carrier coordinate system:
-            //   Exporter X = carrier Height axis (centred at 0)
-            //   Exporter Y = carrier Width axis  (from -Width to 0)
-            //   PositionY shifts along Height (exporter X)
-            //   PositionX shifts inward along Width (exporter -Y)
             double xMin = mod.PositionY - mod.Height / 2.0;
             double xMax = mod.PositionY + mod.Height / 2.0;
             double yMin = -mod.PositionX - mod.Width;
             double yMax = -mod.PositionX;
 
-            // Module layers iterate bottom-to-top (reversed)
-            double zBase = MountGap;
             bool pec = vm.SimSettings.Mesh.UsePecSheets;
-            var layers = mod.Stackup.Layers.ToList();
-            int layerIdx = 0;
 
-            foreach (var layer in layers.AsEnumerable().Reverse())
+            // Build effective layer list bottom-to-top: skip copper layers without
+            // content and merge adjacent dielectric layers.
+            double zBase = MountGap;
+            double pendingDielectricThickness = 0;
+            string? pendingMatVar = null;
+            double pendingZBot = 0;
+
+            foreach (var layer in mod.Stackup.Layers.AsEnumerable().Reverse())
             {
-                if (layer.Thickness <= 0) { layerIdx++; continue; }
-
-                double effectiveThickness = (pec && layer.IsConductive) ? 0 : layer.Thickness;
-                double zTop = zBase + effectiveThickness;
+                if (layer.Thickness <= 0) continue;
 
                 if (layer.IsConductive)
                 {
-                    if (layer.HasGerber)
+                    bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: false);
+
+                    if (hasContent)
                     {
-                        ExportGerberLayerStl(stlDir, stlEntries, getGerberData,
-                            layer, zTop, $"module_gerber_L{layerIdx}");
-                    }
-                    else if (includeDefaultCopper)
-                    {
-                        bool hasShapes = vm.ManualShapes.Any(s =>
-                            !s.IsCarrier && s.LayerName == layer.Name);
-                        if (!hasShapes)
+                        // Flush pending dielectric before this copper layer
+                        if (pendingDielectricThickness > 0 && pendingMatVar != null)
                         {
-                            sb.AppendLine($"copper.AddBox(" +
-                                $"[{F(xMin)}, {F(yMin)}, {F(zBase)}], " +
-                                $"[{F(xMax)}, {F(yMax)}, {F(zTop)}], priority=10)");
+                            double dTop = pendingZBot + pendingDielectricThickness;
+                            sb.AppendLine($"{pendingMatVar}.AddBox(" +
+                                $"[{F(xMin)}, {F(yMin)}, {F(pendingZBot)}], " +
+                                $"[{F(xMax)}, {F(yMax)}, {F(dTop)}], priority=0)");
+                            pendingDielectricThickness = 0;
+                            pendingMatVar = null;
                         }
+
+                        double effectiveThickness = pec ? 0 : layer.Thickness;
+                        double zTop = zBase + effectiveThickness;
+
+                        if (layer.HasGerber)
+                        {
+                            ExportGerberLayerStl(stlDir, stlEntries, getGerberData,
+                                layer, zTop, $"module_gerber_{layer.Name}");
+                        }
+
+                        zBase = zTop;
+                    }
+                    else
+                    {
+                        // No content — skip this copper layer.
+                        if (!pec)
+                            pendingDielectricThickness += layer.Thickness;
                     }
                 }
                 else
                 {
-                    string matVar = MaterialVarName(layer);
-                    sb.AppendLine($"{matVar}.AddBox(" +
-                        $"[{F(xMin)}, {F(yMin)}, {F(zBase)}], " +
-                        $"[{F(xMax)}, {F(yMax)}, {F(zTop)}], priority=0)");
+                    // Dielectric layer — accumulate
+                    if (pendingDielectricThickness == 0)
+                    {
+                        pendingZBot = zBase;
+                        pendingMatVar = MaterialVarName(layer);
+                    }
+                    pendingDielectricThickness += layer.Thickness;
+                    zBase += layer.Thickness;
                 }
+            }
 
-                zBase = zTop;
-                layerIdx++;
+            // Flush remaining dielectric
+            if (pendingDielectricThickness > 0 && pendingMatVar != null)
+            {
+                double dTop = pendingZBot + pendingDielectricThickness;
+                sb.AppendLine($"{pendingMatVar}.AddBox(" +
+                    $"[{F(xMin)}, {F(yMin)}, {F(pendingZBot)}], " +
+                    $"[{F(xMax)}, {F(yMax)}, {F(dTop)}], priority=0)");
             }
             sb.AppendLine();
 
@@ -655,35 +709,71 @@ namespace AntennaSimulatorApp.Services
             // Y mesh
             sb.AppendLine($"mesh.AddLine('y', [{F(domYMin)}, {F(yMin)}, {F(yMax)}, {F(domYMax)}])");
 
-            // Z mesh – add lines at every layer boundary
+            // Z mesh – add lines at effective layer boundaries only.
+            // Empty copper layers are skipped so that merged dielectric slabs
+            // produce fewer (and larger) Z gaps → bigger timestep.
             sb.Append("mesh.AddLine('z', [");
             sb.Append($"{F(domZMin)}, ");
             {
                 bool pec = ms.UsePecSheets;
-                double z = 0;
                 var zLines = new List<double>();
+
+                // Carrier (top-down, z decreasing)
+                double z = 0;
+                zLines.Add(z);
                 foreach (var layer in board.Stackup.Layers)
                 {
-                    double t = (pec && layer.IsConductive) ? 0 : layer.Thickness;
-                    zLines.Add(z);
-                    z -= t;
-                    zLines.Add(z);
-                }
-                if (vm.HasModule)
-                {
-                    double zBase = MountGap;
-                    foreach (var layer in vm.Module.Stackup.Layers.Reverse())
+                    if (layer.Thickness <= 0) continue;
+                    if (layer.IsConductive)
                     {
-                        double t = (pec && layer.IsConductive) ? 0 : layer.Thickness;
-                        zLines.Add(zBase);
-                        zBase += t;
-                        zLines.Add(zBase);
+                        bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: true);
+                        if (hasContent)
+                        {
+                            double t = pec ? 0 : layer.Thickness;
+                            z -= t;
+                            zLines.Add(z);
+                        }
+                        else if (!pec)
+                        {
+                            z -= layer.Thickness; // absorbed into dielectric
+                        }
+                    }
+                    else
+                    {
+                        z -= layer.Thickness;
+                        zLines.Add(z);
                     }
                 }
 
-                // Z refinement is controlled entirely by SmoothMeshLines('z', ZMaxStepMm).
-                // Layer boundary lines are already seeded above; SmoothMeshLines
-                // will interpolate additional lines where gaps exceed ZMaxStepMm.
+                // Module (bottom-up, z increasing)
+                if (vm.HasModule)
+                {
+                    double zBase = MountGap;
+                    zLines.Add(zBase);
+                    foreach (var layer in vm.Module.Stackup.Layers.Reverse())
+                    {
+                        if (layer.Thickness <= 0) continue;
+                        if (layer.IsConductive)
+                        {
+                            bool hasContent = CopperLayerHasContent(layer, vm, isCarrier: false);
+                            if (hasContent)
+                            {
+                                double t = pec ? 0 : layer.Thickness;
+                                zBase += t;
+                                zLines.Add(zBase);
+                            }
+                            else if (!pec)
+                            {
+                                zBase += layer.Thickness;
+                            }
+                        }
+                        else
+                        {
+                            zBase += layer.Thickness;
+                            zLines.Add(zBase);
+                        }
+                    }
+                }
 
                 sb.Append(string.Join(", ", zLines.Distinct().OrderBy(v => v).Select(F)));
             }
@@ -1377,6 +1467,23 @@ namespace AntennaSimulatorApp.Services
                     mats[varName] = (layer.DielectricConstant, kappa);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns true when a conductive layer has actual copper content that should
+        /// be exported (Gerber data, manual shapes, or antenna traces).
+        /// Layers with only the default pour (used for 3-D visualisation) return false.
+        /// </summary>
+        private static bool CopperLayerHasContent(
+            Layer layer, MainViewModel vm, bool isCarrier)
+        {
+            if (!layer.IsConductive) return false;
+            if (layer.HasGerber) return true;
+            // Any manual shape / antenna on this layer?
+            return vm.ManualShapes.Any(s =>
+                s.IsCarrier == isCarrier &&
+                s.LayerName == layer.Name &&
+                s.ShowIn3D);
         }
 
         /// <summary>Collect unique X and Y coordinates from polygon vertices for mesh seeding.</summary>
