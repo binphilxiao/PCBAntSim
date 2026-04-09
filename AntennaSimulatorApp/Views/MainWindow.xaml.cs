@@ -663,6 +663,7 @@ public partial class MainWindow : Window
             // Aluminum CCL: metal backing � keep mostly opaque
             LayerMaterial.AluminumCCL => new SolidColorBrush(Color.FromArgb(200, 0xC0, 0xC8, 0xD0)),
             LayerMaterial.Air         => new SolidColorBrush(Color.FromArgb(20,  0xB0, 0xD0, 0xFF)),
+            LayerMaterial.SolderMask  => new SolidColorBrush(Color.FromArgb(120, 0x00, 0x80, 0x00)),  // green solder mask
             _                         => new SolidColorBrush(isCarrier
                                             ? Color.FromArgb(A, 0xB8, 0xC8, 0x48)
                                             : Color.FromArgb(A, 0xDC, 0xDC, 0xD4))

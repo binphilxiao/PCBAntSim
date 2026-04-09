@@ -311,3 +311,78 @@
 16:52:07.343   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
 16:52:07.505 [Save] DrawnAntennas count = 1
 16:52:07.506   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:56:06.793 [Save] DrawnAntennas count = 1
+09:56:06.795   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:56:08.005 [Save] DrawnAntennas count = 1
+09:56:08.006   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:17.890 [Save] DrawnAntennas count = 1
+10:54:17.891   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:18.553 [Save] DrawnAntennas count = 1
+10:54:18.554   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:18.697 [Save] DrawnAntennas count = 1
+10:54:18.698   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:18.882 [Save] DrawnAntennas count = 1
+10:54:18.882   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:19.050 [Save] DrawnAntennas count = 1
+10:54:19.050   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:19.233 [Save] DrawnAntennas count = 1
+10:54:19.234   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:19.377 [Save] DrawnAntennas count = 1
+10:54:19.378   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:19.555 [Save] DrawnAntennas count = 1
+10:54:19.555   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:54:56.769 [Save] DrawnAntennas count = 1
+10:54:56.770   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:55:04.557 [Load] JSON DrawnAntennas count = 1
+10:55:04.558   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:55:06.179 [Load] Final vm.DrawnAntennas count = 1
+10:55:06.180   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:12.493 [Save] DrawnAntennas count = 1
+10:56:12.493   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:12.721 [Save] DrawnAntennas count = 1
+10:56:12.721   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:12.892 [Save] DrawnAntennas count = 1
+10:56:12.892   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:13.040 [Save] DrawnAntennas count = 1
+10:56:13.040   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:13.208 [Save] DrawnAntennas count = 1
+10:56:13.209   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:13.372 [Save] DrawnAntennas count = 1
+10:56:13.373   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:13.543 [Save] DrawnAntennas count = 1
+10:56:13.544   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+10:56:13.767 [Save] DrawnAntennas count = 1
+10:56:13.768   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:03:11.071 [Load] JSON DrawnAntennas count = 1
+11:03:11.092   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:03:12.725 [Load] Final vm.DrawnAntennas count = 1
+11:03:12.727   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:32:38.727 [Save] DrawnAntennas count = 0
+11:32:39.141 [Save] DrawnAntennas count = 0
+11:38:41.428 [Save] DrawnAntennas count = 1
+11:38:41.429   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:38:48.060 [Load] JSON DrawnAntennas count = 1
+11:38:48.061   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:38:49.311 [Load] Final vm.DrawnAntennas count = 1
+11:38:49.311   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:43:26.315 [Load] JSON DrawnAntennas count = 1
+11:43:26.324   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:43:27.471 [Load] Final vm.DrawnAntennas count = 1
+11:43:27.473   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:44:20.009 [Load] JSON DrawnAntennas count = 1
+11:44:20.009   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:44:21.781 [Load] Final vm.DrawnAntennas count = 1
+11:44:21.782   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:49:46.472 [Load] JSON DrawnAntennas count = 1
+11:49:46.483   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:49:48.251 [Load] Final vm.DrawnAntennas count = 1
+11:49:48.253   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:58:16.178 [Load] JSON DrawnAntennas count = 1
+11:58:16.189   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:58:17.967 [Load] Final vm.DrawnAntennas count = 1
+11:58:17.969   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+11:59:37.632 [Load] JSON DrawnAntennas count = 0
+11:59:40.153 [Load] Final vm.DrawnAntennas count = 0
+12:02:37.027 [Load] JSON DrawnAntennas count = 0
+12:02:39.632 [Load] Final vm.DrawnAntennas count = 0
+12:09:57.483 [Save] DrawnAntennas count = 0

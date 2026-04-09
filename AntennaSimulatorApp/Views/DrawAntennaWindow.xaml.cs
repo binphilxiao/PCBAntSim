@@ -436,7 +436,7 @@ namespace AntennaSimulatorApp.Views
             // Read Er from the stackup's first dielectric layer
             var stackup = IsCarrierSelected ? _vm.CarrierBoard.Stackup : _vm.Module.Stackup;
             double er = stackup.Layers
-                .Where(l => !l.IsConductive && l.DielectricConstant > 0)
+                .Where(l => !l.IsConductive && l.Type != LayerType.Mask && l.DielectricConstant > 0)
                 .Select(l => l.DielectricConstant)
                 .FirstOrDefault();
             if (er <= 0) er = 4.3;

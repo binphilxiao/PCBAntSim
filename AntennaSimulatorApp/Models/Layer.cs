@@ -16,6 +16,7 @@ namespace AntennaSimulatorApp.Models
         Rogers5880,
         AluminumCCL,
         Air,
+        SolderMask,
         Custom
     }
 
@@ -36,6 +37,7 @@ namespace AntennaSimulatorApp.Models
             new MaterialInfo { Value = LayerMaterial.Rogers5880,  DisplayName = "Rogers 5880 (PTFE)", DefaultDk = 2.2  },
             new MaterialInfo { Value = LayerMaterial.AluminumCCL, DisplayName = "Aluminum CCL",       DefaultDk = 4.0  },
             new MaterialInfo { Value = LayerMaterial.Air,         DisplayName = "Air",                DefaultDk = 1.0  },
+            new MaterialInfo { Value = LayerMaterial.SolderMask,  DisplayName = "Solder Mask",        DefaultDk = 3.8  },
             new MaterialInfo { Value = LayerMaterial.Custom,      DisplayName = "Custom",             DefaultDk = 1.0  },
         };
 
@@ -181,7 +183,9 @@ namespace AntennaSimulatorApp.Models
             get 
             {
                 double sum = 0;
-                foreach(var layer in Layers) sum += layer.Thickness;
+                foreach(var layer in Layers)
+                    if (layer.Type != LayerType.Mask)
+                        sum += layer.Thickness;
                 return sum;
             }
         }

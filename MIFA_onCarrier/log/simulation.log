@@ -1,0 +1,165 @@
+Python:  python
+Script:  C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\scripts\run_simulation.py
+WorkDir: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim
+────────────────────────────────────────────────────────────
+
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Starting openEMS simulation...
+ ---------------------------------------------------------------------- 
+ | openEMS 64bit -- version v0.0.36
+ | (C) 2010-2023 Thorsten Liebig <thorsten.liebig@gmx.de>  GPL license
+ ---------------------------------------------------------------------- 
+	Used external libraries:
+		CSXCAD -- Version: v0.6.3
+		hdf5   -- Version: 1.12.0
+		          compiled against: HDF5 library version: 1.12.0
+		tinyxml -- compiled against: 2.6.2
+		fparser
+		boost  -- compiled against: 1_72
+		vtk -- Version: 8.2.0
+		       compiled against: 8.2.0
+
+Create FDTD operator (compressed SSE + multi-threading)
+Multithreaded operator using 8 threads.
+Operator::CalcTimestep_Var3: Smallest timestep (3.03218e-14s) found at position: 2 : 43;80;25
+Compressing the FDTD operator... this may take a while...
+------- Stat: FDTD Operator -------
+Dimensions		: 184x91x53 = 887432 Cells (0.887432 MCells)
+Size of Operator	: 42596736 Byte (40.6234 MiB) 
+Size of Field-Data	: 21298368 Byte (20.3117 MiB) 
+-----------------------------------
+Background materials (epsR/mueR/kappa/sigma): 1/1/0/0
+-----------------------------------
+Number of PEC edges	: 27309
+in x direction		: 13031
+in y direction		: 13283
+in z direction		: 995
+-----------------------------------
+Timestep (s)		: 3.03218e-14
+Timestep method name	: Rennings_2
+Nyquist criteria (TS)	: 2748
+Nyquist criteria (s)	: 8.33243e-11
+-----------------------------------
+SSE compression enabled	: yes
+Unique SSE operators	: 57392
+-----------------------------------
+-----------------------------------
+--- Excitation Extension ---
+Voltage excitations	: 35	 (0, 0, 35)
+Current excitations	: 0	 (0, 0, 0)
+Excitation Length (TS)	: 37792
+Excitation Length (s)	: 1.14592e-09
+--- Uniaxial PML Extension ---
+ PML range		: [0,0,0] to [8,90,52]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [175,0,0] to [183,90,52]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,0,0] to [174,8,52]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,82,0] to [174,90,52]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,0] to [174,81,8]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+--- Uniaxial PML Extension ---
+ PML range		: [9,9,44] to [174,81,52]
+ Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
+-----------------------------------
+Creation time for operator: 9.05521 s
+FDTD simulation size: 184x91x53 --> 887432 FDTD cells 
+FDTD timestep is: 3.03218e-14 s; Nyquist rate: 2748 timesteps @6.00065e+09 Hz
+openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
+Excitation signal length is: 37792 timesteps (1.14592e-09s)
+Max. number of timesteps: 200000 ( --> 5.29213 * Excitation signal length)
+Create FDTD engine (compressed SSE + multi-threading)
+---  Engine::SortExtensionByPriority() ---
+ #0: Uniaxial PML Extension (1000000)
+ #1: Uniaxial PML Extension (1000000)
+ #2: Uniaxial PML Extension (1000000)
+ #3: Uniaxial PML Extension (1000000)
+ #4: Uniaxial PML Extension (1000000)
+ #5: Uniaxial PML Extension (1000000)
+ #6: Excitation Extension (-1000)
+Multithreaded engine using 8 threads. Utilization: (23;23;23;23;23;23;23;23)
+Setting up processing...
+Running FDTD engine... this may take a while... grab a cup of coffee?!?
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: too many indices for array: array is 1-dimensional, but 2 were indexed
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+[WARN] Port data not ready yet: too many indices for array: array is 1-dimensional, but 2 were indexed
+[@       20s] Timestep:          687 || Speed:   30.2 MC/s (2.942e-02 s/TS) || Energy: ~3.25e-21 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+[@       43s] Timestep:         1374 || Speed:   25.6 MC/s (3.460e-02 s/TS) || Energy: ~1.21e-20 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.56 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.56 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+[@     1m08s] Timestep:         2061 || Speed:   24.7 MC/s (3.586e-02 s/TS) || Energy: ~2.42e-20 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -16.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -16.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -16.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+[@     1m33s] Timestep:         2748 || Speed:   24.2 MC/s (3.662e-02 s/TS) || Energy: ~2.29e-20 (- 0.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.47 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 1.0000 GHz,  S11 = -10.47 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+[@     1m55s] Timestep:         3435 || Speed:   27.9 MC/s (3.176e-02 s/TS) || Energy: ~9.07e-20 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -8.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -8.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png
+[@     2m20s] Timestep:         4122 || Speed:   24.4 MC/s (3.637e-02 s/TS) || Energy: ~9.20e-19 (- 0.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 6.0000 GHz,  S11 = -10.80 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onCarrier\Sim\results\S11.png

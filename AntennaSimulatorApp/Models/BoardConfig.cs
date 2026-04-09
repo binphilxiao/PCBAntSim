@@ -148,11 +148,11 @@ namespace AntennaSimulatorApp.Models
             int centerIndex = (dielectrics.Count - 1) / 2;
             Layer coreLayer = dielectrics[centerIndex];
 
-            // Sum all layers except the core.
+            // Sum all layers except the core (exclude Mask layers from thickness calc).
             double otherLayersSum = 0;
             foreach (var layer in Stackup.Layers)
             {
-                if (layer != coreLayer)
+                if (layer != coreLayer && layer.Type != LayerType.Mask)
                     otherLayersSum += layer.Thickness;
             }
 

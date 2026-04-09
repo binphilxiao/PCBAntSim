@@ -1478,6 +1478,7 @@ namespace AntennaSimulatorApp.Services
                         LayerMaterial.PolyimidePI => 0.01,
                         LayerMaterial.Rogers5880  => 0.001,
                         LayerMaterial.AluminumCCL => 0.02,
+                        LayerMaterial.SolderMask  => 0.02,
                         LayerMaterial.Air         => 0,
                         _                        => 0.02,
                     };
@@ -1646,6 +1647,7 @@ namespace AntennaSimulatorApp.Services
                 LayerMaterial.PolyimidePI => "polyimide",
                 LayerMaterial.Rogers5880  => "rogers5880",
                 LayerMaterial.AluminumCCL => "aluminum_ccl",
+                LayerMaterial.SolderMask  => "soldermask",
                 LayerMaterial.Air         => "air",
                 _                         => $"dielectric_eps{layer.DielectricConstant:F1}".Replace('.', '_'),
             };

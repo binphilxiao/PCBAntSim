@@ -6,6 +6,9 @@ namespace AntennaSimulatorApp.Models
 {
     public static class StackupGenerator
     {
+        public const double DefaultSolderMaskThickness = 0.025; // 25 µm typical
+        public const double DefaultSolderMaskEr = 3.8;
+
         public static void GenerateStackup(PcbStackup stackup, int layerCount, double totalThickness)
         {
             stackup.Layers.Clear();
@@ -15,6 +18,7 @@ namespace AntennaSimulatorApp.Models
             
             double copperThick = 0.035; // 35um standard 1oz
             int dielectricCount = layerCount - 1;
+            double maskThick = DefaultSolderMaskThickness;
             
             // Core logic: All prepreg/dielectric layers have a default thickness (e.g., 0.1mm or 0.2mm)
             // The THICKEST part (Core) is usually in the middle. 
@@ -23,6 +27,7 @@ namespace AntennaSimulatorApp.Models
             double defaultDielectricThick = 0.2; // 0.2mm (approx 8mil) standard prepreg
             
             // Calculate total fixed height (Copper + Standard Prepregs)
+            // Note: solder mask layers are NOT included in the board thickness
             double fixedHeight = (layerCount * copperThick); 
             
             // If we have > 2 layers, we have multiple dielectrics. The middle one takes the slack.
@@ -47,6 +52,16 @@ namespace AntennaSimulatorApp.Models
 
             double remainingForCore = totalThickness - fixedHeight;
             if (remainingForCore < 0.1) remainingForCore = 0.1; // Minimum core thickness
+
+            // Top solder mask
+            stackup.Layers.Add(new Layer
+            {
+                Name = "TopMask",
+                Thickness = maskThick,
+                Type = LayerType.Mask,
+                Material = LayerMaterial.SolderMask,
+                DielectricConstant = DefaultSolderMaskEr
+            });
 
             for (int i = 0; i < layerCount; i++)
             {
@@ -84,9 +99,16 @@ namespace AntennaSimulatorApp.Models
                     });
                 }
             }
-            
-            // Explicitly notify that the collection has changed if binding doesn't pick it up automatically
-            // (Though ObservableCollection usually handles Add/Clear)
+
+            // Bottom solder mask
+            stackup.Layers.Add(new Layer
+            {
+                Name = "BotMask",
+                Thickness = maskThick,
+                Type = LayerType.Mask,
+                Material = LayerMaterial.SolderMask,
+                DielectricConstant = DefaultSolderMaskEr
+            });
         }
 
         private static List<LayerType> GetLayerTypes(int count)

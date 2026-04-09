@@ -2,11 +2,23 @@
   "FormatVersion": 1,
   "CarrierBoard": {
     "Name": "Main PCB Carrier",
-    "Width": 100,
-    "Height": 80,
+    "Width": 40,
+    "Height": 60,
     "Thickness": 1.6,
     "LayerCount": 4,
     "Layers": [
+      {
+        "Name": "TopMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
       {
         "Name": "TOP",
         "Thickness": 0.035,
@@ -90,6 +102,18 @@
         "GerberOffsetX": 0,
         "GerberOffsetY": 0,
         "GerberRotation": "0"
+      },
+      {
+        "Name": "BotMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
       }
     ]
   },
@@ -103,6 +127,18 @@
     "Thickness": 0.6,
     "LayerCount": 6,
     "Layers": [
+      {
+        "Name": "TopMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
       {
         "Name": "TOP",
         "Thickness": 0.035,
@@ -234,6 +270,18 @@
         "GerberOffsetX": 0,
         "GerberOffsetY": 0,
         "GerberRotation": "0"
+      },
+      {
+        "Name": "BotMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
       }
     ]
   },
@@ -332,19 +380,19 @@
       "ShowIn3D": true,
       "Vertices": [
         {
-          "X": -40,
+          "X": -30,
           "Y": 0
         },
         {
-          "X": -40,
-          "Y": -100
+          "X": -30,
+          "Y": -40
         },
         {
-          "X": 40,
-          "Y": -100
+          "X": 30,
+          "Y": -40
         },
         {
-          "X": 40,
+          "X": 30,
           "Y": 0
         },
         {
@@ -364,7 +412,7 @@
           "Y": 0
         },
         {
-          "X": -40,
+          "X": -30,
           "Y": 0
         }
       ],
@@ -377,19 +425,19 @@
       "ShowIn3D": true,
       "Vertices": [
         {
-          "X": -40,
+          "X": -30,
           "Y": 0
         },
         {
-          "X": -40,
-          "Y": -100
+          "X": -30,
+          "Y": -40
         },
         {
-          "X": 40,
-          "Y": -100
+          "X": 30,
+          "Y": -40
         },
         {
-          "X": 40,
+          "X": 30,
           "Y": 0
         },
         {
@@ -401,6 +449,22 @@
           "Y": -4
         },
         {
+          "X": -2.5,
+          "Y": -4
+        },
+        {
+          "X": -2.5,
+          "Y": -4.5
+        },
+        {
+          "X": -3,
+          "Y": -4.5
+        },
+        {
+          "X": -3,
+          "Y": -4
+        },
+        {
           "X": -15,
           "Y": -4
         },
@@ -409,7 +473,7 @@
           "Y": 0
         },
         {
-          "X": -40,
+          "X": -30,
           "Y": 0
         }
       ],

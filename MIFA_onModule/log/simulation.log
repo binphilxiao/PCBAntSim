@@ -21,62 +21,59 @@ Starting openEMS simulation...
 
 Create FDTD operator (compressed SSE + multi-threading)
 Multithreaded operator using 8 threads.
-Operator::CalcTimestep_Var3: Smallest timestep (6.28608e-14s) found at position: 0 : 60;73;20
-openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 54, column 1.
+Operator::CalcTimestep_Var3: Smallest timestep (6.41946e-14s) found at position: 0 : 58;98;17
 Compressing the FDTD operator... this may take a while...
 ------- Stat: FDTD Operator -------
-Dimensions		: 194x115x34 = 758540 Cells (0.75854 MCells)
-Size of Operator	: 36409920 Byte (34.7232 MiB) 
-Size of Field-Data	: 18204960 Byte (17.3616 MiB) 
+Dimensions		: 190x106x34 = 684760 Cells (0.68476 MCells)
+Size of Operator	: 32868480 Byte (31.3458 MiB) 
+Size of Field-Data	: 16434240 Byte (15.6729 MiB) 
 -----------------------------------
 Background materials (epsR/mueR/kappa/sigma): 1/1/0/0
 -----------------------------------
-Number of PEC edges	: 94471
-in x direction		: 46269
-in y direction		: 45999
-in z direction		: 2203
+Number of PEC edges	: 86015
+in x direction		: 42069
+in y direction		: 41769
+in z direction		: 2177
 -----------------------------------
-Timestep (s)		: 6.28608e-14
+Timestep (s)		: 6.41946e-14
 Timestep method name	: Rennings_2
-Nyquist criteria (TS)	: 1988
-Nyquist criteria (s)	: 1.24967e-10
+Nyquist criteria (TS)	: 1947
+Nyquist criteria (s)	: 1.24987e-10
 -----------------------------------
 SSE compression enabled	: yes
-Unique SSE operators	: 32393
+Unique SSE operators	: 29311
 -----------------------------------
 -----------------------------------
 --- Excitation Extension ---
 Voltage excitations	: 15	 (0, 0, 15)
 Current excitations	: 0	 (0, 0, 0)
-Excitation Length (TS)	: 30383
-Excitation Length (s)	: 1.9099e-09
+Excitation Length (TS)	: 29752
+Excitation Length (s)	: 1.90992e-09
 --- Uniaxial PML Extension ---
- PML range		: [0,0,0] to [4,114,33]
+ PML range		: [0,0,0] to [4,105,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [189,0,0] to [193,114,33]
+ PML range		: [185,0,0] to [189,105,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,0,0] to [188,4,33]
+ PML range		: [5,0,0] to [184,4,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,110,0] to [188,114,33]
+ PML range		: [5,101,0] to [184,105,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,5,0] to [188,109,4]
+ PML range		: [5,5,0] to [184,100,4]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 --- Uniaxial PML Extension ---
- PML range		: [5,5,29] to [188,109,33]
+ PML range		: [5,5,29] to [184,100,33]
  Grading function	: " -log(1e-6)*log(2.5)/(2*dl*Z*(pow(2.5,W/dl)-1)) * pow(2.5, D/dl) "
 -----------------------------------
-Creation time for operator: 17.033 s
-FDTD simulation size: 194x115x34 --> 758540 FDTD cells 
-FDTD timestep is: 6.28608e-14 s; Nyquist rate: 1988 timesteps @4.00105e+09 Hz
+Creation time for operator: 7.15761 s
+FDTD simulation size: 190x106x34 --> 684760 FDTD cells 
+FDTD timestep is: 6.41946e-14 s; Nyquist rate: 1947 timesteps @4.00042e+09 Hz
 openEMS::SetupFDTD: Warning, the timestep seems to be very small --> long simulation. Check your mesh!?
-Excitation signal length is: 30383 timesteps (1.9099e-09s)
-Max. number of timesteps: 200000 ( --> 6.58263 * Excitation signal length)
+Excitation signal length is: 29752 timesteps (1.90992e-09s)
+Max. number of timesteps: 200000 ( --> 6.72224 * Excitation signal length)
 Create FDTD engine (compressed SSE + multi-threading)
 ---  Engine::SortExtensionByPriority() ---
  #0: Uniaxial PML Extension (1000000)
@@ -86,251 +83,1447 @@ Create FDTD engine (compressed SSE + multi-threading)
  #4: Uniaxial PML Extension (1000000)
  #5: Uniaxial PML Extension (1000000)
  #6: Excitation Extension (-1000)
-Multithreaded engine using 8 threads. Utilization: (25;25;24;24;24;24;24;24)
+Multithreaded engine using 8 threads. Utilization: (24;24;24;24;24;24;23;23)
 Setting up processing...
 Running FDTD engine... this may take a while... grab a cup of coffee?!?
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
 [WARN] Port data not ready yet: too many indices for array: array is 1-dimensional, but 2 were indexed
+[@       12s] Timestep:          486 || Speed:   27.7 MC/s (2.475e-02 s/TS) || Energy: ~4.17e-22 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 1, column 1.
-[@       21s] Timestep:          497 || Speed:   17.5 MC/s (4.341e-02 s/TS) || Energy: ~4.35e-22 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -8.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
+Resonance: 1.0000 GHz,  S11 = -8.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@       24s] Timestep:          972 || Speed:   27.2 MC/s (2.522e-02 s/TS) || Energy: ~5.70e-22 (- 0.00dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 2, column 1.
+Resonance: 1.0000 GHz,  S11 = -2.66 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@       36s] Timestep:         1458 || Speed:   28.3 MC/s (2.419e-02 s/TS) || Energy: ~1.70e-21 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-[@       43s] Timestep:          994 || Speed:   17.5 MC/s (4.335e-02 s/TS) || Energy: ~5.93e-22 (- 0.00dB)
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
+Resonance: 4.0000 GHz,  S11 = -5.65 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@       47s] Timestep:         1944 || Speed:   29.2 MC/s (2.345e-02 s/TS) || Energy: ~2.58e-20 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
+Resonance: 4.0000 GHz,  S11 = -11.38 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@       59s] Timestep:         2430 || Speed:   27.7 MC/s (2.471e-02 s/TS) || Energy: ~1.52e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 3, column 1.
-[@     1m04s] Timestep:         1491 || Speed:   17.3 MC/s (4.384e-02 s/TS) || Energy: ~1.80e-21 (- 0.00dB)
+Resonance: 4.0000 GHz,  S11 = -17.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     1m10s] Timestep:         2916 || Speed:   29.7 MC/s (2.309e-02 s/TS) || Energy: ~5.04e-19 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
+Resonance: 1.0000 GHz,  S11 = -28.07 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 4, column 1.
-[@     1m26s] Timestep:         1988 || Speed:   17.5 MC/s (4.338e-02 s/TS) || Energy: ~2.72e-20 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -28.07 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     1m24s] Timestep:         3402 || Speed:   24.6 MC/s (2.786e-02 s/TS) || Energy: ~1.02e-18 (- 0.00dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
+Resonance: 1.0000 GHz,  S11 = -17.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     1m37s] Timestep:         3888 || Speed:   25.1 MC/s (2.732e-02 s/TS) || Energy: ~1.15e-18 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 5, column 1.
-[@     1m48s] Timestep:         2485 || Speed:   17.2 MC/s (4.417e-02 s/TS) || Energy: ~1.60e-19 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -8.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     1m49s] Timestep:         4374 || Speed:   28.0 MC/s (2.444e-02 s/TS) || Energy: ~6.43e-19 (- 2.52dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
+Resonance: 4.0000 GHz,  S11 = -3.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m01s] Timestep:         4860 || Speed:   27.0 MC/s (2.532e-02 s/TS) || Energy: ~3.86e-18 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 6, column 1.
-[@     2m09s] Timestep:         2982 || Speed:   17.5 MC/s (4.330e-02 s/TS) || Energy: ~5.29e-19 (- 0.00dB)
+Resonance: 4.0000 GHz,  S11 = -8.52 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m11s] Timestep:         5346 || Speed:   34.1 MC/s (2.005e-02 s/TS) || Energy: ~2.59e-17 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
+Resonance: 4.0000 GHz,  S11 = -14.02 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m21s] Timestep:         5832 || Speed:   34.1 MC/s (2.008e-02 s/TS) || Energy: ~8.74e-17 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 7, column 1.
-[@     2m31s] Timestep:         3479 || Speed:   17.9 MC/s (4.240e-02 s/TS) || Energy: ~1.07e-18 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -17.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m31s] Timestep:         6318 || Speed:   32.6 MC/s (2.099e-02 s/TS) || Energy: ~1.80e-16 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 8, column 1.
+Resonance: 1.0000 GHz,  S11 = -19.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m42s] Timestep:         6804 || Speed:   29.8 MC/s (2.300e-02 s/TS) || Energy: ~2.26e-16 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 8, column 1.
-[@     2m53s] Timestep:         3976 || Speed:   17.0 MC/s (4.459e-02 s/TS) || Energy: ~1.19e-18 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -10.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     2m52s] Timestep:         7290 || Speed:   32.5 MC/s (2.104e-02 s/TS) || Energy: ~1.52e-16 (- 1.72dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
+Resonance: 1.0000 GHz,  S11 = -3.25 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     3m02s] Timestep:         7776 || Speed:   34.3 MC/s (1.999e-02 s/TS) || Energy: ~1.63e-16 (- 1.41dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
+Resonance: 4.0000 GHz,  S11 = -5.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     3m12s] Timestep:         8262 || Speed:   33.2 MC/s (2.063e-02 s/TS) || Energy: ~9.90e-16 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 9, column 1.
-[@     3m15s] Timestep:         4473 || Speed:   17.3 MC/s (4.397e-02 s/TS) || Energy: ~6.70e-19 (- 2.50dB)
+Resonance: 4.0000 GHz,  S11 = -10.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     3m22s] Timestep:         8748 || Speed:   32.9 MC/s (2.084e-02 s/TS) || Energy: ~3.46e-15 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 10, column 1.
+Resonance: 4.0000 GHz,  S11 = -12.48 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 10, column 1.
-[@     3m36s] Timestep:         4970 || Speed:   17.4 MC/s (4.371e-02 s/TS) || Energy: ~4.16e-18 (- 0.00dB)
+Resonance: 4.0000 GHz,  S11 = -12.48 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     3m35s] Timestep:         9234 || Speed:   26.5 MC/s (2.586e-02 s/TS) || Energy: ~7.11e-15 (- 0.00dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 11, column 1.
+Resonance: 1.0000 GHz,  S11 = -17.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     3m45s] Timestep:         9720 || Speed:   32.9 MC/s (2.083e-02 s/TS) || Energy: ~9.36e-15 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 11, column 1.
-[@     3m59s] Timestep:         5467 || Speed:   16.7 MC/s (4.545e-02 s/TS) || Energy: ~2.76e-17 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -12.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     3m56s] Timestep:        10206 || Speed:   30.5 MC/s (2.247e-02 s/TS) || Energy: ~7.70e-15 (- 0.85dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 12, column 1.
+Resonance: 1.0000 GHz,  S11 = -5.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m06s] Timestep:        10692 || Speed:   32.7 MC/s (2.095e-02 s/TS) || Energy: ~4.75e-15 (- 2.95dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 12, column 1.
-[@     4m20s] Timestep:         5964 || Speed:   17.4 MC/s (4.356e-02 s/TS) || Energy: ~9.25e-17 (- 0.00dB)
+Resonance: 4.0000 GHz,  S11 = -2.72 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m16s] Timestep:        11178 || Speed:   32.7 MC/s (2.092e-02 s/TS) || Energy: ~1.01e-14 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 13, column 1.
+Resonance: 4.0000 GHz,  S11 = -7.00 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m27s] Timestep:        11664 || Speed:   31.5 MC/s (2.174e-02 s/TS) || Energy: ~3.21e-14 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 13, column 1.
+Resonance: 4.0000 GHz,  S11 = -9.30 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m38s] Timestep:        12150 || Speed:   30.4 MC/s (2.250e-02 s/TS) || Energy: ~6.50e-14 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-[@     4m44s] Timestep:         6461 || Speed:   16.1 MC/s (4.714e-02 s/TS) || Energy: ~1.89e-16 (- 0.00dB)
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+Resonance: 1.6060 GHz,  S11 = -9.37 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m49s] Timestep:        12636 || Speed:   29.0 MC/s (2.363e-02 s/TS) || Energy: ~8.70e-14 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
+Resonance: 1.0000 GHz,  S11 = -12.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     4m59s] Timestep:        13122 || Speed:   33.3 MC/s (2.054e-02 s/TS) || Energy: ~8.13e-14 (- 0.29dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 14, column 1.
-[@     5m06s] Timestep:         6958 || Speed:   17.2 MC/s (4.413e-02 s/TS) || Energy: ~2.35e-16 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -7.86 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     5m09s] Timestep:        13608 || Speed:   33.2 MC/s (2.065e-02 s/TS) || Energy: ~5.95e-14 (- 1.65dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 15, column 1.
+Resonance: 1.0000 GHz,  S11 = -2.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     5m19s] Timestep:        14094 || Speed:   32.9 MC/s (2.081e-02 s/TS) || Energy: ~5.68e-14 (- 1.85dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 15, column 1.
-[@     5m27s] Timestep:         7455 || Speed:   17.7 MC/s (4.295e-02 s/TS) || Energy: ~1.56e-16 (- 1.77dB)
+Resonance: 4.0000 GHz,  S11 = -4.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     5m30s] Timestep:        14580 || Speed:   31.4 MC/s (2.184e-02 s/TS) || Energy: ~9.54e-14 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 16, column 1.
+Resonance: 4.0000 GHz,  S11 = -6.26 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     5m37s] Timestep:        14876 || Speed:   30.4 MC/s (2.250e-02 s/TS) || Energy: ~1.33e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 16, column 1.
-[@     5m49s] Timestep:         7952 || Speed:   17.3 MC/s (4.372e-02 s/TS) || Energy: ~1.76e-16 (- 1.25dB)
+Resonance: 2.7580 GHz,  S11 = -5.75 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     5m50s] Timestep:        15552 || Speed:   33.7 MC/s (2.033e-02 s/TS) || Energy: ~2.03e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 17, column 1.
+Resonance: 1.6120 GHz,  S11 = -6.04 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     6m01s] Timestep:        16038 || Speed:   31.4 MC/s (2.178e-02 s/TS) || Energy: ~2.11e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 17, column 1.
-[@     6m10s] Timestep:         8449 || Speed:   17.7 MC/s (4.282e-02 s/TS) || Energy: ~1.07e-15 (- 0.00dB)
+Resonance: 1.0000 GHz,  S11 = -7.88 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     6m12s] Timestep:        16524 || Speed:   28.9 MC/s (2.373e-02 s/TS) || Energy: ~2.01e-13 (- 0.23dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 18, column 1.
+Resonance: 1.0000 GHz,  S11 = -5.49 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     6m23s] Timestep:        17010 || Speed:   32.7 MC/s (2.097e-02 s/TS) || Energy: ~1.96e-13 (- 0.32dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 18, column 1.
-[@     6m32s] Timestep:         8946 || Speed:   17.3 MC/s (4.384e-02 s/TS) || Energy: ~3.69e-15 (- 0.00dB)
+Resonance: 4.0000 GHz,  S11 = -2.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     6m33s] Timestep:        17496 || Speed:   32.4 MC/s (2.113e-02 s/TS) || Energy: ~2.02e-13 (- 0.20dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 19, column 1.
+Resonance: 4.0000 GHz,  S11 = -3.78 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 19, column 1.
+Resonance: 4.0000 GHz,  S11 = -3.78 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     6m44s] Timestep:        17982 || Speed:   30.0 MC/s (2.286e-02 s/TS) || Energy: ~2.05e-13 (- 0.13dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
-[@     6m55s] Timestep:         9443 || Speed:   16.3 MC/s (4.653e-02 s/TS) || Energy: ~7.50e-15 (- 0.00dB)
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
+Resonance: 2.8780 GHz,  S11 = -3.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     6m56s] Timestep:        18468 || Speed:   28.4 MC/s (2.413e-02 s/TS) || Energy: ~2.07e-13 (- 0.09dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
+Resonance: 2.4400 GHz,  S11 = -3.84 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     7m06s] Timestep:        18954 || Speed:   32.1 MC/s (2.134e-02 s/TS) || Energy: ~2.24e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 20, column 1.
-[@     7m18s] Timestep:         9940 || Speed:   16.6 MC/s (4.574e-02 s/TS) || Energy: ~9.77e-15 (- 0.00dB)
+Resonance: 2.1220 GHz,  S11 = -3.75 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     7m16s] Timestep:        19440 || Speed:   32.6 MC/s (2.098e-02 s/TS) || Energy: ~2.62e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 21, column 1.
+Resonance: 1.9360 GHz,  S11 = -3.49 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     7m27s] Timestep:        19926 || Speed:   32.2 MC/s (2.126e-02 s/TS) || Energy: ~2.99e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 21, column 1.
-[@     7m40s] Timestep:        10437 || Speed:   16.7 MC/s (4.551e-02 s/TS) || Energy: ~7.93e-15 (- 0.91dB)
+Resonance: 2.0620 GHz,  S11 = -3.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     7m38s] Timestep:        20412 || Speed:   30.3 MC/s (2.257e-02 s/TS) || Energy: ~3.04e-13 (- 0.00dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 22, column 1.
+Resonance: 2.4520 GHz,  S11 = -3.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     7m50s] Timestep:        20898 || Speed:   27.1 MC/s (2.530e-02 s/TS) || Energy: ~2.71e-13 (- 0.49dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 22, column 1.
-[@     8m03s] Timestep:        10934 || Speed:   16.9 MC/s (4.480e-02 s/TS) || Energy: ~4.94e-15 (- 2.96dB)
+Resonance: 2.5120 GHz,  S11 = -3.40 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     8m01s] Timestep:        21384 || Speed:   28.7 MC/s (2.389e-02 s/TS) || Energy: ~2.30e-13 (- 1.21dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 23, column 1.
+Resonance: 2.5060 GHz,  S11 = -3.59 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     8m12s] Timestep:        21870 || Speed:   31.5 MC/s (2.177e-02 s/TS) || Energy: ~2.16e-13 (- 1.49dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 23, column 1.
-[@     8m25s] Timestep:        11431 || Speed:   16.7 MC/s (4.536e-02 s/TS) || Energy: ~1.10e-14 (- 0.00dB)
+Resonance: 2.5300 GHz,  S11 = -3.80 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     8m22s] Timestep:        22356 || Speed:   33.2 MC/s (2.063e-02 s/TS) || Energy: ~2.38e-13 (- 1.06dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
+Resonance: 2.5300 GHz,  S11 = -4.11 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@     8m33s] Timestep:        22842 || Speed:   29.4 MC/s (2.332e-02 s/TS) || Energy: ~2.74e-13 (- 0.45dB)
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
+Resonance: 2.4880 GHz,  S11 = -4.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 24, column 1.
-[@     8m47s] Timestep:        11928 || Speed:   17.4 MC/s (4.366e-02 s/TS) || Energy: ~3.45e-14 (- 0.00dB)
+Resonance: 2.4880 GHz,  S11 = -4.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     8m44s] Timestep:        23328 || Speed:   30.8 MC/s (2.226e-02 s/TS) || Energy: ~2.88e-13 (- 0.24dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 25, column 1.
+Resonance: 2.4340 GHz,  S11 = -4.71 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     8m55s] Timestep:        23814 || Speed:   31.0 MC/s (2.209e-02 s/TS) || Energy: ~2.66e-13 (- 0.58dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 25, column 1.
-[@     9m08s] Timestep:        12425 || Speed:   17.7 MC/s (4.283e-02 s/TS) || Energy: ~6.89e-14 (- 0.00dB)
+Resonance: 2.4100 GHz,  S11 = -4.80 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     9m05s] Timestep:        24300 || Speed:   33.2 MC/s (2.061e-02 s/TS) || Energy: ~2.24e-13 (- 1.33dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 26, column 1.
+Resonance: 2.4400 GHz,  S11 = -4.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@     9m15s] Timestep:        24786 || Speed:   31.9 MC/s (2.150e-02 s/TS) || Energy: ~1.92e-13 (- 1.99dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 26, column 1.
-[@     9m30s] Timestep:        12922 || Speed:   17.2 MC/s (4.423e-02 s/TS) || Energy: ~9.10e-14 (- 0.00dB)
+Resonance: 2.5060 GHz,  S11 = -5.03 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     9m26s] Timestep:        25272 || Speed:   32.0 MC/s (2.138e-02 s/TS) || Energy: ~1.88e-13 (- 2.09dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 27, column 1.
+Resonance: 2.5300 GHz,  S11 = -5.57 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     9m36s] Timestep:        25758 || Speed:   31.3 MC/s (2.188e-02 s/TS) || Energy: ~2.05e-13 (- 1.71dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 27, column 1.
-[@     9m53s] Timestep:        13419 || Speed:   16.7 MC/s (4.552e-02 s/TS) || Energy: ~8.41e-14 (- 0.35dB)
+Resonance: 2.5120 GHz,  S11 = -6.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     9m46s] Timestep:        26244 || Speed:   33.3 MC/s (2.053e-02 s/TS) || Energy: ~2.19e-13 (- 1.42dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 28, column 1.
+Resonance: 2.4820 GHz,  S11 = -6.65 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@     9m56s] Timestep:        26730 || Speed:   33.5 MC/s (2.046e-02 s/TS) || Energy: ~2.12e-13 (- 1.56dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 28, column 1.
-[@    10m15s] Timestep:        13916 || Speed:   17.4 MC/s (4.364e-02 s/TS) || Energy: ~6.14e-14 (- 1.71dB)
+Resonance: 2.4580 GHz,  S11 = -6.84 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m06s] Timestep:        27216 || Speed:   33.6 MC/s (2.035e-02 s/TS) || Energy: ~1.84e-13 (- 2.17dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
+Resonance: 2.4580 GHz,  S11 = -6.83 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m17s] Timestep:        27702 || Speed:   31.4 MC/s (2.178e-02 s/TS) || Energy: ~1.54e-13 (- 2.96dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
+Resonance: 2.4820 GHz,  S11 = -6.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m27s] Timestep:        28188 || Speed:   32.2 MC/s (2.127e-02 s/TS) || Energy: ~1.39e-13 (- 3.41dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 29, column 1.
-[@    10m37s] Timestep:        14413 || Speed:   16.9 MC/s (4.475e-02 s/TS) || Energy: ~6.01e-14 (- 1.81dB)
+Resonance: 2.5060 GHz,  S11 = -7.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m37s] Timestep:        28674 || Speed:   33.2 MC/s (2.060e-02 s/TS) || Energy: ~1.44e-13 (- 3.26dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 30, column 1.
+Resonance: 4.0000 GHz,  S11 = -9.06 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m47s] Timestep:        29160 || Speed:   33.4 MC/s (2.049e-02 s/TS) || Energy: ~1.56e-13 (- 2.90dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 30, column 1.
-[@    11m00s] Timestep:        14910 || Speed:   16.3 MC/s (4.665e-02 s/TS) || Energy: ~1.02e-13 (- 0.00dB)
+Resonance: 2.4940 GHz,  S11 = -8.80 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    10m57s] Timestep:        29646 || Speed:   33.8 MC/s (2.028e-02 s/TS) || Energy: ~1.59e-13 (- 2.83dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 31, column 1.
-[@    11m13s] Timestep:        15191 || Speed:   16.1 MC/s (4.707e-02 s/TS) || Energy: ~1.39e-13 (- 0.00dB)
+Resonance: 2.4760 GHz,  S11 = -9.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m07s] Timestep:        30132 || Speed:   33.7 MC/s (2.031e-02 s/TS) || Energy: ~1.44e-13 (- 3.24dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 31, column 1.
-[@    11m24s] Timestep:        15407 || Speed:   15.1 MC/s (5.034e-02 s/TS) || Energy: ~1.67e-13 (- 0.00dB)
+Resonance: 2.4700 GHz,  S11 = -9.22 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m17s] Timestep:        30618 || Speed:   32.2 MC/s (2.124e-02 s/TS) || Energy: ~1.21e-13 (- 4.01dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 32, column 1.
+Resonance: 2.4760 GHz,  S11 = -9.24 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m28s] Timestep:        31104 || Speed:   31.5 MC/s (2.174e-02 s/TS) || Energy: ~1.03e-13 (- 4.69dB)
 openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
 Post-processing only (--post-only mode)
-[WARN] Port data not ready yet: could not convert string '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0 to float64 at row 32, column 1.
+Resonance: 2.4940 GHz,  S11 = -9.58 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m38s] Timestep:        31590 || Speed:   32.4 MC/s (2.111e-02 s/TS) || Energy: ~1.01e-13 (- 4.81dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.5000 GHz,  S11 = -10.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m48s] Timestep:        32076 || Speed:   34.0 MC/s (2.014e-02 s/TS) || Energy: ~1.09e-13 (- 4.47dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4940 GHz,  S11 = -11.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    11m58s] Timestep:        32562 || Speed:   33.6 MC/s (2.039e-02 s/TS) || Energy: ~1.15e-13 (- 4.22dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -11.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m08s] Timestep:        33048 || Speed:   33.8 MC/s (2.026e-02 s/TS) || Energy: ~1.10e-13 (- 4.41dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.96 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m17s] Timestep:        33534 || Speed:   33.7 MC/s (2.031e-02 s/TS) || Energy: ~9.50e-14 (- 5.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.96 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m27s] Timestep:        34020 || Speed:   34.2 MC/s (2.004e-02 s/TS) || Energy: ~7.91e-14 (- 5.85dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.15 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m38s] Timestep:        34506 || Speed:   30.4 MC/s (2.252e-02 s/TS) || Energy: ~7.21e-14 (- 6.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4940 GHz,  S11 = -12.82 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m48s] Timestep:        34992 || Speed:   32.7 MC/s (2.093e-02 s/TS) || Energy: ~7.53e-14 (- 6.06dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4940 GHz,  S11 = -13.83 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    12m58s] Timestep:        35478 || Speed:   33.3 MC/s (2.055e-02 s/TS) || Energy: ~8.17e-14 (- 5.71dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    13m09s] Timestep:        35964 || Speed:   32.2 MC/s (2.129e-02 s/TS) || Energy: ~8.23e-14 (- 5.68dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -15.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    13m19s] Timestep:        36450 || Speed:   32.3 MC/s (2.121e-02 s/TS) || Energy: ~7.41e-14 (- 6.13dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -15.28 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    13m30s] Timestep:        36936 || Speed:   29.4 MC/s (2.328e-02 s/TS) || Energy: ~6.19e-14 (- 6.91dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -15.35 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    13m40s] Timestep:        37422 || Speed:   33.6 MC/s (2.038e-02 s/TS) || Energy: ~5.35e-14 (- 7.55dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.92 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    13m50s] Timestep:        37908 || Speed:   33.3 MC/s (2.054e-02 s/TS) || Energy: ~5.28e-14 (- 7.61dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -17.04 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m00s] Timestep:        38394 || Speed:   33.3 MC/s (2.058e-02 s/TS) || Energy: ~5.71e-14 (- 7.26dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -18.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m11s] Timestep:        38880 || Speed:   31.1 MC/s (2.203e-02 s/TS) || Energy: ~6.00e-14 (- 7.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -19.35 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m22s] Timestep:        39366 || Speed:   29.0 MC/s (2.359e-02 s/TS) || Energy: ~5.69e-14 (- 7.28dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -19.68 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m33s] Timestep:        39852 || Speed:   31.3 MC/s (2.191e-02 s/TS) || Energy: ~4.88e-14 (- 7.95dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -19.67 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m43s] Timestep:        40338 || Speed:   34.0 MC/s (2.014e-02 s/TS) || Energy: ~4.09e-14 (- 8.72dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -20.08 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    14m53s] Timestep:        40824 || Speed:   33.7 MC/s (2.030e-02 s/TS) || Energy: ~3.77e-14 (- 9.07dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -21.42 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m02s] Timestep:        41310 || Speed:   33.8 MC/s (2.028e-02 s/TS) || Energy: ~3.96e-14 (- 8.86dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -23.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m12s] Timestep:        41796 || Speed:   33.9 MC/s (2.019e-02 s/TS) || Energy: ~4.27e-14 (- 8.53dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -25.55 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m22s] Timestep:        42282 || Speed:   33.3 MC/s (2.056e-02 s/TS) || Energy: ~4.26e-14 (- 8.54dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m33s] Timestep:        42768 || Speed:   32.2 MC/s (2.126e-02 s/TS) || Energy: ~3.81e-14 (- 9.02dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.73 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m43s] Timestep:        43254 || Speed:   33.2 MC/s (2.061e-02 s/TS) || Energy: ~3.18e-14 (- 9.80dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.80 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    15m53s] Timestep:        43740 || Speed:   32.8 MC/s (2.089e-02 s/TS) || Energy: ~2.76e-14 (-10.41dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -28.88 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m03s] Timestep:        44226 || Speed:   33.8 MC/s (2.027e-02 s/TS) || Energy: ~2.75e-14 (-10.44dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -33.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m13s] Timestep:        44712 || Speed:   33.5 MC/s (2.042e-02 s/TS) || Energy: ~2.98e-14 (-10.09dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -41.70 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m23s] Timestep:        45198 || Speed:   32.3 MC/s (2.120e-02 s/TS) || Energy: ~3.11e-14 (- 9.90dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -37.97 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m33s] Timestep:        45684 || Speed:   32.6 MC/s (2.099e-02 s/TS) || Energy: ~2.93e-14 (-10.16dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -39.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m43s] Timestep:        46170 || Speed:   33.5 MC/s (2.044e-02 s/TS) || Energy: ~2.50e-14 (-10.86dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -38.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    16m53s] Timestep:        46656 || Speed:   33.7 MC/s (2.032e-02 s/TS) || Energy: ~2.09e-14 (-11.63dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -37.58 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    17m03s] Timestep:        47142 || Speed:   31.5 MC/s (2.176e-02 s/TS) || Energy: ~1.94e-14 (-11.94dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -34.15 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    17m13s] Timestep:        47628 || Speed:   33.5 MC/s (2.044e-02 s/TS) || Energy: ~2.06e-14 (-11.69dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -29.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    17m24s] Timestep:        48114 || Speed:   30.6 MC/s (2.236e-02 s/TS) || Energy: ~2.22e-14 (-11.36dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -27.25 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+[@    17m35s] Timestep:        48600 || Speed:   31.0 MC/s (2.211e-02 s/TS) || Energy: ~2.21e-14 (-11.40dB)
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.36 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.36 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    17m46s] Timestep:        49086 || Speed:   30.7 MC/s (2.228e-02 s/TS) || Energy: ~1.95e-14 (-11.92dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -26.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    17m56s] Timestep:        49572 || Speed:   33.4 MC/s (2.050e-02 s/TS) || Energy: ~1.62e-14 (-12.73dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -26.04 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m06s] Timestep:        50058 || Speed:   33.6 MC/s (2.038e-02 s/TS) || Energy: ~1.42e-14 (-13.30dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -25.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m16s] Timestep:        50544 || Speed:   32.2 MC/s (2.130e-02 s/TS) || Energy: ~1.44e-14 (-13.25dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -23.67 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m27s] Timestep:        51030 || Speed:   31.7 MC/s (2.162e-02 s/TS) || Energy: ~1.56e-14 (-12.89dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -22.38 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m37s] Timestep:        51516 || Speed:   33.1 MC/s (2.069e-02 s/TS) || Energy: ~1.62e-14 (-12.72dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -21.67 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m46s] Timestep:        52002 || Speed:   33.9 MC/s (2.022e-02 s/TS) || Energy: ~1.51e-14 (-13.04dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -21.57 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    18m56s] Timestep:        52488 || Speed:   33.8 MC/s (2.025e-02 s/TS) || Energy: ~1.28e-14 (-13.76dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -21.52 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m06s] Timestep:        52974 || Speed:   34.1 MC/s (2.009e-02 s/TS) || Energy: ~1.08e-14 (-14.50dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -21.21 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m16s] Timestep:        53460 || Speed:   34.0 MC/s (2.013e-02 s/TS) || Energy: ~1.02e-14 (-14.73dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -20.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m27s] Timestep:        53946 || Speed:   30.6 MC/s (2.237e-02 s/TS) || Energy: ~1.09e-14 (-14.46dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -19.67 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    19m37s] Timestep:        54432 || Speed:   32.7 MC/s (2.094e-02 s/TS) || Energy: ~1.17e-14 (-14.16dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -19.08 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m47s] Timestep:        54918 || Speed:   34.2 MC/s (2.000e-02 s/TS) || Energy: ~1.14e-14 (-14.25dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -18.87 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    19m56s] Timestep:        55404 || Speed:   33.9 MC/s (2.017e-02 s/TS) || Energy: ~1.01e-14 (-14.81dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -18.87 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m06s] Timestep:        55890 || Speed:   34.2 MC/s (2.003e-02 s/TS) || Energy: ~8.39e-15 (-15.59dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -18.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m16s] Timestep:        56376 || Speed:   34.1 MC/s (2.011e-02 s/TS) || Energy: ~7.44e-15 (-16.11dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -18.42 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m26s] Timestep:        56862 || Speed:   31.7 MC/s (2.163e-02 s/TS) || Energy: ~7.56e-15 (-16.05dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -17.87 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m36s] Timestep:        57348 || Speed:   33.3 MC/s (2.054e-02 s/TS) || Energy: ~8.18e-15 (-15.70dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -17.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m46s] Timestep:        57834 || Speed:   33.6 MC/s (2.038e-02 s/TS) || Energy: ~8.41e-15 (-15.58dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -17.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    20m57s] Timestep:        58320 || Speed:   32.1 MC/s (2.130e-02 s/TS) || Energy: ~7.78e-15 (-15.92dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -17.09 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m06s] Timestep:        58806 || Speed:   34.1 MC/s (2.007e-02 s/TS) || Energy: ~6.58e-15 (-16.65dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -17.06 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m16s] Timestep:        59292 || Speed:   33.7 MC/s (2.033e-02 s/TS) || Energy: ~5.57e-15 (-17.38dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -16.90 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m27s] Timestep:        59778 || Speed:   32.0 MC/s (2.139e-02 s/TS) || Energy: ~5.29e-15 (-17.60dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -16.56 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m37s] Timestep:        60264 || Speed:   33.3 MC/s (2.055e-02 s/TS) || Energy: ~5.65e-15 (-17.31dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -16.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m46s] Timestep:        60750 || Speed:   33.9 MC/s (2.019e-02 s/TS) || Energy: ~6.04e-15 (-17.02dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.90 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    21m56s] Timestep:        61236 || Speed:   33.5 MC/s (2.041e-02 s/TS) || Energy: ~5.89e-15 (-17.13dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -15.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    22m06s] Timestep:        61722 || Speed:   33.9 MC/s (2.018e-02 s/TS) || Energy: ~5.15e-15 (-17.71dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -15.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    22m16s] Timestep:        62208 || Speed:   34.1 MC/s (2.005e-02 s/TS) || Energy: ~4.27e-15 (-18.53dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.74 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    22m26s] Timestep:        62694 || Speed:   31.5 MC/s (2.172e-02 s/TS) || Energy: ~3.80e-15 (-19.03dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.55 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    22m37s] Timestep:        63180 || Speed:   30.6 MC/s (2.239e-02 s/TS) || Energy: ~3.91e-15 (-18.91dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.26 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    22m48s] Timestep:        63666 || Speed:   31.3 MC/s (2.189e-02 s/TS) || Energy: ~4.27e-15 (-18.53dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -15.00 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    22m58s] Timestep:        64152 || Speed:   33.7 MC/s (2.034e-02 s/TS) || Energy: ~4.37e-15 (-18.42dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -14.87 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m08s] Timestep:        64638 || Speed:   34.0 MC/s (2.014e-02 s/TS) || Energy: ~4.00e-15 (-18.81dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -14.86 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m18s] Timestep:        65124 || Speed:   32.4 MC/s (2.114e-02 s/TS) || Energy: ~3.35e-15 (-19.58dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -14.84 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m29s] Timestep:        65610 || Speed:   31.0 MC/s (2.211e-02 s/TS) || Energy: ~2.85e-15 (-20.28dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.74 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m39s] Timestep:        66096 || Speed:   33.0 MC/s (2.077e-02 s/TS) || Energy: ~2.77e-15 (-20.41dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.53 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m49s] Timestep:        66582 || Speed:   32.5 MC/s (2.110e-02 s/TS) || Energy: ~2.99e-15 (-20.08dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    23m59s] Timestep:        67068 || Speed:   33.6 MC/s (2.039e-02 s/TS) || Energy: ~3.17e-15 (-19.81dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m09s] Timestep:        67554 || Speed:   33.5 MC/s (2.044e-02 s/TS) || Energy: ~3.05e-15 (-19.99dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -14.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m19s] Timestep:        68040 || Speed:   33.7 MC/s (2.033e-02 s/TS) || Energy: ~2.64e-15 (-20.61dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -14.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m29s] Timestep:        68526 || Speed:   32.4 MC/s (2.110e-02 s/TS) || Energy: ~2.21e-15 (-21.39dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -14.07 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m39s] Timestep:        69012 || Speed:   33.5 MC/s (2.045e-02 s/TS) || Energy: ~2.01e-15 (-21.80dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.95 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m49s] Timestep:        69498 || Speed:   33.5 MC/s (2.042e-02 s/TS) || Energy: ~2.08e-15 (-21.64dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.77 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    24m59s] Timestep:        69984 || Speed:   33.4 MC/s (2.053e-02 s/TS) || Energy: ~2.25e-15 (-21.31dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.62 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m09s] Timestep:        70470 || Speed:   34.1 MC/s (2.009e-02 s/TS) || Energy: ~2.27e-15 (-21.26dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.55 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m19s] Timestep:        70956 || Speed:   33.5 MC/s (2.044e-02 s/TS) || Energy: ~2.06e-15 (-21.68dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.54 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m29s] Timestep:        71442 || Speed:   31.9 MC/s (2.146e-02 s/TS) || Energy: ~1.74e-15 (-22.43dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.53 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m39s] Timestep:        71928 || Speed:   32.6 MC/s (2.102e-02 s/TS) || Energy: ~1.49e-15 (-23.08dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m49s] Timestep:        72414 || Speed:   32.8 MC/s (2.085e-02 s/TS) || Energy: ~1.45e-15 (-23.20dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.33 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    25m59s] Timestep:        72900 || Speed:   33.1 MC/s (2.068e-02 s/TS) || Energy: ~1.56e-15 (-22.90dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -13.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    26m09s] Timestep:        73386 || Speed:   34.2 MC/s (2.005e-02 s/TS) || Energy: ~1.64e-15 (-22.67dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.10 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    26m19s] Timestep:        73872 || Speed:   33.7 MC/s (2.029e-02 s/TS) || Energy: ~1.57e-15 (-22.86dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.08 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    26m30s] Timestep:        74358 || Speed:   29.0 MC/s (2.364e-02 s/TS) || Energy: ~1.36e-15 (-23.50dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.08 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    26m41s] Timestep:        74844 || Speed:   30.2 MC/s (2.264e-02 s/TS) || Energy: ~1.13e-15 (-24.29dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -13.04 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    26m51s] Timestep:        75330 || Speed:   34.1 MC/s (2.005e-02 s/TS) || Energy: ~1.03e-15 (-24.71dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.95 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m01s] Timestep:        75816 || Speed:   34.0 MC/s (2.014e-02 s/TS) || Energy: ~1.07e-15 (-24.53dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.84 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m11s] Timestep:        76302 || Speed:   33.8 MC/s (2.024e-02 s/TS) || Energy: ~1.16e-15 (-24.18dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.74 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m21s] Timestep:        76788 || Speed:   33.8 MC/s (2.026e-02 s/TS) || Energy: ~1.17e-15 (-24.13dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.71 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m31s] Timestep:        77274 || Speed:   31.5 MC/s (2.175e-02 s/TS) || Energy: ~1.06e-15 (-24.58dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.70 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m43s] Timestep:        77760 || Speed:   29.6 MC/s (2.316e-02 s/TS) || Energy: ~8.80e-16 (-25.39dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.69 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    27m53s] Timestep:        78246 || Speed:   31.8 MC/s (2.153e-02 s/TS) || Energy: ~7.55e-16 (-26.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.64 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m03s] Timestep:        78732 || Speed:   34.2 MC/s (2.005e-02 s/TS) || Energy: ~7.47e-16 (-26.10dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.55 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m13s] Timestep:        79218 || Speed:   32.6 MC/s (2.099e-02 s/TS) || Energy: ~8.14e-16 (-25.72dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4880 GHz,  S11 = -12.46 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m23s] Timestep:        79704 || Speed:   33.0 MC/s (2.072e-02 s/TS) || Energy: ~8.59e-16 (-25.49dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.40 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m33s] Timestep:        80190 || Speed:   32.7 MC/s (2.097e-02 s/TS) || Energy: ~8.12e-16 (-25.73dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m43s] Timestep:        80676 || Speed:   33.6 MC/s (2.038e-02 s/TS) || Energy: ~6.92e-16 (-26.43dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    28m53s] Timestep:        81162 || Speed:   33.9 MC/s (2.023e-02 s/TS) || Energy: ~5.78e-16 (-27.21dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.36 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m03s] Timestep:        81648 || Speed:   34.3 MC/s (1.998e-02 s/TS) || Energy: ~5.38e-16 (-27.52dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.30 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m12s] Timestep:        82134 || Speed:   34.1 MC/s (2.011e-02 s/TS) || Energy: ~5.72e-16 (-27.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m23s] Timestep:        82620 || Speed:   32.8 MC/s (2.089e-02 s/TS) || Energy: ~6.18e-16 (-26.92dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m33s] Timestep:        83106 || Speed:   32.4 MC/s (2.113e-02 s/TS) || Energy: ~6.13e-16 (-26.95dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.14 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m44s] Timestep:        83592 || Speed:   29.0 MC/s (2.360e-02 s/TS) || Energy: ~5.46e-16 (-27.46dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.14 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    29m55s] Timestep:        84078 || Speed:   30.4 MC/s (2.251e-02 s/TS) || Energy: ~4.57e-16 (-28.23dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.13 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    30m06s] Timestep:        84564 || Speed:   31.1 MC/s (2.203e-02 s/TS) || Energy: ~4.02e-16 (-28.78dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.09 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    30m16s] Timestep:        85050 || Speed:   34.1 MC/s (2.007e-02 s/TS) || Energy: ~4.03e-16 (-28.78dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -12.03 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    30m26s] Timestep:        85536 || Speed:   31.9 MC/s (2.145e-02 s/TS) || Energy: ~4.33e-16 (-28.46dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.97 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    30m36s] Timestep:        86022 || Speed:   33.7 MC/s (2.032e-02 s/TS) || Energy: ~4.48e-16 (-28.32dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.94 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    30m46s] Timestep:        86508 || Speed:   34.2 MC/s (2.001e-02 s/TS) || Energy: ~4.20e-16 (-28.60dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    30m57s] Timestep:        86994 || Speed:   29.2 MC/s (2.345e-02 s/TS) || Energy: ~3.60e-16 (-29.27dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.93 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    31m08s] Timestep:        87480 || Speed:   30.8 MC/s (2.222e-02 s/TS) || Energy: ~3.04e-16 (-30.00dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.91 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+[@    31m18s] Timestep:        87966 || Speed:   32.3 MC/s (2.118e-02 s/TS) || Energy: ~2.83e-16 (-30.30dB)
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.87 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    31m29s] Timestep:        88452 || Speed:   30.3 MC/s (2.261e-02 s/TS) || Energy: ~2.97e-16 (-30.10dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.81 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    31m40s] Timestep:        88938 || Speed:   31.8 MC/s (2.151e-02 s/TS) || Energy: ~3.19e-16 (-29.80dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.78 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    31m50s] Timestep:        89424 || Speed:   33.1 MC/s (2.067e-02 s/TS) || Energy: ~3.16e-16 (-29.83dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m00s] Timestep:        89910 || Speed:   32.9 MC/s (2.079e-02 s/TS) || Energy: ~2.81e-16 (-30.34dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.76 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m10s] Timestep:        90396 || Speed:   33.8 MC/s (2.024e-02 s/TS) || Energy: ~2.34e-16 (-31.13dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.75 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m19s] Timestep:        90882 || Speed:   34.3 MC/s (1.997e-02 s/TS) || Energy: ~2.04e-16 (-31.74dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.72 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m30s] Timestep:        91368 || Speed:   31.9 MC/s (2.146e-02 s/TS) || Energy: ~2.04e-16 (-31.74dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.68 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m41s] Timestep:        91854 || Speed:   29.7 MC/s (2.309e-02 s/TS) || Energy: ~2.22e-16 (-31.37dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.64 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    32m51s] Timestep:        92340 || Speed:   32.3 MC/s (2.118e-02 s/TS) || Energy: ~2.31e-16 (-31.19dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.62 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m01s] Timestep:        92826 || Speed:   33.8 MC/s (2.027e-02 s/TS) || Energy: ~2.16e-16 (-31.49dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.61 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m11s] Timestep:        93312 || Speed:   33.3 MC/s (2.054e-02 s/TS) || Energy: ~1.82e-16 (-32.24dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.61 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m21s] Timestep:        93798 || Speed:   33.8 MC/s (2.028e-02 s/TS) || Energy: ~1.52e-16 (-33.02dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.60 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m32s] Timestep:        94284 || Speed:   30.7 MC/s (2.229e-02 s/TS) || Energy: ~1.44e-16 (-33.26dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.56 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m42s] Timestep:        94770 || Speed:   33.8 MC/s (2.027e-02 s/TS) || Energy: ~1.56e-16 (-32.91dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.53 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    33m51s] Timestep:        95256 || Speed:   34.0 MC/s (2.013e-02 s/TS) || Energy: ~1.68e-16 (-32.56dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.50 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m01s] Timestep:        95742 || Speed:   34.0 MC/s (2.016e-02 s/TS) || Energy: ~1.65e-16 (-32.66dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.49 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m11s] Timestep:        96228 || Speed:   34.0 MC/s (2.015e-02 s/TS) || Energy: ~1.44e-16 (-33.25dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.49 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m21s] Timestep:        96714 || Speed:   34.0 MC/s (2.011e-02 s/TS) || Energy: ~1.19e-16 (-34.06dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.49 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m31s] Timestep:        97200 || Speed:   32.3 MC/s (2.118e-02 s/TS) || Energy: ~1.07e-16 (-34.53dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.47 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m41s] Timestep:        97686 || Speed:   32.7 MC/s (2.092e-02 s/TS) || Energy: ~1.11e-16 (-34.38dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.43 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    34m51s] Timestep:        98172 || Speed:   34.2 MC/s (2.005e-02 s/TS) || Energy: ~1.20e-16 (-34.02dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.41 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m01s] Timestep:        98658 || Speed:   34.1 MC/s (2.010e-02 s/TS) || Energy: ~1.22e-16 (-33.95dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m11s] Timestep:        99144 || Speed:   33.8 MC/s (2.028e-02 s/TS) || Energy: ~1.12e-16 (-34.34dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m20s] Timestep:        99630 || Speed:   34.0 MC/s (2.017e-02 s/TS) || Energy: ~9.51e-17 (-35.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.39 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m31s] Timestep:       100116 || Speed:   30.7 MC/s (2.233e-02 s/TS) || Energy: ~8.22e-17 (-35.68dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.38 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m42s] Timestep:       100602 || Speed:   31.7 MC/s (2.161e-02 s/TS) || Energy: ~7.93e-17 (-35.84dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.36 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    35m52s] Timestep:       101088 || Speed:   33.6 MC/s (2.036e-02 s/TS) || Energy: ~8.40e-17 (-35.59dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.33 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m03s] Timestep:       101574 || Speed:   30.5 MC/s (2.246e-02 s/TS) || Energy: ~8.83e-17 (-35.37dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m13s] Timestep:       102060 || Speed:   32.5 MC/s (2.108e-02 s/TS) || Energy: ~8.56e-17 (-35.50dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m24s] Timestep:       102546 || Speed:   30.5 MC/s (2.242e-02 s/TS) || Energy: ~7.55e-17 (-36.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.31 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m34s] Timestep:       103032 || Speed:   32.7 MC/s (2.096e-02 s/TS) || Energy: ~6.36e-17 (-36.79dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.30 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m44s] Timestep:       103518 || Speed:   33.4 MC/s (2.050e-02 s/TS) || Energy: ~5.67e-17 (-37.29dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.29 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    36m54s] Timestep:       104004 || Speed:   33.4 MC/s (2.053e-02 s/TS) || Energy: ~5.71e-17 (-37.26dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.26 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m04s] Timestep:       104490 || Speed:   34.0 MC/s (2.013e-02 s/TS) || Energy: ~6.12e-17 (-36.96dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.24 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m14s] Timestep:       104976 || Speed:   33.8 MC/s (2.029e-02 s/TS) || Energy: ~6.27e-17 (-36.86dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m24s] Timestep:       105462 || Speed:   32.0 MC/s (2.140e-02 s/TS) || Energy: ~5.78e-17 (-37.21dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m35s] Timestep:       105948 || Speed:   31.3 MC/s (2.185e-02 s/TS) || Energy: ~4.86e-17 (-37.96dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.23 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m45s] Timestep:       106434 || Speed:   31.8 MC/s (2.155e-02 s/TS) || Energy: ~4.09e-17 (-38.71dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.22 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    37m55s] Timestep:       106920 || Speed:   33.6 MC/s (2.040e-02 s/TS) || Energy: ~3.91e-17 (-38.91dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.21 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m05s] Timestep:       107406 || Speed:   33.6 MC/s (2.038e-02 s/TS) || Energy: ~4.23e-17 (-38.56dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.19 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m15s] Timestep:       107892 || Speed:   32.8 MC/s (2.085e-02 s/TS) || Energy: ~4.57e-17 (-38.23dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.18 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m25s] Timestep:       108378 || Speed:   31.9 MC/s (2.145e-02 s/TS) || Energy: ~4.44e-17 (-38.36dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m35s] Timestep:       108864 || Speed:   33.3 MC/s (2.059e-02 s/TS) || Energy: ~3.83e-17 (-39.00dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m45s] Timestep:       109350 || Speed:   33.7 MC/s (2.029e-02 s/TS) || Energy: ~3.14e-17 (-39.86dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.17 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    38m56s] Timestep:       109836 || Speed:   32.0 MC/s (2.140e-02 s/TS) || Energy: ~2.84e-17 (-40.30dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.16 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m05s] Timestep:       110322 || Speed:   34.0 MC/s (2.013e-02 s/TS) || Energy: ~3.01e-17 (-40.05dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.14 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m15s] Timestep:       110808 || Speed:   33.5 MC/s (2.041e-02 s/TS) || Energy: ~3.31e-17 (-39.63dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.13 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m26s] Timestep:       111294 || Speed:   30.5 MC/s (2.245e-02 s/TS) || Energy: ~3.34e-17 (-39.59dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m36s] Timestep:       111780 || Speed:   32.8 MC/s (2.086e-02 s/TS) || Energy: ~2.99e-17 (-40.08dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m46s] Timestep:       112266 || Speed:   33.7 MC/s (2.032e-02 s/TS) || Energy: ~2.49e-17 (-40.87dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.12 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    39m57s] Timestep:       112752 || Speed:   32.6 MC/s (2.101e-02 s/TS) || Energy: ~2.19e-17 (-41.43dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.11 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+[@    40m06s] Timestep:       113238 || Speed:   33.5 MC/s (2.045e-02 s/TS) || Energy: ~2.21e-17 (-41.38dB)
+openEMS found: C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\openEMS
+Post-processing only (--post-only mode)
+Resonance: 2.4820 GHz,  S11 = -11.10 dB
+S11 data saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.csv
+S11 plot saved to C:\Users\Bin Xiao\OneDrive\Desktop\PCBAntSim\MIFA_onModule\Sim\results\S11.png
+
+[STOPPED] Simulation was cancelled by user.
 
 ────────────────────────────────────────────────────────────
 [STOPPED] Simulation was terminated.
