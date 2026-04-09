@@ -407,22 +407,23 @@ namespace AntennaSimulatorApp.Models
         /// Returns flat list of vertex indices (triples).
         /// Works correctly for both convex and concave polygons.
         /// Input must be wound CCW (use SignedArea to check/fix before calling).
-        /// Falls back to fan triangulation if ear-clipping gets stuck.
+        /// When the main loop gets stuck, force-clips the most convex remaining
+        /// vertex instead of falling back to fan triangulation (which fails on
+        /// non-convex shapes).
         /// </summary>
         public static List<int> Triangulate(List<(double X, double Y)> poly)
         {
             int n = poly.Count;
             if (n < 3) return new List<int>();
             if (n == 3) return new List<int> { 0, 1, 2 };
-            if (n == 4) return new List<int> { 0, 1, 2, 0, 2, 3 };
 
-            // ── Ear-clipping for n >= 5 ──
+            // ── Ear-clipping ──
             var result = new List<int>((n - 2) * 3);
             var idx = new List<int>(n);
             for (int i = 0; i < n; i++) idx.Add(i);
 
             int remaining = n;
-            int failSafe = remaining * remaining;   // generous limit
+            int failSafe = remaining * remaining;
             int cur = 0;
 
             while (remaining > 3 && failSafe-- > 0)
@@ -468,16 +469,33 @@ namespace AntennaSimulatorApp.Models
                 cur = (cur + 1) % remaining;
             }
 
+            // If the main loop got stuck (failSafe expired), force-clip the
+            // most-convex remaining vertex one at a time.  This avoids the old
+            // fan-triangulation fallback which produces garbage for non-convex
+            // polygons.
+            while (remaining > 3)
+            {
+                int bestK = -1;
+                double bestCross = double.NegativeInfinity;
+                for (int k = 0; k < remaining; k++)
+                {
+                    int pv = (k - 1 + remaining) % remaining;
+                    int nx = (k + 1) % remaining;
+                    double c = CrossSign(poly[idx[pv]], poly[idx[k]], poly[idx[nx]]);
+                    if (c > bestCross) { bestCross = c; bestK = k; }
+                }
+                if (bestK < 0) break;
+
+                int prevK = (bestK - 1 + remaining) % remaining;
+                int nextK = (bestK + 1) % remaining;
+                result.Add(idx[prevK]); result.Add(idx[bestK]); result.Add(idx[nextK]);
+                idx.RemoveAt(bestK);
+                remaining--;
+            }
+
             if (remaining == 3)
                 result.AddRange(new[] { idx[0], idx[1], idx[2] });
 
-            // Fallback: if ear-clipping produced too few triangles, use fan
-            if (result.Count < (n - 2) * 3)
-            {
-                result.Clear();
-                for (int i = 1; i < n - 1; i++)
-                { result.Add(0); result.Add(i); result.Add(i + 1); }
-            }
             return result;
         }
 

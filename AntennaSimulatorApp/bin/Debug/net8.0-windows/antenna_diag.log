@@ -386,3 +386,40 @@
 12:02:37.027 [Load] JSON DrawnAntennas count = 0
 12:02:39.632 [Load] Final vm.DrawnAntennas count = 0
 12:09:57.483 [Save] DrawnAntennas count = 0
+12:32:31.532 [Save] DrawnAntennas count = 0
+12:32:31.796 [Save] DrawnAntennas count = 0
+12:32:32.077 [Save] DrawnAntennas count = 0
+12:32:32.276 [Save] DrawnAntennas count = 0
+12:40:19.623 [Save] DrawnAntennas count = 0
+12:41:56.961 [Load] JSON DrawnAntennas count = 0
+12:41:58.290 [Load] Final vm.DrawnAntennas count = 0
+12:44:55.451 [Load] JSON DrawnAntennas count = 0
+12:44:57.188 [Load] Final vm.DrawnAntennas count = 0
+12:45:00.372 [Load] JSON DrawnAntennas count = 0
+12:45:01.979 [Load] Final vm.DrawnAntennas count = 0
+12:45:20.742 [Load] JSON DrawnAntennas count = 0
+12:45:22.411 [Load] Final vm.DrawnAntennas count = 0
+12:51:39.065 [Load] JSON DrawnAntennas count = 0
+12:51:41.038 [Load] Final vm.DrawnAntennas count = 0
+12:53:01.222 [Load] JSON DrawnAntennas count = 0
+12:53:02.901 [Load] Final vm.DrawnAntennas count = 0
+12:53:46.137 [Load] JSON DrawnAntennas count = 1
+12:53:46.138   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+12:53:48.005 [Load] Final vm.DrawnAntennas count = 1
+12:53:48.007   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+12:53:56.233 [Load] JSON DrawnAntennas count = 1
+12:53:56.234   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+12:53:58.659 [Load] Final vm.DrawnAntennas count = 1
+12:53:58.660   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+12:54:05.835 [Load] JSON DrawnAntennas count = 0
+12:54:08.055 [Load] Final vm.DrawnAntennas count = 0
+13:17:41.305 [Load] JSON DrawnAntennas count = 0
+13:17:42.795 [Load] Final vm.DrawnAntennas count = 0
+13:18:44.467 [Save] DrawnAntennas count = 0
+13:18:45.055 [Save] DrawnAntennas count = 0
+13:18:45.212 [Save] DrawnAntennas count = 0
+13:21:26.801 [Load] JSON DrawnAntennas count = 0
+13:21:28.364 [Load] Final vm.DrawnAntennas count = 0
+13:21:46.723 [Save] DrawnAntennas count = 0
+13:21:46.868 [Save] DrawnAntennas count = 0
+13:21:47.039 [Save] DrawnAntennas count = 0

@@ -255,9 +255,10 @@ namespace AntennaSimulatorApp.Models
                 }
             }
 
-            // Sync substrate material across all non-conductive layers in this stackup.
-            // One board = one substrate, so changing any dielectric layer propagates to the rest.
-            // Conductive layers (Signal / Ground / Power) are intentionally excluded.
+            // Sync substrate material across dielectric layers of the SAME kind.
+            // Mask layers sync only with other Mask layers; Dielectric layers sync
+            // only with other Dielectric layers.  This prevents solder-mask material
+            // from overwriting FR-4 (or vice versa) during project loading.
             if (e.PropertyName == nameof(Layer.Material) && !_isUpdating && sender is Layer src)
             {
                 if (src.IsConductive) return;   // ignore copper-layer material changes
@@ -268,8 +269,34 @@ namespace AntennaSimulatorApp.Models
                     foreach (var layer in Layers)
                     {
                         if (layer == src || layer.IsConductive) continue;
+                        // Only sync between layers of the same LayerType
+                        if (layer.Type != src.Type) continue;
                         if (layer.Material != src.Material)
                             layer.Material = src.Material;
+                    }
+                }
+                finally
+                {
+                    _isUpdating = false;
+                }
+            }
+
+            // Sync DielectricConstant across non-conductive layers of the SAME kind.
+            // Changing one Dielectric layer's Dk → all Dielectric layers update.
+            // Changing one Mask layer's Dk → all Mask layers update.
+            if (e.PropertyName == nameof(Layer.DielectricConstant) && !_isUpdating && sender is Layer dkSrc)
+            {
+                if (dkSrc.IsConductive) return;
+
+                _isUpdating = true;
+                try
+                {
+                    foreach (var layer in Layers)
+                    {
+                        if (layer == dkSrc || layer.IsConductive) continue;
+                        if (layer.Type != dkSrc.Type) continue;
+                        if (Math.Abs(layer.DielectricConstant - dkSrc.DielectricConstant) > 1e-6)
+                            layer.DielectricConstant = dkSrc.DielectricConstant;
                     }
                 }
                 finally

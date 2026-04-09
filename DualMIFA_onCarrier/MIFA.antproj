@@ -35,8 +35,8 @@
         "Name": "Sub1-2",
         "Thickness": 0.2,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -59,8 +59,8 @@
         "Name": "Sub2-3",
         "Thickness": 1.06,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -83,8 +83,8 @@
         "Name": "Sub3-4",
         "Thickness": 0.2,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -155,8 +155,8 @@
         "Name": "Sub1-2",
         "Thickness": 0.05,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -179,8 +179,8 @@
         "Name": "Sub2-3",
         "Thickness": 0.05,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -203,8 +203,8 @@
         "Name": "Sub3-4",
         "Thickness": 0.18999999999999995,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -227,8 +227,8 @@
         "Name": "Sub4-5",
         "Thickness": 0.05,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -251,8 +251,8 @@
         "Name": "Sub5-6",
         "Thickness": 0.05,
         "Type": "Dielectric",
-        "Material": "SolderMask",
-        "DielectricConstant": 3.8,
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
         "IsVisible": true,
         "GerberFilePath": "",
         "GerberOffsetX": 0,
@@ -473,18 +473,46 @@
         },
         {
           "X": -2.6,
-          "Y": -4
+          "Y": -4.1
+        },
+        {
+          "X": 0,
+          "Y": -4.1
+        },
+        {
+          "X": 0,
+          "Y": -4.4
+        },
+        {
+          "X": -2.6,
+          "Y": -4.4
+        },
+        {
+          "X": -2.6,
+          "Y": -4.6
         },
         {
           "X": -2.9,
-          "Y": -4
+          "Y": -4.6
         },
         {
           "X": -2.9,
           "Y": -0.7
         },
         {
-          "X": -2.9,
+          "X": -3.9,
+          "Y": -0.7
+        },
+        {
+          "X": -3.9,
+          "Y": -3.25
+        },
+        {
+          "X": -4.2,
+          "Y": -3.25
+        },
+        {
+          "X": -4.2,
           "Y": -0.4
         },
         {
