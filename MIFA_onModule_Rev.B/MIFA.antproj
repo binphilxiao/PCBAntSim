@@ -1,0 +1,1373 @@
+{
+  "FormatVersion": 1,
+  "CarrierBoard": {
+    "Name": "Main PCB Carrier",
+    "Width": 40,
+    "Height": 60,
+    "Thickness": 1.6,
+    "LayerCount": 4,
+    "Layers": [
+      {
+        "Name": "TopMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "TOP",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub1-2",
+        "Thickness": 0.2,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L2",
+        "Thickness": 0.035,
+        "Type": "Ground",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub2-3",
+        "Thickness": 1.06,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L3",
+        "Thickness": 0.035,
+        "Type": "Power",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub3-4",
+        "Thickness": 0.2,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "BOTTOM",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "BotMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      }
+    ]
+  },
+  "Module": {
+    "PositionX": 0,
+    "PositionY": 0,
+    "Rotation": 0,
+    "Name": "RF Module",
+    "Width": 15,
+    "Height": 10.2,
+    "Thickness": 0.6,
+    "LayerCount": 6,
+    "Layers": [
+      {
+        "Name": "TopMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "TOP",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub1-2",
+        "Thickness": 0.05,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L2",
+        "Thickness": 0.035,
+        "Type": "Ground",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub2-3",
+        "Thickness": 0.05,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L3",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub3-4",
+        "Thickness": 0.18999999999999995,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L4",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub4-5",
+        "Thickness": 0.05,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "L5",
+        "Thickness": 0.035,
+        "Type": "Power",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "Sub5-6",
+        "Thickness": 0.05,
+        "Type": "Dielectric",
+        "Material": "FR4",
+        "DielectricConstant": 4.3,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "BOTTOM",
+        "Thickness": 0.035,
+        "Type": "Signal",
+        "Material": "Copper",
+        "DielectricConstant": 1,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      },
+      {
+        "Name": "BotMask",
+        "Thickness": 0.025,
+        "Type": "Mask",
+        "Material": "SolderMask",
+        "DielectricConstant": 3.8,
+        "IsVisible": true,
+        "GerberFilePath": "",
+        "GerberOffsetX": 0,
+        "GerberOffsetY": 0,
+        "GerberRotation": "0"
+      }
+    ]
+  },
+  "HasModule": true,
+  "ManualShapes": [
+    {
+      "Name": "MODULE_L3_GND",
+      "IsCarrier": false,
+      "LayerName": "L3",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -5.1,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -15
+        },
+        {
+          "X": 5.1,
+          "Y": -15
+        },
+        {
+          "X": 5.1,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -4
+        }
+      ],
+      "MergedPolygons": []
+    },
+    {
+      "Name": "MODULE_TOP_GND",
+      "IsCarrier": false,
+      "LayerName": "TOP",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -3.3,
+          "Y": -7
+        },
+        {
+          "X": 5.1,
+          "Y": -7
+        },
+        {
+          "X": 5.1,
+          "Y": -4.4
+        },
+        {
+          "X": -3.07,
+          "Y": -4.4
+        },
+        {
+          "X": -3.07,
+          "Y": -4.6
+        },
+        {
+          "X": -3.77,
+          "Y": -4.6
+        },
+        {
+          "X": -3.77,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -7
+        },
+        {
+          "X": -3.3,
+          "Y": -7
+        }
+      ],
+      "MergedPolygons": []
+    },
+    {
+      "Name": "CARRIER_L2_GND",
+      "IsCarrier": true,
+      "LayerName": "L2",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -30,
+          "Y": 0
+        },
+        {
+          "X": -30,
+          "Y": -40
+        },
+        {
+          "X": 30,
+          "Y": -40
+        },
+        {
+          "X": 30,
+          "Y": 0
+        },
+        {
+          "X": 15,
+          "Y": 0
+        },
+        {
+          "X": 15,
+          "Y": -4
+        },
+        {
+          "X": -15,
+          "Y": -4
+        },
+        {
+          "X": -15,
+          "Y": 0
+        },
+        {
+          "X": -30,
+          "Y": 0
+        }
+      ],
+      "MergedPolygons": []
+    },
+    {
+      "Name": "CARRIER_TOP_GND",
+      "IsCarrier": true,
+      "LayerName": "TOP",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -30,
+          "Y": 0
+        },
+        {
+          "X": -30,
+          "Y": -40
+        },
+        {
+          "X": 30,
+          "Y": -40
+        },
+        {
+          "X": 30,
+          "Y": 0
+        },
+        {
+          "X": 15,
+          "Y": 0
+        },
+        {
+          "X": 15,
+          "Y": -4
+        },
+        {
+          "X": -2.5,
+          "Y": -4
+        },
+        {
+          "X": -2.5,
+          "Y": -4.5
+        },
+        {
+          "X": -3,
+          "Y": -4.5
+        },
+        {
+          "X": -3,
+          "Y": -4
+        },
+        {
+          "X": -15,
+          "Y": -4
+        },
+        {
+          "X": -15,
+          "Y": 0
+        },
+        {
+          "X": -30,
+          "Y": 0
+        }
+      ],
+      "MergedPolygons": []
+    },
+    {
+      "Name": "MODULE_BOT",
+      "IsCarrier": false,
+      "LayerName": "BOTTOM",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -5.1,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -15
+        },
+        {
+          "X": 5.1,
+          "Y": -15
+        },
+        {
+          "X": 5.1,
+          "Y": -4
+        },
+        {
+          "X": -5.1,
+          "Y": -4
+        }
+      ],
+      "MergedPolygons": []
+    },
+    {
+      "Name": "Antenna (MIFA)",
+      "IsCarrier": false,
+      "LayerName": "TOP",
+      "ShowIn3D": true,
+      "Vertices": [
+        {
+          "X": -4.17,
+          "Y": -4.3500000000000005
+        },
+        {
+          "X": -3.8699999999999997,
+          "Y": -4.3500000000000005
+        },
+        {
+          "X": -3.8699999999999997,
+          "Y": -0.2500000000000009
+        },
+        {
+          "X": -4.17,
+          "Y": -0.2500000000000009
+        },
+        {
+          "X": -4.17,
+          "Y": -4.3500000000000005
+        }
+      ],
+      "MergedPolygons": [
+        [
+          {
+            "X": -4.17,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": -3.2199999999999998,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": -3.2199999999999998,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -4.17,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -4.17,
+            "Y": -0.6500000000000008
+          }
+        ],
+        [
+          {
+            "X": -3.6199999999999997,
+            "Y": -4.3500000000000005
+          },
+          {
+            "X": -3.2199999999999998,
+            "Y": -4.3500000000000005
+          },
+          {
+            "X": -3.2199999999999998,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -3.6199999999999997,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -3.6199999999999997,
+            "Y": -4.3500000000000005
+          }
+        ],
+        [
+          {
+            "X": -3.6199999999999997,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": -2.0699999999999994,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": -2.0699999999999994,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -3.6199999999999997,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -3.6199999999999997,
+            "Y": -0.6500000000000008
+          }
+        ],
+        [
+          {
+            "X": -2.4699999999999998,
+            "Y": -3.45
+          },
+          {
+            "X": -2.0699999999999994,
+            "Y": -3.45
+          },
+          {
+            "X": -2.0699999999999994,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -2.4699999999999998,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -2.4699999999999998,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": -2.4699999999999998,
+            "Y": -3.45
+          },
+          {
+            "X": -0.9199999999999999,
+            "Y": -3.45
+          },
+          {
+            "X": -0.9199999999999999,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": -2.4699999999999998,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": -2.4699999999999998,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": -1.3199999999999998,
+            "Y": -3.45
+          },
+          {
+            "X": -0.9199999999999999,
+            "Y": -3.45
+          },
+          {
+            "X": -0.9199999999999999,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -1.3199999999999998,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -1.3199999999999998,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": -1.3199999999999998,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 0.23000000000000043,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 0.23000000000000043,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -1.3199999999999998,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -1.3199999999999998,
+            "Y": -0.6500000000000008
+          }
+        ],
+        [
+          {
+            "X": -0.16999999999999993,
+            "Y": -3.45
+          },
+          {
+            "X": 0.23000000000000043,
+            "Y": -3.45
+          },
+          {
+            "X": 0.23000000000000043,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -0.16999999999999993,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": -0.16999999999999993,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": -0.16999999999999993,
+            "Y": -3.45
+          },
+          {
+            "X": 1.38,
+            "Y": -3.45
+          },
+          {
+            "X": 1.38,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": -0.16999999999999993,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": -0.16999999999999993,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": 0.9799999999999995,
+            "Y": -3.45
+          },
+          {
+            "X": 1.38,
+            "Y": -3.45
+          },
+          {
+            "X": 1.38,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 0.9799999999999995,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 0.9799999999999995,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": 0.9799999999999995,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 2.5300000000000002,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 2.5300000000000002,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 0.9799999999999995,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 0.9799999999999995,
+            "Y": -0.6500000000000008
+          }
+        ],
+        [
+          {
+            "X": 2.13,
+            "Y": -3.45
+          },
+          {
+            "X": 2.5300000000000002,
+            "Y": -3.45
+          },
+          {
+            "X": 2.5300000000000002,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 2.13,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 2.13,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": 2.13,
+            "Y": -3.45
+          },
+          {
+            "X": 3.6800000000000015,
+            "Y": -3.45
+          },
+          {
+            "X": 3.6800000000000015,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": 2.13,
+            "Y": -3.0500000000000003
+          },
+          {
+            "X": 2.13,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": 3.2799999999999994,
+            "Y": -3.45
+          },
+          {
+            "X": 3.6800000000000015,
+            "Y": -3.45
+          },
+          {
+            "X": 3.6800000000000015,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 3.2799999999999994,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 3.2799999999999994,
+            "Y": -3.45
+          }
+        ],
+        [
+          {
+            "X": 3.2799999999999994,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 4.83,
+            "Y": -0.6500000000000008
+          },
+          {
+            "X": 4.83,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 3.2799999999999994,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 3.2799999999999994,
+            "Y": -0.6500000000000008
+          }
+        ],
+        [
+          {
+            "X": 4.4300000000000015,
+            "Y": -3.1999999999999997
+          },
+          {
+            "X": 4.83,
+            "Y": -3.1999999999999997
+          },
+          {
+            "X": 4.83,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 4.4300000000000015,
+            "Y": -0.2500000000000009
+          },
+          {
+            "X": 4.4300000000000015,
+            "Y": -3.1999999999999997
+          }
+        ]
+      ]
+    }
+  ],
+  "DrawnAntennas": [
+    {
+      "Type": "MeanderedInvertedF",
+      "IsCarrier": false,
+      "LayerName": "TOP",
+      "Name": "MIFA",
+      "OffsetX": 0,
+      "OffsetY": 0,
+      "FreqGHz": 2.4,
+      "LengthL": 28,
+      "HeightH": 7,
+      "FeedGap": 0.6,
+      "ShortPinWidth": 1,
+      "FeedPinWidth": 1,
+      "MatchStubWidth": 1,
+      "RadiatorWidth": 1,
+      "MifaHeightH": 3.9,
+      "MeanderHeight": 2.8,
+      "MeanderPitch": 1.15,
+      "MifaShortWidth": 0.3,
+      "MifaFeedWidth": 0.4,
+      "MifaHorizWidth": 0.4,
+      "MifaVertWidth": 0.4,
+      "AvailWidth": 10.2,
+      "AvailHeight": 4.4,
+      "PcbOffsetX": -1.08,
+      "PcbOffsetY": -0.05,
+      "Clearance": 0.254,
+      "CustomVertices": []
+    }
+  ],
+  "Vias": [
+    {
+      "Name": "Via3",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": -4.8,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": -4.2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": -2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": -1,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": 0,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": 1,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": 2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": 3,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via2_copy",
+      "IsCarrier": false,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 12,
+      "X": 4,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 0,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 1,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 3,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 4,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 5,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 6,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 7,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 8,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 9,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": 10,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -1,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -3,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -4,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -5,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -6,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -7,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -8,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -9,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "Via_carrier_copy",
+      "IsCarrier": true,
+      "FromLayer": "TOP",
+      "ToLayer": "BOTTOM",
+      "DiameterMil": 20,
+      "X": -10,
+      "Y": -4.6,
+      "ShowIn3D": true
+    }
+  ],
+  "SolderJoints": [
+    {
+      "Name": "SJ1",
+      "DiameterMil": 30,
+      "X": 0,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "SJ1_copy",
+      "DiameterMil": 30,
+      "X": 2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "SJ1_copy",
+      "DiameterMil": 30,
+      "X": 4,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "SJ1_copy",
+      "DiameterMil": 30,
+      "X": -2,
+      "Y": -4.6,
+      "ShowIn3D": true
+    },
+    {
+      "Name": "SJ1_copy",
+      "DiameterMil": 30,
+      "X": -4,
+      "Y": -4.6,
+      "ShowIn3D": true
+    }
+  ],
+  "SimSettings": {
+    "Ports": [
+      {
+        "Label": "Port 1",
+        "FromLayer": "Module \u2013 TOP",
+        "ToLayer": "Module \u2013 L3",
+        "X": -3.42,
+        "Y": -4.15,
+        "PortType": "LumpedPort",
+        "IntegLine": "ZPlus",
+        "Impedance": 50,
+        "WidthX": 0.4,
+        "WidthY": 0.4
+      }
+    ],
+    "GroundPlanes": [
+      {
+        "BoardName": "Carrier",
+        "LayerName": "TOP",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Carrier",
+        "LayerName": "L2",
+        "IsGround": true
+      },
+      {
+        "BoardName": "Carrier",
+        "LayerName": "L3",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Carrier",
+        "LayerName": "BOTTOM",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "TOP",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "L2",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "L3",
+        "IsGround": true
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "L4",
+        "IsGround": true
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "L5",
+        "IsGround": false
+      },
+      {
+        "BoardName": "Module",
+        "LayerName": "BOTTOM",
+        "IsGround": false
+      }
+    ],
+    "Boundary": {
+      "BoundaryType": "PML",
+      "PmlLayers": 4,
+      "SpacingXPlus": 10,
+      "SpacingXMinus": 10,
+      "SpacingYPlus": 10,
+      "SpacingYMinus": 10,
+      "SpacingZPlus": 10,
+      "SpacingZMinus": 10,
+      "SymmetryX": "None",
+      "SymmetryY": "None",
+      "SymmetryZ": "None",
+      "ManualSimArea": false,
+      "SimXMin": -80,
+      "SimXMax": 80,
+      "SimYMin": -130,
+      "SimYMax": 30,
+      "SimZMin": -30,
+      "SimZMax": 30
+    },
+    "Mesh": {
+      "AdaptiveMeshing": true,
+      "MeshFreqGHz": 2.4,
+      "CellsPerWavelength": 20,
+      "MinStepMm": 0.1,
+      "ZMaxStepMm": 1,
+      "MinCellsPerTrace": 3,
+      "UsePecSheets": true,
+      "MaxAdaptivePasses": 10,
+      "ConvergenceDelta": 0.01
+    },
+    "Sweep": {
+      "SweepType": "Interpolating",
+      "StartGHz": 1,
+      "StopGHz": 4,
+      "StepGHz": 0.01,
+      "NumPoints": 501
+    },
+    "Solver": {
+      "MaxTimesteps": 200000,
+      "EndCriteria": 1E-05,
+      "NumThreads": 0
+    },
+    "FieldDumps": {
+      "EnableSurfaceCurrent": false,
+      "EnableEField": false,
+      "EnableHField": false,
+      "OverlayShapeOutline": true
+    }
+  }
+}
