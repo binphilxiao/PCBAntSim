@@ -944,7 +944,7 @@ namespace AntennaSimulatorApp.Services
 
             sb.AppendLine("if not post_only:");
             sb.AppendLine("    print('Starting openEMS simulation...')");
-            sb.AppendLine($"    sim.Run(sim_path, verbose=2, numThreads={numThreads})");
+            sb.AppendLine($"    sim.Run(sim_path, verbose=2, numThreads={numThreads}, engine='multithreaded')");
             sb.AppendLine("else:");
             sb.AppendLine("    print('Post-processing only (--post-only mode)')");
             sb.AppendLine();
