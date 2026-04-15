@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using HelixToolkit.Wpf;
 using AntennaSimulatorApp.Models;
 using AntennaSimulatorApp.ViewModels;
@@ -32,6 +33,9 @@ public partial class MainWindow : Window
 
     /// <summary>Path to the currently loaded / last-saved .antproj file (null = untitled).</summary>
     private string? _currentProjectPath;
+
+    /// <summary>Debounce timer to coalesce rapid property-change rebuilds.</summary>
+    private DispatcherTimer? _rebuildTimer;
 
     public MainWindow()
     {
@@ -86,49 +90,49 @@ public partial class MainWindow : Window
         // Subscribe to stackup / dimension changes so visuals stay in sync
         if (DataContext is MainViewModel vm)
         {
-            vm.CarrierBoard.PropertyChanged += (s, _) => RebuildLayerVisuals();
-            vm.CarrierBoard.Stackup.PropertyChanged += (s, _) => RebuildLayerVisuals();
+            vm.CarrierBoard.PropertyChanged += (s, _) => ScheduleRebuild();
+            vm.CarrierBoard.Stackup.PropertyChanged += (s, _) => ScheduleRebuild();
             SubscribeLayerList(vm.CarrierBoard.Stackup.Layers);
             vm.CarrierBoard.Stackup.Layers.CollectionChanged += (_, ce) =>
             {
                 if (ce.NewItems != null)
-                    foreach (Layer l in ce.NewItems) l.PropertyChanged += (__, ___) => RebuildLayerVisuals();
-                RebuildLayerVisuals();
+                    foreach (Layer l in ce.NewItems) l.PropertyChanged += (__, ___) => ScheduleRebuild();
+                ScheduleRebuild();
             };
 
-            vm.Module.PropertyChanged += (s, _) => RebuildLayerVisuals();
-            vm.Module.Stackup.PropertyChanged += (s, _) => RebuildLayerVisuals();
+            vm.Module.PropertyChanged += (s, _) => ScheduleRebuild();
+            vm.Module.Stackup.PropertyChanged += (s, _) => ScheduleRebuild();
             SubscribeLayerList(vm.Module.Stackup.Layers);
             vm.Module.Stackup.Layers.CollectionChanged += (_, ce) =>
             {
                 if (ce.NewItems != null)
-                    foreach (Layer l in ce.NewItems) l.PropertyChanged += (__, ___) => RebuildLayerVisuals();
-                RebuildLayerVisuals();
+                    foreach (Layer l in ce.NewItems) l.PropertyChanged += (__, ___) => ScheduleRebuild();
+                ScheduleRebuild();
             };
 
-            vm.PropertyChanged += (s, _) => RebuildLayerVisuals();
+            vm.PropertyChanged += (s, _) => ScheduleRebuild();
 
             // Re-render when manually drawn shapes are added/removed/changed
             vm.ManualShapes.CollectionChanged += (_, __) =>
             {
-                RebuildLayerVisuals();
+                ScheduleRebuild();
                 RefreshDrawnObjectGridFilters();
             };
 
             // Re-render when vias are added/removed
-            vm.Vias.CollectionChanged += (_, __) => RebuildLayerVisuals();
+            vm.Vias.CollectionChanged += (_, __) => ScheduleRebuild();
 
             // Re-render when solder joints are added/removed
-            vm.SolderJoints.CollectionChanged += (_, __) => RebuildLayerVisuals();
+            vm.SolderJoints.CollectionChanged += (_, __) => ScheduleRebuild();
 
             // Re-render when ports are added/removed/changed
             foreach (FeedPoint p in vm.SimSettings.Ports)
-                p.PropertyChanged += (__, ___) => RebuildLayerVisuals();
+                p.PropertyChanged += (__, ___) => ScheduleRebuild();
             vm.SimSettings.Ports.CollectionChanged += (_, ce) =>
             {
                 if (ce.NewItems != null)
-                    foreach (FeedPoint p in ce.NewItems) p.PropertyChanged += (__, ___) => RebuildLayerVisuals();
-                RebuildLayerVisuals();
+                    foreach (FeedPoint p in ce.NewItems) p.PropertyChanged += (__, ___) => ScheduleRebuild();
+                ScheduleRebuild();
             };
 
             // Set up DataGrid filters: Copper vs Antenna
@@ -167,7 +171,29 @@ public partial class MainWindow : Window
     private void SubscribeLayerList(IEnumerable<Layer> layers)
     {
         foreach (var l in layers)
-            l.PropertyChanged += (_, __) => RebuildLayerVisuals();
+            l.PropertyChanged += (_, __) => ScheduleRebuild();
+    }
+
+    /// <summary>
+    /// Coalesce rapid property-change notifications into a single
+    /// <see cref="RebuildLayerVisuals"/> call after a short delay.
+    /// </summary>
+    private void ScheduleRebuild()
+    {
+        if (_rebuildTimer == null)
+        {
+            _rebuildTimer = new DispatcherTimer(DispatcherPriority.Background)
+            {
+                Interval = TimeSpan.FromMilliseconds(50)
+            };
+            _rebuildTimer.Tick += (_, __) =>
+            {
+                _rebuildTimer.Stop();
+                RebuildLayerVisuals();
+            };
+        }
+        _rebuildTimer.Stop();
+        _rebuildTimer.Start();
     }
 
     // -- Layer visual builders ------------------------------------------
