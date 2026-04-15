@@ -122,7 +122,14 @@ public partial class MainWindow : Window
             vm.SolderJoints.CollectionChanged += (_, __) => RebuildLayerVisuals();
 
             // Re-render when ports are added/removed/changed
-            vm.SimSettings.Ports.CollectionChanged += (_, __) => RebuildLayerVisuals();
+            foreach (FeedPoint p in vm.SimSettings.Ports)
+                p.PropertyChanged += (__, ___) => RebuildLayerVisuals();
+            vm.SimSettings.Ports.CollectionChanged += (_, ce) =>
+            {
+                if (ce.NewItems != null)
+                    foreach (FeedPoint p in ce.NewItems) p.PropertyChanged += (__, ___) => RebuildLayerVisuals();
+                RebuildLayerVisuals();
+            };
 
             // Set up DataGrid filters: Copper vs Antenna
             CopperShapesGrid.ItemsSource  = _copperShapes;
@@ -1513,6 +1520,9 @@ public partial class MainWindow : Window
             return;
         }
 
+        // ── Auto-save project before simulation ──
+        SaveToFile(_currentProjectPath);
+
         // ── Ask user for analysis type ──
         var typeDlg = new SimTypeDialog { Owner = this };
         if (typeDlg.ShowDialog() != true) return;
@@ -1552,7 +1562,15 @@ public partial class MainWindow : Window
         }
 
         // ── Launch simulation console ──
-        var simWin = new SimConsoleWindow(outputDir, vm.SimSettings.Solver.MaxTimesteps) { Owner = this };
+        var reportCtx = new SimReportGenerator.ReportContext
+        {
+            ProjectName  = System.IO.Path.GetFileNameWithoutExtension(_currentProjectPath),
+            ProjectPath  = _currentProjectPath,
+            AnalysisType = analysisType,
+            Antennas     = vm.DrawnAntennas.ToList(),
+            SimSettings  = vm.SimSettings
+        };
+        var simWin = new SimConsoleWindow(outputDir, vm.SimSettings.Solver.MaxTimesteps, reportCtx) { Owner = this };
         simWin.Show();
         simWin.StartSimulation();
     }

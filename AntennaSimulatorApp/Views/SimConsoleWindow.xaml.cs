@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
+using AntennaSimulatorApp.Services;
 
 namespace AntennaSimulatorApp.Views
 {
@@ -27,17 +28,21 @@ namespace AntennaSimulatorApp.Views
         // Log file
         private StreamWriter? _logWriter;
 
+        // Report context (captured before run)
+        private SimReportGenerator.ReportContext? _reportContext;
+
         // Regex to match openEMS timestep output: "[@ 1234]" or "Timestep: 1234"
         private static readonly Regex _tsRegex = new(
             @"(?:\[@\s*(\d+)\]|Timestep:\s*(\d+))",
             RegexOptions.Compiled);
 
-        public SimConsoleWindow(string simDir, int maxTimesteps = 200000)
+        public SimConsoleWindow(string simDir, int maxTimesteps = 200000, SimReportGenerator.ReportContext? reportContext = null)
         {
             InitializeComponent();
             _simDir        = simDir;
             _scriptPath    = Path.Combine(simDir, "scripts", "run_simulation.py");
             _maxTimesteps  = maxTimesteps > 0 ? maxTimesteps : 200000;
+            _reportContext = reportContext;
 
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += (_, __) =>
@@ -170,6 +175,7 @@ namespace AntennaSimulatorApp.Views
                     TxtStatus.Text = "Simulation completed successfully";
                     AppendLine("[DONE] Simulation finished successfully.");
                     FinalRefreshResults();
+                    GenerateReport();
                 }
                 else
                 {
@@ -325,6 +331,26 @@ namespace AntennaSimulatorApp.Views
                 if (this.IsLoaded) _liveResultWindow.Owner = this;
                 _liveResultWindow.Closed += (_, __) => _liveResultWindow = null;
                 _liveResultWindow.Show();
+            }
+        }
+
+        private void GenerateReport()
+        {
+            if (_reportContext == null) return;
+            try
+            {
+                var elapsed = DateTime.Now - _startTime;
+                string? path = SimReportGenerator.Generate(_simDir, _reportContext, elapsed);
+                if (path != null)
+                {
+                    AppendLine($"[REPORT] {path}");
+                    // Open the report in the default browser
+                    Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                AppendLine($"[WARN] Report generation failed: {ex.Message}");
             }
         }
 
