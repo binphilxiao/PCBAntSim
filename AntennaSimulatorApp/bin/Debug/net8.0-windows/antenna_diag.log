@@ -628,3 +628,31 @@
 17:07:38.231   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
 17:07:38.444 [Save] DrawnAntennas count = 1
 17:07:38.445   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:05:57.430 [Load] JSON DrawnAntennas count = 1
+09:05:57.435   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:05:58.094 [Load] Final vm.DrawnAntennas count = 1
+09:05:58.095   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:06:11.425 [Load] JSON DrawnAntennas count = 1
+09:06:11.426   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:06:12.270 [Load] Final vm.DrawnAntennas count = 1
+09:06:12.270   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:06:59.248 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:06:59.335 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=30 H=7
+09:06:59.343 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+09:07:20.369 [Load] JSON DrawnAntennas count = 1
+09:07:20.370   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:07:20.984 [Load] Final vm.DrawnAntennas count = 1
+09:07:20.984   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:07:42.579 [Load] JSON DrawnAntennas count = 0
+09:07:43.179 [Load] Final vm.DrawnAntennas count = 0
+09:07:54.460 [Load] JSON DrawnAntennas count = 1
+09:07:54.461   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:07:55.108 [Load] Final vm.DrawnAntennas count = 1
+09:07:55.108   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:08:15.167 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:08:15.250 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=28 H=7
+09:08:15.258 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=28
+09:08:33.609 [Save] DrawnAntennas count = 1
+09:08:33.609   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:08:34.039 [Save] DrawnAntennas count = 1
+09:08:34.039   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
