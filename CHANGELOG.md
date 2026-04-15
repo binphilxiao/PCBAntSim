@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - 2026-04-15
+
+### Changed
+- OpenEMS simulation now uses the multithreaded engine (`engine='multithreaded'`) by default for faster FDTD runs
+- Updated MIFA_onModule_Rev.B simulation script with expanded configuration
+
 ## [1.0.0] - 2026-04-13
 
 ### Initial Release
