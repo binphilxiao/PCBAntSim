@@ -51,6 +51,11 @@ Thumbs.db
 # Build outputs (keep obj/ ignored, track bin/Debug)
 obj/
 
+# Explicitly keep debug build outputs in git for this project
+!AntennaSimulatorApp/bin/
+!AntennaSimulatorApp/bin/Debug/
+!AntennaSimulatorApp/bin/Debug/**
+
 # Python virtual environments
 .venv*/
 .env*/
