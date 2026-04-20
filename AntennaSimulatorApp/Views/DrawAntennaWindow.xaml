@@ -173,13 +173,41 @@
                           Header="IFA Parameters"
                           Padding="8,6"
                           Margin="0,4,0,4">
-                    <Grid x:Name="IfaParamGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
+                    <StackPanel>
+                        <CheckBox x:Name="IfaGroundStubCheck"
+                                  Content="Include grounding stub (shorting post)"
+                                  IsChecked="True"
+                                  Margin="0,0,0,6"
+                                  Checked="GroundStubCheck_Changed"
+                                  Unchecked="GroundStubCheck_Changed"/>
+                                                <StackPanel Orientation="Horizontal"
+                                                                        Margin="0,0,0,6">
+                                                        <CheckBox x:Name="IfaMirrorCheck"
+                                                                          Content="Mirror"
+                                                                          IsChecked="False"
+                                                                          VerticalAlignment="Center"
+                                                                          Margin="0,0,8,0"
+                                                                          Checked="MirrorControl_Changed"
+                                                                          Unchecked="MirrorControl_Changed"/>
+                                                        <TextBlock Text="Axis:"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="0,0,4,0"/>
+                                                        <ComboBox x:Name="IfaMirrorAxisCombo"
+                                                                          Width="72"
+                                                                          SelectedIndex="0"
+                                                                          SelectionChanged="MirrorControl_Changed">
+                                                                <ComboBoxItem Content="X"/>
+                                                                <ComboBoxItem Content="Y"/>
+                                                        </ComboBox>
+                                                </StackPanel>
+                        <Grid x:Name="IfaParamGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </StackPanel>
                 </GroupBox>
 
                 <!-- MIFA Meander Parameters -->
@@ -188,13 +216,41 @@
                           Padding="8,6"
                           Margin="0,4,0,8"
                           Visibility="Collapsed">
-                    <Grid x:Name="MifaParamGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
+                    <StackPanel>
+                        <CheckBox x:Name="MifaGroundStubCheck"
+                                  Content="Include grounding stub (shorting post)"
+                                  IsChecked="True"
+                                  Margin="0,0,0,6"
+                                  Checked="GroundStubCheck_Changed"
+                                  Unchecked="GroundStubCheck_Changed"/>
+                                                <StackPanel Orientation="Horizontal"
+                                                                        Margin="0,0,0,6">
+                                                        <CheckBox x:Name="MifaMirrorCheck"
+                                                                          Content="Mirror"
+                                                                          IsChecked="False"
+                                                                          VerticalAlignment="Center"
+                                                                          Margin="0,0,8,0"
+                                                                          Checked="MirrorControl_Changed"
+                                                                          Unchecked="MirrorControl_Changed"/>
+                                                        <TextBlock Text="Axis:"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="0,0,4,0"/>
+                                                        <ComboBox x:Name="MifaMirrorAxisCombo"
+                                                                          Width="72"
+                                                                          SelectedIndex="0"
+                                                                          SelectionChanged="MirrorControl_Changed">
+                                                                <ComboBoxItem Content="X"/>
+                                                                <ComboBoxItem Content="Y"/>
+                                                        </ComboBox>
+                                                </StackPanel>
+                        <Grid x:Name="MifaParamGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </StackPanel>
                 </GroupBox>
 
                 <!-- Custom Antenna (polygon vertex editor) -->

@@ -114,6 +114,13 @@ namespace AntennaSimulatorApp.Models
         public double OffsetX        { get; set; }
         public double OffsetY        { get; set; }
 
+        // Ground stub toggle
+        public bool   HasGroundStub { get; set; } = true;
+
+        // Mirror toggle
+        public bool   MirrorEnabled { get; set; } = false;
+        public string MirrorAxis    { get; set; } = "X";
+
         // IFA common
         public double FreqGHz       { get; set; } = 2.4;
         public double LengthL       { get; set; } = 24.0;

@@ -60,7 +60,7 @@ namespace AntennaSimulatorApp.Views
             string? pythonExe = FindPython();
             if (pythonExe == null)
             {
-                AppendLine("[ERROR] Cannot find Python. Please install Python or create a .venv.");
+                AppendLine("[ERROR] Cannot find system Python. Please install Python or set Tools -> Options -> Python path.");
                 TxtStatus.Text = "Error: Python not found";
                 return;
             }
@@ -368,19 +368,9 @@ namespace AntennaSimulatorApp.Views
             if (!string.IsNullOrWhiteSpace(userPython) && File.Exists(userPython) && TestPython(userPython))
                 return userPython;
 
-            // Candidates to try in order
-            string projectDir = Path.GetDirectoryName(_simDir)!;
-            string parentDir  = Path.GetDirectoryName(projectDir) ?? "";
-
-            var candidates = new[]
-            {
-                // 1. .venv next to Sim/ (project folder)
-                Path.Combine(projectDir, ".venv", "Scripts", "python.exe"),
-                // 2. workspace-level .venv (one more level up)
-                Path.Combine(parentDir, ".venv", "Scripts", "python.exe"),
-                // 3. System Python on PATH
-                "python"
-            };
+            // Default policy: force system Python on PATH.
+            // Do not auto-pick project/workspace .venv to avoid accidental dependency mismatch.
+            var candidates = new[] { "python" };
 
             foreach (var candidate in candidates)
             {

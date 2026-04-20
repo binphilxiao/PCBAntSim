@@ -36,6 +36,13 @@ namespace AntennaSimulatorApp.Views
         public double OffsetX  { get; set; } = 0.0;
         public double OffsetY  { get; set; } = 0.0;
 
+        // ── Ground stub toggle ────────────────────────────────────────────
+        public bool   HasGroundStub  { get; set; } = true;
+
+        // ── Mirror toggle (IFA/MIFA) ──────────────────────────────────────
+        public bool   MirrorEnabled  { get; set; } = false;
+        public string MirrorAxis     { get; set; } = "X"; // "X" or "Y"
+
         // ── IFA common ──────────────────────────────────────────────────
         public double FreqGHz        { get; set; } = 2.4;
         public double LengthL        { get; set; } = 24.0;
@@ -111,10 +118,13 @@ namespace AntennaSimulatorApp.Views
                 double hwRa = RadiatorWidth / 2;
                 double hwTopFeed = Math.Max(hwMa, hwRa); // top of feed stub connects to both
 
-                // 1. Shorting stub  (0,0) → (0, H) — extend top by half match width
-                AddRect(gd, -hwSh, 0, hwSh, HeightH + hwMa);
-                // 2. Matching section (0, H) → (S, H) — extend left/right by half connecting vertical widths
-                AddRect(gd, -hwSh, HeightH - hwMa, FeedGap + hwFe, HeightH + hwMa);
+                if (HasGroundStub)
+                {
+                    // 1. Shorting stub  (0,0) → (0, H) — extend top by half match width
+                    AddRect(gd, -hwSh, 0, hwSh, HeightH + hwMa);
+                    // 2. Matching section (0, H) → (S, H) — extend left/right by half connecting vertical widths
+                    AddRect(gd, -hwSh, HeightH - hwMa, FeedGap + hwFe, HeightH + hwMa);
+                }
                 // 3. Feed stub  (S, 0) → (S, H) — extend top by half max(match, radiator)
                 AddRect(gd, FeedGap - hwFe, 0, FeedGap + hwFe, HeightH + hwTopFeed);
                 // 4. Radiating arm  (S, H) → (L, H) — extend left by half feed width
@@ -145,10 +155,13 @@ namespace AntennaSimulatorApp.Views
                 double hwMh = MifaHorizWidth / 2;
                 double hwMv = MifaVertWidth / 2;
 
-                // 1. Shorting stub (0,0) → (0, H) — extend top by half horiz width
-                AddRect(gd, -hwSh, 0, hwSh, H + hwMh);
-                // 2. Matching section (0, H) → (S, H) — extend left/right by half connecting vertical widths
-                AddRect(gd, -hwSh, H - hwMh, FeedGap + hwFe, H + hwMh);
+                if (HasGroundStub)
+                {
+                    // 1. Shorting stub (0,0) → (0, H) — extend top by half horiz width
+                    AddRect(gd, -hwSh, 0, hwSh, H + hwMh);
+                    // 2. Matching section (0, H) → (S, H) — extend left/right by half connecting vertical widths
+                    AddRect(gd, -hwSh, H - hwMh, FeedGap + hwFe, H + hwMh);
+                }
                 // 3. Feed stub (S, 0) → (S, H) — extend top by half horiz width
                 AddRect(gd, FeedGap - hwFe, 0, FeedGap + hwFe, H + hwMh);
 
@@ -177,7 +190,30 @@ namespace AntennaSimulatorApp.Views
                 if (tailLen > 0)
                     AddRect(gd, x - hwMv, y - hwMh, x + tailLen, y + hwMh);
             }
+            if (Type != AntennaType.Custom && MirrorEnabled)
+                gd = BuildMirroredGerber(gd, MirrorAxis);
+
             return gd;
+        }
+
+        private static GerberData BuildMirroredGerber(GerberData src, string axis)
+        {
+            bool mirrorY = string.Equals(axis, "Y", StringComparison.OrdinalIgnoreCase);
+
+            var dst = new GerberData();
+            foreach (var shape in src.Shapes)
+            {
+                var ns = new GerberShape();
+                foreach (var p in shape.Points)
+                {
+                    double nx = mirrorY ? -p.X : p.X;
+                    double ny = mirrorY ? p.Y : -p.Y;
+                    ns.Points.Add((nx, ny));
+                    dst.ExpandBounds(nx, ny);
+                }
+                dst.Shapes.Add(ns);
+            }
+            return dst;
         }
 
         private static void AddTraceSeg(GerberData gd,
@@ -518,6 +554,14 @@ namespace AntennaSimulatorApp.Views
             _sysOffY = -offY - ah + boardTopY;
         }
 
+        // Custom UI vertices are edited in system coordinates for consistency with the rest of the app.
+        // Convert them to local antenna coordinates before geometry/fit calculations and saving.
+        private (double X, double Y) CustomUiToLocal(double sysX, double sysY)
+            => (sysX - _sysOffX, sysY - _sysOffY);
+
+        private (double X, double Y) CustomLocalToUi(double localX, double localY)
+            => (localX + _sysOffX, localY + _sysOffY);
+
         private void DrawPreview()
         {
             if (!IsInitialized || _suppressPreview) return;
@@ -750,9 +794,9 @@ namespace AntennaSimulatorApp.Views
         /// Returns (minX, minY, maxX, maxY) to center the drawing.
         /// </summary>
         private (double minX, double minY, double maxX, double maxY) GetCombinedBounds(
-            double antennaW, double antennaH)
+            double antennaMinX, double antennaMinY, double antennaMaxX, double antennaMaxY)
         {
-            double minX = 0, minY = 0, maxX = antennaW, maxY = antennaH;
+            double minX = antennaMinX, minY = antennaMinY, maxX = antennaMaxX, maxY = antennaMaxY;
 
             if (double.TryParse(AvailWidthBox.Text, out double aw) && aw > 0 &&
                 double.TryParse(AvailHeightBox.Text, out double ah) && ah > 0)
@@ -766,6 +810,10 @@ namespace AntennaSimulatorApp.Views
             }
             return (minX, minY, maxX, maxY);
         }
+
+        private (double minX, double minY, double maxX, double maxY) GetCombinedBounds(
+            double antennaW, double antennaH)
+            => GetCombinedBounds(0, 0, antennaW, antennaH);
 
         private void DrawIFA()
         {
@@ -781,9 +829,23 @@ namespace AntennaSimulatorApp.Views
             double wMa = Get("MatchStubWidth", 1);
             double wRa = Get("RadiatorWidth", 1);
             double wMax = Math.Max(Math.Max(wSh, wFe), Math.Max(wMa, wRa));
+            bool mirrorEnabled = IsMirrorEnabledChecked;
+            string mirrorAxis = MirrorAxisChecked;
+
+            (double X, double Y) M(double x, double y) => MirrorPoint(x, y, mirrorEnabled, mirrorAxis);
+
+            // Antenna bounds (canonical: x in [0,L], y in [0,H+halfW]) transformed by mirror
+            var c0 = M(0, 0);
+            var c1 = M(L, 0);
+            var c2 = M(0, H + wMax / 2);
+            var c3 = M(L, H + wMax / 2);
+            double antMinX = new[] { c0.X, c1.X, c2.X, c3.X }.Min();
+            double antMaxX = new[] { c0.X, c1.X, c2.X, c3.X }.Max();
+            double antMinY = new[] { c0.Y, c1.Y, c2.Y, c3.Y }.Min();
+            double antMaxY = new[] { c0.Y, c1.Y, c2.Y, c3.Y }.Max();
 
             // Compute combined bounding box (antenna + PCB space)
-            var (bx0, by0, bx1, by1) = GetCombinedBounds(L, H + wMax / 2);
+            var (bx0, by0, bx1, by1) = GetCombinedBounds(antMinX, antMinY, antMaxX, antMaxY);
             double bw = bx1 - bx0;
             double bh = by1 - by0;
 
@@ -805,6 +867,17 @@ namespace AntennaSimulatorApp.Views
             double py(double mm) => oy - mm * sc;
             double pw(double mm) => Math.Max(mm * sc, 1);
 
+            void AddRectMm(double x0, double y0, double x1, double y1, Brush fill)
+            {
+                var p0 = M(x0, y0);
+                var p1 = M(x1, y1);
+                double minX = Math.Min(p0.X, p1.X);
+                double maxX = Math.Max(p0.X, p1.X);
+                double minY = Math.Min(p0.Y, p1.Y);
+                double maxY = Math.Max(p0.Y, p1.Y);
+                AddFilledRect(px(minX), py(maxY), (maxX - minX) * sc, (maxY - minY) * sc, fill);
+            }
+
             _prevOx = ox; _prevOy = oy; _prevScale = sc;
 
             var blue = new SolidColorBrush(Color.FromRgb(0x20, 0x60, 0xCC));
@@ -814,49 +887,66 @@ namespace AntennaSimulatorApp.Views
             var grn  = new SolidColorBrush(Color.FromRgb(0x20, 0xAA, 0x40));
 
             // GND plane (full width, thin gray bar)
-            AddFilledRect(ox - 4, oy, L * sc + 8, 3, gray);
+            AddFilledRect(px(antMinX) - 4, oy, (antMaxX - antMinX) * sc + 8, 3, gray);
             AddLabel("GND", ox - 4, oy + 4, gray);
 
             // --- Draw horizontal segments first ---
             // 2. Matching section: extend left/right to cover half of connecting vertical widths
-            AddFilledRect(px(0) - pw(wSh) / 2, py(H) - pw(wMa) / 2,
-                          S * sc + pw(wSh) / 2 + pw(wFe) / 2, pw(wMa), ltbl);
-            if (S * sc > 20)
-                AddLabel("Match", px(S / 2) - 12, py(H) - pw(wMa) / 2 - 13, ltbl);
+            if (HasGroundStubChecked)
+            {
+                AddRectMm(-wSh / 2, H - wMa / 2, S + wFe / 2, H + wMa / 2, ltbl);
+                if (S * sc > 20)
+                {
+                    var pm = M(S / 2, H);
+                    AddLabel("Match", px(pm.X) - 12, py(pm.Y) - pw(wMa) / 2 - 13, ltbl);
+                }
+            }
 
             // 4. Radiating arm: extend left to cover half of feed pin width
-            AddFilledRect(px(S) - pw(wFe) / 2, py(H) - pw(wRa) / 2,
-                          (L - S) * sc + pw(wFe) / 2, pw(wRa), blue);
-            AddLabel("Radiator", px((S + L) / 2) - 18, py(H) - pw(wRa) / 2 - 13, blue, bold: true);
+            AddRectMm(S - wFe / 2, H - wRa / 2, L, H + wRa / 2, blue);
+            var prad = M((S + L) / 2, H);
+            AddLabel("Radiator", px(prad.X) - 18, py(prad.Y) - pw(wRa) / 2 - 13, blue, bold: true);
 
             // --- Draw vertical segments on top (extend to cover junction corners) ---
             // 1. Shorting stub: extend top by half match width
-            AddFilledRect(px(0) - pw(wSh) / 2, py(H) - pw(wMa) / 2,
-                          pw(wSh), H * sc + pw(wMa) / 2, blue);
-            AddLabel("Short", px(0) - 4, py(H) - 13, blue);
+            if (HasGroundStubChecked)
+            {
+                AddRectMm(-wSh / 2, 0, wSh / 2, H + wMa / 2, blue);
+                var pshort = M(0, H);
+                AddLabel("Short", px(pshort.X) - 4, py(pshort.Y) - 13, blue);
+            }
 
             // 3. Feed stub: extend top by half of max(match, radiator) width
-            double hwTopFeed = Math.Max(pw(wMa), pw(wRa)) / 2;
-            AddFilledRect(px(S) - pw(wFe) / 2, py(H) - hwTopFeed,
-                          pw(wFe), H * sc + hwTopFeed, red);
-            AddLabel("Feed", px(S) + pw(wFe) / 2 + 2, py(H / 2) - 5, red);
+            double topFeedMm = Math.Max(wMa, wRa) / 2;
+            AddRectMm(S - wFe / 2, 0, S + wFe / 2, H + topFeedMm, red);
+            var pfeed = M(S, H / 2);
+            AddLabel("Feed", px(pfeed.X) + pw(wFe) / 2 + 2, py(pfeed.Y) - 5, red);
 
             // Dimension annotations
             double dimY1 = oy + 12;
-            AddDimH(px(0), px(L), dimY1, L, "L", grn);
-            AddDimH(px(0), px(S), dimY1 + 16, S, "S", grn);
-            double dimX1 = px(L) + 8;
-            AddDimV(dimX1, py(H), oy, H, "H", grn);
+            AddDimH(px(antMinX), px(antMaxX), dimY1, L, "L", grn);
+            var p0 = M(0, 0);
+            var pS = M(S, 0);
+            AddDimH(px(p0.X), px(pS.X), dimY1 + 16, S, "S", grn);
+            double dimX1 = px(antMaxX) + 8;
+            var pH = M(0, H);
+            AddDimV(dimX1, py(pH.Y), py(p0.Y), H, "H", grn);
 
             // Width labels next to each segment
-            AddLabel($"W={wSh:F1}", px(0) - 30, py(H / 2), grn);
-            AddLabel($"W={wFe:F1}", px(S) + pw(wFe) / 2 + 2, py(H) + 2, grn);
+            var pWsh = M(0, H / 2);
+            var pWfe = M(S, H);
+            AddLabel($"W={wSh:F1}", px(pWsh.X) - 30, py(pWsh.Y), grn);
+            AddLabel($"W={wFe:F1}", px(pWfe.X) + pw(wFe) / 2 + 2, py(pWfe.Y) + 2, grn);
             if (S * sc > 20)
-                AddLabel($"W={wMa:F1}", px(S / 2) - 8, py(H) + pw(wMa) / 2 + 2, grn);
-            AddLabel($"W={wRa:F1}", px((S + L) / 2) - 8, py(H) + pw(wRa) / 2 + 2, grn);
+            {
+                var pWma = M(S / 2, H);
+                AddLabel($"W={wMa:F1}", px(pWma.X) - 8, py(pWma.Y) + pw(wMa) / 2 + 2, grn);
+            }
+            var pWra = M((S + L) / 2, H);
+            AddLabel($"W={wRa:F1}", px(pWra.X) - 8, py(pWra.Y) + pw(wRa) / 2 + 2, grn);
 
             // Available space overlay
-            DrawAvailSpaceOverlay(ox, oy, sc, L, H);
+            DrawAvailSpaceOverlay(ox, oy, sc, antMaxX - antMinX, antMaxY - antMinY, antMinX, antMinY);
 
             // Origin cross at (0,0)
             DrawOriginCross(px, py, cw, ch);
@@ -899,6 +989,10 @@ namespace AntennaSimulatorApp.Views
             double wFe    = Get("MifaFeedWidth", 0.8);
             double wMh    = Get("MifaHorizWidth", 0.5);
             double wMv    = Get("MifaVertWidth", 0.5);
+            bool mirrorEnabled = IsMirrorEnabledChecked;
+            string mirrorAxis = MirrorAxisChecked;
+            (double X, double Y) M(double x, double y) => MirrorPoint(x, y, mirrorEnabled, mirrorAxis);
+
             if (Hm >= H) Hm = H * 0.8; // safety clamp
             int    n_full = (pitch + Hm) > 0 ? Math.Max(1, (int)Math.Floor((L - feedS) / (pitch + Hm))) : 1;
             double remaining = L - feedS - n_full * (pitch + Hm);
@@ -912,11 +1006,24 @@ namespace AntennaSimulatorApp.Views
 
             // Total physical width = feed gap + sum of pitches + tail
             double totalW   = feedS + n * pitch + tailLen;
-            double totalH   = H;
             double wMaxAll  = Math.Max(Math.Max(wSh, wFe), Math.Max(wMh, wMv));
 
+            // Conservative transformed bounds for preview centering / fit check.
+            double xMinC = -Math.Max(wSh, wMv) / 2;
+            double xMaxC = totalW + Math.Max(wFe, wMv) / 2;
+            double yMinC = 0;
+            double yMaxC = H + wMh / 2;
+            var b0 = M(xMinC, yMinC);
+            var b1 = M(xMaxC, yMinC);
+            var b2 = M(xMinC, yMaxC);
+            var b3 = M(xMaxC, yMaxC);
+            double antMinX = new[] { b0.X, b1.X, b2.X, b3.X }.Min();
+            double antMaxX = new[] { b0.X, b1.X, b2.X, b3.X }.Max();
+            double antMinY = new[] { b0.Y, b1.Y, b2.Y, b3.Y }.Min();
+            double antMaxY = new[] { b0.Y, b1.Y, b2.Y, b3.Y }.Max();
+
             // Compute combined bounding box (antenna + PCB space)
-            var (bx0, by0, bx1, by1) = GetCombinedBounds(totalW, H + wMaxAll / 2);
+            var (bx0, by0, bx1, by1) = GetCombinedBounds(antMinX, antMinY, antMaxX, antMaxY);
             double bw = bx1 - bx0;
             double bh = by1 - by0;
 
@@ -937,6 +1044,17 @@ namespace AntennaSimulatorApp.Views
             double py(double mm) => oy - mm * sc;
             double pw(double mm) => Math.Max(mm * sc, 1);
 
+            void AddRectMm(double x0, double y0, double x1, double y1, Brush fill)
+            {
+                var p0 = M(x0, y0);
+                var p1 = M(x1, y1);
+                double minX = Math.Min(p0.X, p1.X);
+                double maxX = Math.Max(p0.X, p1.X);
+                double minY = Math.Min(p0.Y, p1.Y);
+                double maxY = Math.Max(p0.Y, p1.Y);
+                AddFilledRect(px(minX), py(maxY), (maxX - minX) * sc, (maxY - minY) * sc, fill);
+            }
+
             _prevOx = ox; _prevOy = oy; _prevScale = sc;
 
             var blue = new SolidColorBrush(Color.FromRgb(0x20, 0x60, 0xCC));
@@ -947,13 +1065,15 @@ namespace AntennaSimulatorApp.Views
             var oran = new SolidColorBrush(Color.FromRgb(0xDD, 0x88, 0x00));
 
             // GND bar
-            AddFilledRect(ox - 4, oy, totalW * sc + 8, 3, gray);
-            AddLabel("GND", ox - 4, oy + 4, gray);
+            AddFilledRect(px(antMinX) - 4, oy, (antMaxX - antMinX) * sc + 8, 3, gray);
+            AddLabel("GND", px(antMinX) - 4, oy + 4, gray);
 
             // --- Draw horizontal segments first ---
             // 2. Matching section at y = H: extend left/right to cover connecting vertical widths
-            AddFilledRect(px(0) - pw(wSh) / 2, py(yTop) - pw(wMh) / 2,
-                          feedS * sc + pw(wSh) / 2 + pw(wFe) / 2, pw(wMh), oran);
+            if (HasGroundStubChecked)
+            {
+                AddRectMm(-wSh / 2, yTop - wMh / 2, feedS + wFe / 2, yTop + wMh / 2, oran);
+            }
 
             // Meander traces (start at x = feedS, y = yTop)
             double mx = feedS, my_mm = yTop;
@@ -968,50 +1088,60 @@ namespace AntennaSimulatorApp.Views
                 double vy1 = Math.Max(my_mm, ny_mm);
 
                 // 4. Horizontal trace: extend left/right to cover half vertical width
-                AddFilledRect(px(mx) - pw(wMv) / 2, py(my_mm) - pw(wMh) / 2,
-                              pitch * sc + pw(wMv), pw(wMh), blue);
+                AddRectMm(mx - wMv / 2, my_mm - wMh / 2, nx + wMv / 2, my_mm + wMh / 2, blue);
                 // 5. Vertical trace: extend top/bottom to cover half horizontal width
                 if (vy1 - vy0 > 1e-6)
-                    AddFilledRect(px(nx) - pw(wMv) / 2, py(vy1) - pw(wMh) / 2,
-                              pw(wMv), (vy1 - vy0) * sc + pw(wMh), purp);
+                    AddRectMm(nx - wMv / 2, vy0 - wMh / 2, nx + wMv / 2, vy1 + wMh / 2, purp);
                 mx = nx; my_mm = ny_mm;
             }
             // Tail: only if remaining couldn't be folded
             if (tailLen > 0)
-                AddFilledRect(px(mx) - pw(wMv) / 2, py(my_mm) - pw(wMh) / 2,
-                              tailLen * sc + pw(wMv) / 2, pw(wMh), blue);
+                AddRectMm(mx - wMv / 2, my_mm - wMh / 2, mx + tailLen, my_mm + wMh / 2, blue);
 
             // --- Draw vertical segments on top ---
             // 1. Shorting stub: from GND (y=0) to top (y=H), extend top by half horiz width
-            AddFilledRect(px(0) - pw(wSh) / 2, py(H) - pw(wMh) / 2,
-                          pw(wSh), H * sc + pw(wMh) / 2, blue);
-            AddLabel("Short", px(0) - 4, py(H) - 13, blue);
+            if (HasGroundStubChecked)
+            {
+                AddRectMm(-wSh / 2, 0, wSh / 2, H + wMh / 2, blue);
+                var pShort = M(0, H);
+                AddLabel("Short", px(pShort.X) - 4, py(pShort.Y) - 13, blue);
+            }
 
             // 3. Feed stub: from GND (y=0) to top (y=H), extend top by half horiz width
-            AddFilledRect(px(feedS) - pw(wFe) / 2, py(H) - pw(wMh) / 2,
-                          pw(wFe), H * sc + pw(wMh) / 2, red);
-            AddLabel("Feed", px(feedS) + pw(wFe) / 2 + 2, py(H / 2) - 5, red);
+            AddRectMm(feedS - wFe / 2, 0, feedS + wFe / 2, H + wMh / 2, red);
+            var pFeed = M(feedS, H / 2);
+            AddLabel("Feed", px(pFeed.X) + pw(wFe) / 2 + 2, py(pFeed.Y) - 5, red);
 
             // Dimension annotations
             double dimY1 = oy + 18;
-            AddDimH(px(0), px(totalW), dimY1, totalW, "Total", grn);
-            double dimX1 = px(totalW) + 20;
+            AddDimH(px(antMinX), px(antMaxX), dimY1, totalW, "Total", grn);
+            double dimX1 = px(antMaxX) + 20;
             // H dimension (total height)
-            AddDimV(dimX1, py(H), oy, H, "H", grn);
+            var p0 = M(0, 0);
+            var pH = M(0, H);
+            AddDimV(dimX1, py(pH.Y), py(p0.Y), H, "H", grn);
             // h1 dimension (meander depth)
-            AddDimV(dimX1 + 40, py(yTop), py(H - Hm), Hm, "h1", grn);
+            var pTop = M(0, yTop);
+            var pBot = M(0, H - Hm);
+            AddDimV(dimX1 + 40, py(pTop.Y), py(pBot.Y), Hm, "h1", grn);
             // Feed gap
-            AddDimH(px(0), px(feedS), dimY1 + 18, feedS, "S", grn);
+            var pFeed0 = M(0, 0);
+            var pFeedS = M(feedS, 0);
+            AddDimH(px(pFeed0.X), px(pFeedS.X), dimY1 + 18, feedS, "S", grn);
             // Single pitch between first two vertical legs
             if (n >= 1)
-                AddDimH(px(feedS), px(feedS + pitch), dimY1 + 18 + 18, pitch, "P", grn);
+            {
+                var pPitch0 = M(feedS, 0);
+                var pPitch1 = M(feedS + pitch, 0);
+                AddDimH(px(pPitch0.X), px(pPitch1.X), dimY1 + 18 + 18, pitch, "P", grn);
+            }
 
             // Trace length estimate
             double traceLen = feedS + n_full * (pitch + Hm) + (hasPartial ? pitch + partialHm : 0) + tailLen;
             AddLabel($"N={n} (auto)  trace≈{traceLen:F1}mm", cw / 2 - 50, 3, blue, bold: true);
 
             // Available space overlay
-            DrawAvailSpaceOverlay(ox, oy, sc, totalW, H);
+            DrawAvailSpaceOverlay(ox, oy, sc, antMaxX - antMinX, antMaxY - antMinY, antMinX, antMinY);
 
             // Origin cross at (0,0)
             DrawOriginCross(px, py, cw, ch);
@@ -1062,10 +1192,14 @@ namespace AntennaSimulatorApp.Views
             double cw = PreviewCanvas.ActualWidth  > 10 ? PreviewCanvas.ActualWidth  : 560;
             double ch = PreviewCanvas.ActualHeight > 10 ? PreviewCanvas.ActualHeight : 260;
 
-            double minX = _customVertices.Min(v => v.X);
-            double minY = _customVertices.Min(v => v.Y);
-            double maxX = _customVertices.Max(v => v.X);
-            double maxY = _customVertices.Max(v => v.Y);
+            var localVerts = _customVertices
+                .Select(v => CustomUiToLocal(v.X, v.Y))
+                .ToList();
+
+            double minX = localVerts.Min(v => v.X);
+            double minY = localVerts.Min(v => v.Y);
+            double maxX = localVerts.Max(v => v.X);
+            double maxY = localVerts.Max(v => v.Y);
             double polyW = maxX - minX;
             double polyH = maxY - minY;
             if (polyW < 1e-6) polyW = 10;
@@ -1111,7 +1245,7 @@ namespace AntennaSimulatorApp.Views
                 Fill            = new SolidColorBrush(Color.FromArgb(55, 0x20, 0x60, 0xCC)),
                 SnapsToDevicePixels = true
             };
-            foreach (var v in _customVertices)
+            foreach (var v in localVerts)
                 poly.Points.Add(new System.Windows.Point(px(v.X), py(v.Y)));
             PreviewCanvas.Children.Add(poly);
 
@@ -1120,13 +1254,13 @@ namespace AntennaSimulatorApp.Views
             {
                 var va = _customVertices[ei];
                 var vb = _customVertices[(ei + 1) % _customVertices.Count];
-                _edgeSegments.Add(((va.X + _sysOffX, va.Y + _sysOffY), (vb.X + _sysOffX, vb.Y + _sysOffY)));
+                _edgeSegments.Add(((va.X, va.Y), (vb.X, vb.Y)));
             }
 
             // Vertex dots and index labels
             for (int i = 0; i < _customVertices.Count; i++)
             {
-                double cx = px(_customVertices[i].X), cy = py(_customVertices[i].Y);
+                double cx = px(localVerts[i].X), cy = py(localVerts[i].Y);
                 bool isFirst = i == 0;
                 bool isLast  = i == _customVertices.Count - 1;
                 bool isClosed = isLast && _customVertices.Count > 2
@@ -1178,7 +1312,7 @@ namespace AntennaSimulatorApp.Views
             AddDimV(px(maxX) + 8, py(maxY), py(minY), polyH, "H", grn);
 
             // Available space overlay
-            DrawAvailSpaceOverlay(ox, oy, sc, polyW, polyH);
+            DrawAvailSpaceOverlay(ox, oy, sc, polyW, polyH, minX, minY);
 
             // Axis indicator
             DrawAxisIndicator();
@@ -1186,7 +1320,7 @@ namespace AntennaSimulatorApp.Views
             // Dimension summary
             DimensionSummary.Text =
                 $"Custom polygon: {_customVertices.Count} vertices\n"
-              + $"Bounding box: ({minX:F2}, {minY:F2}) → ({maxX:F2}, {maxY:F2})\n"
+                            + $"Bounding box (sys): ({_customVertices.Min(v => v.X):F2}, {_customVertices.Min(v => v.Y):F2}) → ({_customVertices.Max(v => v.X):F2}, {_customVertices.Max(v => v.Y):F2})\n"
               + $"Footprint: {polyW:F1} × {polyH:F1} mm";
         }
 
@@ -1298,7 +1432,9 @@ namespace AntennaSimulatorApp.Views
         /// offset by user-specified X/Y values, and updates the fit-check status indicator.
         /// Clearance (left/right/top only, no bottom) is shown as dashed inner lines.
         /// </summary>
-        private void DrawAvailSpaceOverlay(double ox, double oy, double sc, double antennaW_mm, double antennaH_mm)
+        private void DrawAvailSpaceOverlay(double ox, double oy, double sc,
+            double antennaW_mm, double antennaH_mm,
+            double antennaMinX = 0, double antennaMinY = 0)
         {
             if (!double.TryParse(AvailWidthBox.Text, out double aw) || aw <= 0) return;
             if (!double.TryParse(AvailHeightBox.Text, out double ah) || ah <= 0) return;
@@ -1314,14 +1450,16 @@ namespace AntennaSimulatorApp.Views
             double rh = ah * sc;
 
             // Check whether antenna footprint fits inside the clearance-reduced PCB area
-            // Antenna occupies [0, antennaW] x [0, antennaH] in mm
+            // Antenna occupies [antennaMinX, antennaMinX+antennaW] x [antennaMinY, antennaMinY+antennaH] in mm
             // PCB area occupies [offX, offX+aw] x [offY, offY+ah] in mm
             // Usable area (with clearance on left/right/top, not bottom):
             //   X: [offX + clr, offX + aw - clr]
             //   Y: [offY, offY + ah - clr]
+            double antMaxX = antennaMinX + antennaW_mm;
+            double antMaxY = antennaMinY + antennaH_mm;
             const double eps = 0.01; // tolerance for F2 rounding in offset text boxes
-            bool fits = (offX + clr) <= eps && (offX + aw - clr) >= antennaW_mm - eps
-                     && offY <= eps && (offY + ah - clr) >= antennaH_mm - eps;
+            bool fits = (offX + clr) <= antennaMinX + eps && (offX + aw - clr) >= antMaxX - eps
+                     && offY <= antennaMinY + eps && (offY + ah - clr) >= antMaxY - eps;
 
             // Semi-transparent overlay: green if fits, red if not
             var fillColor = fits
@@ -1386,10 +1524,10 @@ namespace AntennaSimulatorApp.Views
             else
             {
                 var parts = new List<string>();
-                if ((offX + clr) > eps) parts.Add($"left gap {offX + clr:F2}");
-                if (antennaW_mm - (offX + aw - clr) > eps) parts.Add($"width +{antennaW_mm - (offX + aw - clr):F2}");
-                if (offY > eps)  parts.Add($"bottom gap {offY:F1}");
-                if (antennaH_mm - (offY + ah - clr) > eps) parts.Add($"height +{antennaH_mm - (offY + ah - clr):F2}");
+                if ((offX + clr) > antennaMinX + eps) parts.Add($"left gap {offX + clr - antennaMinX:F2}");
+                if (antMaxX - (offX + aw - clr) > eps) parts.Add($"width +{antMaxX - (offX + aw - clr):F2}");
+                if (offY > antennaMinY + eps)  parts.Add($"bottom gap {offY - antennaMinY:F1}");
+                if (antMaxY - (offY + ah - clr) > eps) parts.Add($"height +{antMaxY - (offY + ah - clr):F2}");
                 FitStatusText.Text       = parts.Count > 0
                     ? $"✖ Exceeds by {string.Join(", ", parts)} mm"
                     : "✔ Antenna fits";
@@ -1400,6 +1538,55 @@ namespace AntennaSimulatorApp.Views
         }
 
         // ── Event handlers ───────────────────────────────────────────
+
+        private bool HasGroundStubChecked =>
+            SelectedType == AntennaType.MeanderedInvertedF
+                ? (MifaGroundStubCheck.IsChecked == true)
+                : (IfaGroundStubCheck.IsChecked == true);
+
+        private bool IsMirrorEnabledChecked =>
+            SelectedType == AntennaType.MeanderedInvertedF
+                ? (MifaMirrorCheck.IsChecked == true)
+                : (IfaMirrorCheck.IsChecked == true);
+
+        private string MirrorAxisChecked
+        {
+            get
+            {
+                ComboBox combo = SelectedType == AntennaType.MeanderedInvertedF
+                    ? MifaMirrorAxisCombo
+                    : IfaMirrorAxisCombo;
+                return (combo.SelectedItem as ComboBoxItem)?.Content?.ToString() == "Y" ? "Y" : "X";
+            }
+        }
+
+        private static (double X, double Y) MirrorPoint(double x, double y, bool enabled, string axis)
+        {
+            if (!enabled) return (x, y);
+            return string.Equals(axis, "Y", StringComparison.OrdinalIgnoreCase)
+                ? (-x, y)
+                : (x, -y);
+        }
+
+        private static void SetMirrorAxisCombo(ComboBox combo, string axis)
+        {
+            string wanted = string.Equals(axis, "Y", StringComparison.OrdinalIgnoreCase) ? "Y" : "X";
+            foreach (var item in combo.Items)
+            {
+                if (item is ComboBoxItem cbi && string.Equals(cbi.Content?.ToString(), wanted, StringComparison.OrdinalIgnoreCase))
+                {
+                    combo.SelectedItem = cbi;
+                    return;
+                }
+            }
+            combo.SelectedIndex = 0;
+        }
+
+        private void GroundStubCheck_Changed(object sender, RoutedEventArgs e)
+            => DrawPreview();
+
+        private void MirrorControl_Changed(object sender, RoutedEventArgs e)
+            => DrawPreview();
 
         private void AvailSpace_TextChanged(object sender, TextChangedEventArgs e)
             => DrawPreview();
@@ -1412,25 +1599,61 @@ namespace AntennaSimulatorApp.Views
             if (!double.TryParse(AvailWidthBox.Text, out double aw) || aw <= 0) return;
             if (!double.TryParse(AvailHeightBox.Text, out double ah) || ah <= 0) return;
 
-            double antennaW, antennaTopEdge;
+            double clr = double.TryParse(ClearanceBox.Text, out double clrVal) && clrVal >= 0 ? clrVal : 0;
+
             if (SelectedType == AntennaType.Custom)
             {
                 if (_customVertices.Count < 2) return;
-                double minX = _customVertices.Min(v => v.X);
-                double maxX = _customVertices.Max(v => v.X);
-                double maxY = _customVertices.Max(v => v.Y);
-                antennaW = maxX - minX;
-                antennaTopEdge = maxY;
+                // Custom input vertices are in system coords; convert to local before fit/offset math.
+                ComputeSysOffset();
+                var localPts = _customVertices.Select(v => CustomUiToLocal(v.X, v.Y)).ToList();
+                double minX = localPts.Min(v => v.X);
+                double maxX = localPts.Max(v => v.X);
+                double minY = localPts.Min(v => v.Y);
+                double maxY = localPts.Max(v => v.Y);
+                double antennaW = maxX - minX;
+                double antennaTopEdge = maxY;
+                // Account for custom antenna not starting at origin
+                double offXc = minX - (aw - antennaW) / 2.0;
+                double offYc = maxY - ah + clr;
+                // Ensure bottom of PCB space covers bottom of antenna
+                if (offYc > minY) offYc = minY;
+                PcbOffsetXBox.Text = offXc.ToString("F2");
+                PcbOffsetYBox.Text = offYc.ToString("F2");
+                return;
             }
             else if (SelectedType == AntennaType.InvertedF)
             {
-                antennaW = Get("LengthL", 24);
+                bool mirrorEnabled = IsMirrorEnabledChecked;
+                string mirrorAxis = MirrorAxisChecked;
+                (double X, double Y) M(double x, double y) => MirrorPoint(x, y, mirrorEnabled, mirrorAxis);
+
+                double Lifa = Get("LengthL", 24);
                 double H = Get("HeightH", 7);
                 double halfTopW = Math.Max(Get("MatchStubWidth", 1), Get("RadiatorWidth", 1)) / 2.0;
-                antennaTopEdge = H + halfTopW;
+                var p0 = M(0, 0);
+                var p1 = M(Lifa, 0);
+                var p2 = M(0, H + halfTopW);
+                var p3 = M(Lifa, H + halfTopW);
+                double minX = new[] { p0.X, p1.X, p2.X, p3.X }.Min();
+                double maxX = new[] { p0.X, p1.X, p2.X, p3.X }.Max();
+                double minY = new[] { p0.Y, p1.Y, p2.Y, p3.Y }.Min();
+                double antennaW = maxX - minX;
+                double antennaTopEdge = new[] { p0.Y, p1.Y, p2.Y, p3.Y }.Max();
+
+                double offXc = minX - (aw - antennaW) / 2.0;
+                double offYc = antennaTopEdge - ah + clr;
+                if (offYc > minY) offYc = minY;
+                PcbOffsetXBox.Text = offXc.ToString("F2");
+                PcbOffsetYBox.Text = offYc.ToString("F2");
+                return;
             }
             else
             {
+                bool mirrorEnabled = IsMirrorEnabledChecked;
+                string mirrorAxis = MirrorAxisChecked;
+                (double X, double Y) M(double x, double y) => MirrorPoint(x, y, mirrorEnabled, mirrorAxis);
+
                 double feedS = Get("FeedGap", 3);
                 double pitch = Get("MeanderPitch", 5.0);
                 double Hm    = Get("MeanderHeight", 2.85);
@@ -1442,18 +1665,25 @@ namespace AntennaSimulatorApp.Views
                 bool partial = rem >= pitch;
                 if (partial) n += 1;
                 double tail = partial ? 0 : Math.Max(rem, 0);
-                antennaW = feedS + n * pitch + tail;
+                double totalW = feedS + n * pitch + tail;
                 double halfTopW = Get("MifaHorizWidth", 0.5) / 2.0;
-                antennaTopEdge = H + halfTopW;
+                var p0 = M(-Get("MifaShortWidth", 0.8) / 2.0, 0);
+                var p1 = M(totalW + Get("MifaVertWidth", 0.5) / 2.0, 0);
+                var p2 = M(-Get("MifaShortWidth", 0.8) / 2.0, H + halfTopW);
+                var p3 = M(totalW + Get("MifaVertWidth", 0.5) / 2.0, H + halfTopW);
+                double minX = new[] { p0.X, p1.X, p2.X, p3.X }.Min();
+                double maxX = new[] { p0.X, p1.X, p2.X, p3.X }.Max();
+                double minY = new[] { p0.Y, p1.Y, p2.Y, p3.Y }.Min();
+                double antennaW = maxX - minX;
+                double antennaTopEdge = new[] { p0.Y, p1.Y, p2.Y, p3.Y }.Max();
+
+                double offXc = minX - (aw - antennaW) / 2.0;
+                double offYc = antennaTopEdge - ah + clr;
+                if (offYc > minY) offYc = minY;
+                PcbOffsetXBox.Text = offXc.ToString("F2");
+                PcbOffsetYBox.Text = offYc.ToString("F2");
+                return;
             }
-
-            double clr = double.TryParse(ClearanceBox.Text, out double clrVal) && clrVal >= 0 ? clrVal : 0;
-
-            double offX = -(aw - antennaW) / 2.0;
-            double offY = antennaTopEdge - ah + clr;
-
-            PcbOffsetXBox.Text = offX.ToString("F2");
-            PcbOffsetYBox.Text = offY.ToString("F2");
         }
 
         private void AutoCenterBtn_Click(object sender, RoutedEventArgs e)
@@ -1496,6 +1726,9 @@ namespace AntennaSimulatorApp.Views
                 IsCarrier      = IsCarrierSelected,
                 LayerName      = (LayerCombo.SelectedItem as Layer)?.Name ?? "",
                 Name           = antennaName,
+                HasGroundStub  = HasGroundStubChecked,
+                MirrorEnabled  = IsMirrorEnabledChecked,
+                MirrorAxis     = MirrorAxisChecked,
                 FreqGHz        = Get("FreqGHz",        2.4),
                 LengthL        = Get("LengthL",        24.0),
                 HeightH        = Get("HeightH",         7.0),
@@ -1511,7 +1744,9 @@ namespace AntennaSimulatorApp.Views
                 MifaFeedWidth  = Get("MifaFeedWidth",   0.8),
                 MifaHorizWidth = Get("MifaHorizWidth",  0.5),
                 MifaVertWidth  = Get("MifaVertWidth",   0.5),
-                CustomVertices = _customVertices.Select(v => (v.X, v.Y)).ToList(),
+                CustomVertices = _customVertices
+                    .Select(v => CustomUiToLocal(v.X, v.Y))
+                    .ToList(),
                 AvailWidth     = double.TryParse(AvailWidthBox.Text,  out double aw) ? aw : 15.0,
                 AvailHeight    = double.TryParse(AvailHeightBox.Text, out double ah) ? ah : 10.0,
                 PcbOffsetX     = double.TryParse(PcbOffsetXBox.Text,  out double ox) ? ox : 0.0,
@@ -1650,6 +1885,9 @@ namespace AntennaSimulatorApp.Views
             public string  AntennaType   { get; set; } = "InvertedF";
             public string  Board         { get; set; } = "Carrier";
             public string  LayerName     { get; set; } = "";
+            public bool    HasGroundStub { get; set; } = true;
+            public bool    MirrorEnabled { get; set; } = false;
+            public string  MirrorAxis    { get; set; } = "X";
 
             // Common
             public double FreqGHz        { get; set; }
@@ -1696,6 +1934,9 @@ namespace AntennaSimulatorApp.Views
                 AntennaType   = SelectedType.ToString(),
                 Board         = BoardCombo.SelectedItem as string ?? "Carrier",
                 LayerName     = (LayerCombo.SelectedItem as Layer)?.Name ?? "",
+                HasGroundStub = HasGroundStubChecked,
+                MirrorEnabled = IsMirrorEnabledChecked,
+                MirrorAxis    = MirrorAxisChecked,
 
                 FreqGHz        = Get("FreqGHz",        2.4),
                 LengthL        = Get("LengthL",        24.0),
@@ -1752,6 +1993,14 @@ namespace AntennaSimulatorApp.Views
 
             // Rebuild grids so _boxes exist for all keys
             RefreshAll();
+
+            // Ground stub checkbox
+            IfaGroundStubCheck.IsChecked  = pf.HasGroundStub;
+            MifaGroundStubCheck.IsChecked = pf.HasGroundStub;
+            IfaMirrorCheck.IsChecked      = pf.MirrorEnabled;
+            MifaMirrorCheck.IsChecked     = pf.MirrorEnabled;
+            SetMirrorAxisCombo(IfaMirrorAxisCombo, pf.MirrorAxis);
+            SetMirrorAxisCombo(MifaMirrorAxisCombo, pf.MirrorAxis);
 
             // Write values into text boxes
             void Set(string key, double val) { if (_boxes.TryGetValue(key, out var tb)) tb.Text = val.ToString("G6"); }
@@ -1827,6 +2076,14 @@ namespace AntennaSimulatorApp.Views
             // Rebuild grids so _boxes exist
             RefreshAll();
 
+            // Ground stub checkbox
+            IfaGroundStubCheck.IsChecked  = ap.HasGroundStub;
+            MifaGroundStubCheck.IsChecked = ap.HasGroundStub;
+            IfaMirrorCheck.IsChecked      = ap.MirrorEnabled;
+            MifaMirrorCheck.IsChecked     = ap.MirrorEnabled;
+            SetMirrorAxisCombo(IfaMirrorAxisCombo, ap.MirrorAxis);
+            SetMirrorAxisCombo(MifaMirrorAxisCombo, ap.MirrorAxis);
+
             void Set(string key, double val) { if (_boxes.TryGetValue(key, out var tb)) tb.Text = val.ToString("G6"); }
 
             _suppressAutoCalc = true;
@@ -1850,17 +2107,26 @@ namespace AntennaSimulatorApp.Views
             }
             finally { _suppressAutoCalc = false; }
 
-            // Custom vertices
-            _customVertices.Clear();
-            foreach (var (x, y) in ap.CustomVertices)
-                _customVertices.Add(new ShapeVertex(x, y));
-
             // PCB space
             AvailWidthBox.Text  = ap.AvailWidth.ToString("F2");
             AvailHeightBox.Text = ap.AvailHeight.ToString("F2");
             PcbOffsetXBox.Text  = ap.PcbOffsetX.ToString("F2");
             PcbOffsetYBox.Text  = ap.PcbOffsetY.ToString("F2");
             ClearanceBox.Text   = ap.Clearance.ToString("G6");
+
+            // Recompute transform before mapping custom vertices to UI/system coordinates.
+            ComputeSysOffset();
+
+            // Custom vertices are stored in local coords; display them in system coords in the editor.
+            if (ap.CustomVertices.Count > 0)
+            {
+                _customVertices.Clear();
+                foreach (var (x, y) in ap.CustomVertices)
+                {
+                    var (sx, sy) = CustomLocalToUi(x, y);
+                    _customVertices.Add(new ShapeVertex(sx, sy));
+                }
+            }
 
             UpdateWarnings();
             DrawPreview();

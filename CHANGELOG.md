@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.3] - 2026-04-20
+
+### Added
+- Antenna Draw: mirror option for IFA/MIFA with axis selection (X or Y) for geometry flip
+
+### Changed
+- Custom antenna coordinates in Draw Antenna are now aligned with system coordinates in editor and preview
+- IFA/MIFA preview, fit-check, and auto-center now honor mirror settings
+- Simulation runner now defaults to system Python and no longer auto-selects project/workspace `.venv`
+
+## [1.0.2] - 2026-04-20
+
+### Added
+- Antenna Draw: ground stub (shorting post) toggle for IFA and MIFA — checkbox to include or exclude the grounding stub
+- Antenna parameter save/load (`.antparam`) and DXF export support
+- Antenna manage window with copy/paste and double-click edit
+
+### Changed
+- Improved IFA/MIFA preview drawing with dimension annotations and PCB space overlay
+- Antenna geometry generation (`ToGerberData`) now respects ground stub toggle
+
 ## [1.0.1] - 2026-04-15
 
 ### Changed

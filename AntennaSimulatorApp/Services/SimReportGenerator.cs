@@ -593,11 +593,14 @@ namespace AntennaSimulatorApp.Services
             canvas.DrawText("GND", ox - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
 
             // Shorting stub (vertical from GND to top)
-            canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
-            canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
+            if (ant.HasGroundStub)
+            {
+                canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
+                canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
 
-            // Match section (horizontal at top from short to feed)
-            canvas.DrawLine(px(0), py(H), px(S), py(H), bluePaint);
+                // Match section (horizontal at top from short to feed)
+                canvas.DrawLine(px(0), py(H), px(S), py(H), bluePaint);
+            }
 
             // Feed stub (vertical from GND to top)
             canvas.DrawLine(px(S), oy, px(S), py(H), redPaint);
@@ -662,11 +665,14 @@ namespace AntennaSimulatorApp.Services
             canvas.DrawText("GND", ox - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
 
             // Shorting stub
-            canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
-            canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
+            if (ant.HasGroundStub)
+            {
+                canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
+                canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
 
-            // Match section at top
-            canvas.DrawLine(px(0), py(H), px(feedS), py(H), oranPaint);
+                // Match section at top
+                canvas.DrawLine(px(0), py(H), px(feedS), py(H), oranPaint);
+            }
 
             // Feed stub
             canvas.DrawLine(px(feedS), oy, px(feedS), py(H), redPaint);
