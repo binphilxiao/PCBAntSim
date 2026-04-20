@@ -656,3 +656,140 @@
 09:08:33.609   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
 09:08:34.039 [Save] DrawnAntennas count = 1
 09:08:34.039   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=28 H=7 FeedGap=0.6
+09:40:04.504 [Load] JSON DrawnAntennas count = 1
+09:40:04.510   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:40:04.536 [Load] Final vm.DrawnAntennas count = 1
+09:40:04.537   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:40:27.759 [EditAntenna] editParams: Name=MIFA Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+09:40:27.843 [OnContentRendered] Re-applying _editParams: Name=MIFA Freq=2.4 L=30 H=7
+09:40:27.851 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+09:47:37.834 [Save] DrawnAntennas count = 1
+09:47:37.835   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.027 [Save] DrawnAntennas count = 1
+09:47:38.028   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.221 [Save] DrawnAntennas count = 1
+09:47:38.221   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.401 [Save] DrawnAntennas count = 1
+09:47:38.402   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.591 [Save] DrawnAntennas count = 1
+09:47:38.591   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.765 [Save] DrawnAntennas count = 1
+09:47:38.765   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:38.953 [Save] DrawnAntennas count = 1
+09:47:38.953   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:39.143 [Save] DrawnAntennas count = 1
+09:47:39.143   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:47:39.317 [Save] DrawnAntennas count = 1
+09:47:39.317   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:48:36.940 [Save] DrawnAntennas count = 1
+09:48:36.940   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:48:37.118 [Save] DrawnAntennas count = 1
+09:48:37.118   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:48:37.302 [Save] DrawnAntennas count = 1
+09:48:37.302   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:48:37.504 [Save] DrawnAntennas count = 1
+09:48:37.504   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:48:37.686 [Save] DrawnAntennas count = 1
+09:48:37.686   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:49:56.315 [Load] JSON DrawnAntennas count = 1
+09:49:56.319   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:49:56.332 [Load] Final vm.DrawnAntennas count = 1
+09:49:56.333   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:04.734 [Save] DrawnAntennas count = 1
+09:50:04.735   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:04.914 [Save] DrawnAntennas count = 1
+09:50:04.915   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:05.082 [Save] DrawnAntennas count = 1
+09:50:05.083   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:05.256 [Save] DrawnAntennas count = 1
+09:50:05.257   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:05.434 [Save] DrawnAntennas count = 1
+09:50:05.435   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:50:05.630 [Save] DrawnAntennas count = 1
+09:50:05.631   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:54:47.396 [Save] DrawnAntennas count = 1
+09:54:47.397   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:54:47.598 [Save] DrawnAntennas count = 1
+09:54:47.599   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:54:47.788 [Save] DrawnAntennas count = 1
+09:54:47.788   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:54:47.960 [Save] DrawnAntennas count = 1
+09:54:47.961   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:56:38.899 [Save] DrawnAntennas count = 1
+09:56:38.900   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:56:39.094 [Save] DrawnAntennas count = 1
+09:56:39.094   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:56:42.662 [EditAntenna] editParams: Name=IFA Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:56:42.734 [OnContentRendered] Re-applying _editParams: Name=IFA Freq=2.4 L=24 H=3.8
+09:56:42.739 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=24
+09:56:55.987 [EditAntenna] editParams: Name=IFA Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:56:56.042 [OnContentRendered] Re-applying _editParams: Name=IFA Freq=2.4 L=24 H=3.8
+09:56:56.047 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=24
+09:57:08.470 [Save] DrawnAntennas count = 1
+09:57:08.471   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:57:08.672 [Save] DrawnAntennas count = 1
+09:57:08.673   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:57:08.842 [Save] DrawnAntennas count = 1
+09:57:08.843   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:57:13.219 [EditAntenna] editParams: Name=IFA Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:57:13.310 [OnContentRendered] Re-applying _editParams: Name=IFA Freq=2.4 L=24 H=3.8
+09:57:13.316 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=24
+09:57:36.473 [Save] DrawnAntennas count = 1
+09:57:36.473   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:57:36.665 [Save] DrawnAntennas count = 1
+09:57:36.666   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:58:21.400 [Save] DrawnAntennas count = 1
+09:58:21.400   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:58:21.920 [Save] DrawnAntennas count = 1
+09:58:21.920   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:58:22.110 [Save] DrawnAntennas count = 1
+09:58:22.111   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:58:22.298 [Save] DrawnAntennas count = 1
+09:58:22.299   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:48.369 [Save] DrawnAntennas count = 1
+09:59:48.370   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:48.553 [Save] DrawnAntennas count = 1
+09:59:48.554   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:48.723 [Save] DrawnAntennas count = 1
+09:59:48.724   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:48.905 [Save] DrawnAntennas count = 1
+09:59:48.906   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:49.065 [Save] DrawnAntennas count = 1
+09:59:49.066   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:49.252 [Save] DrawnAntennas count = 1
+09:59:49.252   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:49.422 [Save] DrawnAntennas count = 1
+09:59:49.422   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:49.598 [Save] DrawnAntennas count = 1
+09:59:49.598   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:49.796 [Save] DrawnAntennas count = 1
+09:59:49.796   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:59.263 [Save] DrawnAntennas count = 1
+09:59:59.264   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:59.421 [Save] DrawnAntennas count = 1
+09:59:59.422   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:59.603 [Save] DrawnAntennas count = 1
+09:59:59.603   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:59.790 [Save] DrawnAntennas count = 1
+09:59:59.791   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+09:59:59.960 [Save] DrawnAntennas count = 1
+09:59:59.960   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+10:00:00.158 [Save] DrawnAntennas count = 1
+10:00:00.159   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+10:00:19.034 [Save] DrawnAntennas count = 1
+10:00:19.035   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+10:00:29.268 [Save] DrawnAntennas count = 1
+10:00:29.268   [IFA] Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+10:27:55.469 [EditAntenna] editParams: Name=IFA Type=InvertedF Freq=2.4 L=24 H=3.8 FeedGap=1.2
+10:27:55.528 [OnContentRendered] Re-applying _editParams: Name=IFA Freq=2.4 L=24 H=3.8
+10:27:55.533 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=24
+10:28:03.830 [Save] DrawnAntennas count = 1
+10:28:03.831   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
+10:28:04.001 [Save] DrawnAntennas count = 1
+10:28:04.002   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
+10:28:04.175 [Save] DrawnAntennas count = 1
+10:28:04.175   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
+10:28:04.365 [Save] DrawnAntennas count = 1
+10:28:04.365   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
+10:28:05.458 [Save] DrawnAntennas count = 1
+10:28:05.459   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
