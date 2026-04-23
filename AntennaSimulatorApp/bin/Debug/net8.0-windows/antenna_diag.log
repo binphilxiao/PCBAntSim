@@ -793,3 +793,130 @@
 10:28:04.365   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
 10:28:05.458 [Save] DrawnAntennas count = 1
 10:28:05.459   [IFA] Type=InvertedF Freq=2.4 L=18.4 H=3.8 FeedGap=1.2
+14:50:15.365 [Load] JSON DrawnAntennas count = 1
+14:50:15.375   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+14:50:15.414 [Load] Final vm.DrawnAntennas count = 1
+14:50:15.416   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+14:50:18.766 [Save] DrawnAntennas count = 1
+14:50:18.768   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:04:10.046 [Save] DrawnAntennas count = 1
+15:04:10.048   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:04:35.225 [Save] DrawnAntennas count = 1
+15:04:35.227   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:07:16.277 [Load] JSON DrawnAntennas count = 1
+15:07:16.323   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:07:16.435 [Load] Final vm.DrawnAntennas count = 1
+15:07:16.441   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:07:19.820 [Save] DrawnAntennas count = 1
+15:07:19.821   [MIFA] Type=MeanderedInvertedF Freq=2.4 L=27 H=7 FeedGap=1
+15:08:11.883 [Load] JSON DrawnAntennas count = 2
+15:08:11.884   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:08:11.884   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:08:11.900 [Load] Final vm.DrawnAntennas count = 2
+15:08:11.901   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:08:11.901   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:08:51.575 [EditAntenna] editParams: Name=2.4G_ARM Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:08:51.781 [OnContentRendered] Re-applying _editParams: Name=2.4G_ARM Freq=2.4 L=30 H=7
+15:08:51.801 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+15:12:04.003 [EditAntenna] editParams: Name=GND_Stud Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:12:04.403 [OnContentRendered] Re-applying _editParams: Name=GND_Stud Freq=2.4 L=24 H=7
+15:12:04.424 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=N/A
+15:12:10.929 [Save] DrawnAntennas count = 3
+15:12:10.930   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:12:10.931   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:12:10.931   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:12:11.112 [Save] DrawnAntennas count = 3
+15:12:11.113   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:12:11.114   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:12:11.115   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:12:11.288 [Save] DrawnAntennas count = 3
+15:12:11.289   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:12:11.290   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:12:11.291   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:12:11.447 [Save] DrawnAntennas count = 3
+15:12:11.448   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:12:11.449   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:12:11.451   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:26.036 [Save] DrawnAntennas count = 3
+15:18:26.037   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:26.038   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:26.038   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:26.228 [Save] DrawnAntennas count = 3
+15:18:26.229   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:26.230   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:26.230   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:49.428 [Save] DrawnAntennas count = 3
+15:18:49.429   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:49.430   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:49.431   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:49.615 [Save] DrawnAntennas count = 3
+15:18:49.616   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:49.618   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:49.619   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:49.791 [Save] DrawnAntennas count = 3
+15:18:49.792   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:49.793   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:49.794   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:49.947 [Save] DrawnAntennas count = 3
+15:18:49.948   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:49.949   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:49.950   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:50.123 [Save] DrawnAntennas count = 3
+15:18:50.124   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:50.125   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:50.126   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:18:50.426 [Save] DrawnAntennas count = 3
+15:18:50.427   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:18:50.428   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:18:50.429   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:58:52.854 [EditAntenna] editParams: Name=2.4G_ARM Type=MeanderedInvertedF Freq=2.4 L=30 H=7 FeedGap=1.2
+15:58:53.092 [OnContentRendered] Re-applying _editParams: Name=2.4G_ARM Freq=2.4 L=30 H=7
+15:58:53.128 [OnContentRendered] After apply: FreqGHz box=2.4, LengthL box=30
+15:59:18.053 [Save] DrawnAntennas count = 3
+15:59:18.054   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.054   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.055   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:18.241 [Save] DrawnAntennas count = 3
+15:59:18.241   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.242   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.243   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:18.429 [Save] DrawnAntennas count = 3
+15:59:18.429   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.430   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.430   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:18.601 [Save] DrawnAntennas count = 3
+15:59:18.601   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.602   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.602   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:18.774 [Save] DrawnAntennas count = 3
+15:59:18.775   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.776   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.777   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:18.957 [Save] DrawnAntennas count = 3
+15:59:18.958   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:18.959   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:18.959   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+15:59:19.134 [Save] DrawnAntennas count = 3
+15:59:19.135   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+15:59:19.136   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+15:59:19.138   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+16:01:14.654 [Save] DrawnAntennas count = 3
+16:01:14.655   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+16:01:14.656   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+16:01:14.657   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+16:01:14.998 [Save] DrawnAntennas count = 3
+16:01:14.999   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+16:01:14.999   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+16:01:15.000   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+16:01:15.118 [Save] DrawnAntennas count = 3
+16:01:15.119   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+16:01:15.119   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+16:01:15.120   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+16:01:15.317 [Save] DrawnAntennas count = 3
+16:01:15.318   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+16:01:15.318   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+16:01:15.319   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3
+16:01:41.333 [Save] DrawnAntennas count = 3
+16:01:41.334   [2.4G_ARM] Type=MeanderedInvertedF Freq=2.4 L=20 H=7 FeedGap=1.2
+16:01:41.334   [5G_ARM] Type=MeanderedInvertedF Freq=5 L=7.23 H=7 FeedGap=1.2
+16:01:41.335   [GND_Stud] Type=Custom Freq=2.4 L=24 H=7 FeedGap=3

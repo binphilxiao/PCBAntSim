@@ -6,6 +6,6 @@ namespace AntennaSimulatorApp
     /// </summary>
     public static class AppVersion
     {
-        public const string Current = "1.0.3";
+        public const string Current = "1.0.4";
     }
 }

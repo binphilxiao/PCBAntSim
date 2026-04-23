@@ -156,8 +156,9 @@ namespace AntennaSimulatorApp.Services
 
             sb.AppendLine("if openems_path and os.path.isdir(openems_path):");
             sb.AppendLine("    os.add_dll_directory(openems_path)");
-            sb.AppendLine("    print(f'openEMS found: {openems_path}')");
-            sb.AppendLine("else:");
+            sb.AppendLine("    if not post_only:");
+            sb.AppendLine("        print(f'openEMS found: {openems_path}')");
+            sb.AppendLine("elif not post_only:");
             sb.AppendLine("    print('WARNING: openEMS folder not found, relying on system PATH')");
             sb.AppendLine();
             sb.AppendLine("from CSXCAD import ContinuousStructure");
@@ -945,8 +946,6 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("if not post_only:");
             sb.AppendLine("    print('Starting openEMS simulation...')");
             sb.AppendLine($"    sim.Run(sim_path, verbose=2, numThreads={numThreads}, engine='multithreaded')");
-            sb.AppendLine("else:");
-            sb.AppendLine("    print('Post-processing only (--post-only mode)')");
             sb.AppendLine();
         }
 
@@ -964,7 +963,8 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("    for p in ports:");
             sb.AppendLine("        p.CalcPort(sim_path, freq)");
             sb.AppendLine("except Exception as e:");
-            sb.AppendLine("    print(f'[WARN] Port data not ready yet: {e}')");
+            sb.AppendLine("    if not post_only:");
+            sb.AppendLine("        print(f'[WARN] Port data not ready yet: {e}')");
             sb.AppendLine("    sys.exit(0)");
             sb.AppendLine();
             sb.AppendLine("if len(ports) == 0:");
@@ -1030,7 +1030,8 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine($"        for p in ports:");
             sb.AppendLine($"            p.CalcPort(sim_path, ff_freq)");
             sb.AppendLine("    except Exception as e:");
-            sb.AppendLine("        print(f'[WARN] Port data not ready yet: {e}')");
+            sb.AppendLine("        if not post_only:");
+            sb.AppendLine("            print(f'[WARN] Port data not ready yet: {e}')");
             sb.AppendLine("        sys.exit(0)");
             sb.AppendLine();
 

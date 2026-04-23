@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.4] - 2026-04-23
+
+### Changed
+- OpenEMS generated script: suppress informational prints (openEMS path, simulation start banner, port data warnings) when running in `--post-only` mode for cleaner post-processing output
+
 ## [1.0.3] - 2026-04-20
 
 ### Added
