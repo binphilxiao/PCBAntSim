@@ -20,6 +20,7 @@
 
         <!-- Key metrics bar -->
         <Border Grid.Row="0"
+                x:Name="HeaderBar"
                 Background="#F0F4F8"
                 CornerRadius="4"
                 Padding="12,8"
@@ -225,6 +226,7 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2"
+                    x:Name="ButtonBar"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,10,0,0">

@@ -25,6 +25,20 @@ namespace AntennaSimulatorApp.Views
         private bool _postProcessRunning;
         private S11ResultWindow? _liveResultWindow;
 
+        /// <summary>
+        /// Fired right after a new <see cref="S11ResultWindow"/> is created
+        /// during live post-processing. A host (e.g. <c>MainWindow</c>) can
+        /// subscribe to re-parent the result window's content into an
+        /// embedded pane instead of showing it as a top-level window.
+        /// If no subscribers are attached, the result window is shown
+        /// normally as a separate window.
+        /// </summary>
+        public event Action<S11ResultWindow>? ResultWindowReady;
+
+        // Tracks the total size of sim_data/ as seen by the last post-process
+        // pass. If nothing has grown since then, skip running post-only.
+        private long _lastSimDataBytes;
+
         // Log file
         private StreamWriter? _logWriter;
 
@@ -55,6 +69,84 @@ namespace AntennaSimulatorApp.Views
             };
         }
 
+        /// <summary>
+        /// Detach this window's root <see cref="Content"/> so it can be
+        /// hosted inside another control (e.g. an embedded pane in
+        /// <c>MainWindow</c>). The window itself stays alive for its timers,
+        /// process handle and post-processing logic, but must not be shown.
+        /// Returns the detached root element, or <c>null</c> if already
+        /// detached.
+        /// </summary>
+        public FrameworkElement? DetachContentForEmbedding()
+        {
+            if (this.Content is not FrameworkElement root) return null;
+            this.Content = null;
+            // Make absolutely sure this window never pops up on screen.
+            this.ShowInTaskbar = false;
+            this.Visibility = Visibility.Collapsed;
+            this.WindowStyle = WindowStyle.None;
+            this.Width = 0;
+            this.Height = 0;
+            // Hide the Close button — the host window owns visibility now.
+            try { BtnClose.Visibility = Visibility.Collapsed; } catch { }
+            return root;
+        }
+
+        /// <summary>
+        /// Re-run only the post-processing stage of an existing simulation
+        /// (skips the FDTD engine). Requires <c>Sim/sim_data/</c> to already
+        /// contain time-domain port data from a previous successful run.
+        /// </summary>
+        public void StartPostOnly()
+        {
+            Title = "openEMS Post-Processing";
+
+            string? pythonExe = FindPython();
+            if (pythonExe == null)
+            {
+                AppendLine("[ERROR] Cannot find system Python. Please install Python or set Tools -> Options -> Python path.");
+                TxtStatus.Text = "Error: Python not found";
+                return;
+            }
+            _pythonExe = pythonExe;
+
+            if (!File.Exists(_scriptPath))
+            {
+                AppendLine($"[ERROR] Script not found: {_scriptPath}");
+                AppendLine("        Run a full simulation at least once to generate it.");
+                TxtStatus.Text = "Error: Script not found";
+                return;
+            }
+
+            string simDataDir = Path.Combine(_simDir, "sim_data");
+            if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
+            {
+                AppendLine($"[ERROR] No time-domain data in: {simDataDir}");
+                AppendLine("        Run a full simulation at least once before using post-only mode.");
+                TxtStatus.Text = "Error: No sim_data";
+                return;
+            }
+
+            AppendLine($"Python:  {pythonExe}");
+            AppendLine($"Script:  {_scriptPath} --post-only");
+            AppendLine($"WorkDir: {_simDir}");
+            AppendLine(new string('─', 60));
+            AppendLine("[INFO] Re-running post-processing only (FDTD skipped)...");
+            AppendLine("");
+
+            // Hide the FDTD progress bar — post-only has no timestep loop.
+            ProgressSim.Visibility = Visibility.Collapsed;
+            TxtProgress.Text = "";
+            BtnStop.IsEnabled = false;
+
+            TxtStatus.Text = "Post-processing...";
+            _startTime = DateTime.Now;
+            _timer.Start();
+            _isRunning = true;
+
+            RunPostProcessAsync(isFinal: true);
+        }
+
         public void StartSimulation()
         {
             string? pythonExe = FindPython();
@@ -65,6 +157,17 @@ namespace AntennaSimulatorApp.Views
                 return;
             }
             _pythonExe = pythonExe;
+
+            // Clear stale data from the previous run so the live result window
+            // does not briefly show the old S11 curve while FDTD warms up.
+            TryCleanDir(Path.Combine(_simDir, "sim_data"));
+            TryCleanDir(Path.Combine(_simDir, "results"));
+
+            // Close any result window left open from a previous run so it
+            // cannot silently re-display outdated data while live-refresh
+            // timers race with the new simulation.
+            try { _liveResultWindow?.Close(); } catch { }
+            _liveResultWindow = null;
 
             if (!File.Exists(_scriptPath))
             {
@@ -123,8 +226,13 @@ namespace AntennaSimulatorApp.Views
 
             BtnViewResults.IsEnabled = true;
 
-            // Start periodic post-processing for live results (every 10s)
-            _postProcessTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            _lastSimDataBytes = 0;
+
+            // Periodically re-run post-processing so the result window shows
+            // intermediate S11/far-field. Interval is intentionally long to
+            // avoid stealing CPU from the FDTD engine; the actual work is
+            // skipped entirely if sim_data/ hasn't grown since last pass.
+            _postProcessTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(30) };
             _postProcessTimer.Tick += (_, __) => RunLivePostProcess();
             _postProcessTimer.Start();
         }
@@ -199,7 +307,9 @@ namespace AntennaSimulatorApp.Views
 
         /// <summary>
         /// Periodic live post-processing: run --post-only in background,
-        /// then refresh the live result window.
+        /// then refresh the live result window. Skipped if sim_data/ has
+        /// not grown since the previous pass, so it does not waste CPU
+        /// when the FDTD engine is between flushes.
         /// </summary>
         private void RunLivePostProcess()
         {
@@ -210,7 +320,25 @@ namespace AntennaSimulatorApp.Views
             if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
                 return;
 
+            long total = GetDirSize(simDataDir);
+            if (total <= _lastSimDataBytes) return;   // no new time-domain samples
+            _lastSimDataBytes = total;
+
             RunPostProcessAsync(isFinal: false);
+        }
+
+        private static long GetDirSize(string dir)
+        {
+            long total = 0;
+            try
+            {
+                foreach (string f in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories))
+                {
+                    try { total += new FileInfo(f).Length; } catch { }
+                }
+            }
+            catch { }
+            return total;
         }
 
         /// <summary>
@@ -270,11 +398,34 @@ namespace AntennaSimulatorApp.Views
                     if (ppExit == 0 && File.Exists(s11Csv))
                     {
                         OpenOrRefreshResultWindow(isFinal);
+
+                        // Attach auxiliary tabs (Far-Field / Field Distribution)
+                        // whenever new files exist — works for both live and
+                        // final passes. Attach* is a no-op when files are
+                        // absent or already attached.
+                        if (_liveResultWindow != null && _liveResultWindow.IsLoaded)
+                        {
+                            string resultsDir = Path.Combine(_simDir, "results");
+                            _liveResultWindow.AttachFarField(resultsDir);
+                            _liveResultWindow.AttachFieldDump(resultsDir);
+                        }
+
+                        if (isFinal)
+                        {
+                            if (_isRunning)
+                            {
+                                _isRunning = false;
+                                _timer.Stop();
+                                TxtStatus.Text = "Post-processing completed";
+                                BtnOpenFolder.IsEnabled = true;
+                            }
+                        }
                     }
                     else if (isFinal)
                     {
                         AppendLine("[WARN] Post-processing did not produce results.");
                         TxtStatus.Text = "Post-processing failed — no results";
+                        if (_isRunning) { _isRunning = false; _timer.Stop(); }
                     }
                 });
             };
@@ -298,15 +449,13 @@ namespace AntennaSimulatorApp.Views
                 OpenOrRefreshResultWindow(isFinal: true);
             }
 
-            // Auto-open field distribution window if any field dump images exist
-            bool hasFieldPng = File.Exists(Path.Combine(resultsDir, "Jf_surface.png"))
-                            || File.Exists(Path.Combine(resultsDir, "Ef_surface.png"))
-                            || File.Exists(Path.Combine(resultsDir, "Hf_surface.png"));
-            if (hasFieldPng)
+            // Attach auxiliary result tabs (Far-Field + Field Distribution)
+            // into the unified S11 result window rather than opening extra
+            // top-level windows.
+            if (_liveResultWindow != null)
             {
-                var fieldWin = new FieldResultWindow(resultsDir);
-                if (this.IsLoaded) fieldWin.Owner = this;
-                fieldWin.Show();
+                _liveResultWindow.AttachFarField(resultsDir);
+                _liveResultWindow.AttachFieldDump(resultsDir);
             }
         }
 
@@ -317,7 +466,7 @@ namespace AntennaSimulatorApp.Views
         {
             string resultsDir = Path.Combine(_simDir, "results");
 
-            if (_liveResultWindow != null && _liveResultWindow.IsLoaded)
+            if (_liveResultWindow != null)
             {
                 // Existing window — just refresh data
                 _liveResultWindow.Refresh();
@@ -330,7 +479,15 @@ namespace AntennaSimulatorApp.Views
                 _liveResultWindow = new S11ResultWindow(resultsDir, refreshInterval);
                 if (this.IsLoaded) _liveResultWindow.Owner = this;
                 _liveResultWindow.Closed += (_, __) => _liveResultWindow = null;
-                _liveResultWindow.Show();
+                if (ResultWindowReady != null)
+                {
+                    // Let the host (MainWindow) embed the result window's content.
+                    ResultWindowReady.Invoke(_liveResultWindow);
+                }
+                else
+                {
+                    _liveResultWindow.Show();
+                }
             }
         }
 
@@ -381,6 +538,23 @@ namespace AntennaSimulatorApp.Views
             }
 
             return null;
+        }
+
+        private static void TryCleanDir(string dir)
+        {
+            try
+            {
+                if (!Directory.Exists(dir)) return;
+                foreach (string f in Directory.EnumerateFiles(dir))
+                {
+                    try { File.Delete(f); } catch { /* best effort */ }
+                }
+                foreach (string sub in Directory.EnumerateDirectories(dir))
+                {
+                    try { Directory.Delete(sub, recursive: true); } catch { /* best effort */ }
+                }
+            }
+            catch { /* best effort */ }
         }
 
         private static bool TestPython(string pythonPath)
@@ -472,6 +646,31 @@ namespace AntennaSimulatorApp.Views
 
             _timer.Stop();
             _postProcessTimer?.Stop();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            // After the console closes, Windows may pick an unrelated top-level
+            // window (e.g. a lingering openEMS/Python process) to focus. Force
+            // focus back to our owner (MainWindow) if it's still alive.
+            try
+            {
+                var owner = Owner;
+                if (owner != null && owner.IsLoaded)
+                {
+                    if (owner.WindowState == WindowState.Minimized)
+                        owner.WindowState = WindowState.Normal;
+                    owner.Activate();
+                    owner.Focus();
+                }
+                else
+                {
+                    Application.Current?.MainWindow?.Activate();
+                }
+            }
+            catch { }
         }
     }
 }

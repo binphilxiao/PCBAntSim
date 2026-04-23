@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -33,7 +35,18 @@ namespace AntennaSimulatorApp.Views
         private bool _hasBw;
         private int _idxMin;
 
+        // Secondary dip markers (local minima below -5 dB, excluding global min)
+        private int[] _dipIndices = Array.Empty<int>();
+        private const double DipThresholdDb = -5.0;
+
         private const double Z0 = 50.0;
+
+        // Embedded far-field sub-window (owns code-behind for the hosted grid)
+        private FarFieldResultWindow? _farSource;
+
+        // Signature (sum of LastWriteTimeUtc.Ticks) of the field-dump images
+        // last attached, used to skip rebuild when nothing changed.
+        private long _fieldDumpSignature;
 
         public S11ResultWindow(string resultsDir, int liveRefreshSeconds = 0)
         {
@@ -56,6 +69,24 @@ namespace AntennaSimulatorApp.Views
         {
             _refreshTimer?.Stop();
             TxtLiveStatus.Text = "";
+        }
+
+        /// <summary>
+        /// Detach this window's root <see cref="Window.Content"/> so it can
+        /// be embedded into another control. The window object stays alive
+        /// so its refresh timer keeps working, but should not be shown.
+        /// </summary>
+        public FrameworkElement? DetachContentForEmbedding()
+        {
+            if (this.Content is not FrameworkElement root) return null;
+            this.Content = null;
+            // Make absolutely sure this window never pops up on screen.
+            this.ShowInTaskbar = false;
+            this.Visibility = Visibility.Collapsed;
+            this.WindowStyle = WindowStyle.None;
+            this.Width = 0;
+            this.Height = 0;
+            return root;
         }
 
         public void Refresh()
@@ -223,6 +254,23 @@ namespace AntennaSimulatorApp.Views
             {
                 TxtBandwidth.Text = "N/A (S11 > -10 dB)";
             }
+
+            // Detect all local minima with S11 < -5 dB (excluding the global min
+            // which already has its own marker). A local min is a sample strictly
+            // lower than both neighbors (with small plateau tolerance).
+            var dips = new List<int>();
+            int n = _s11dB.Length;
+            for (int i = 1; i < n - 1; i++)
+            {
+                if (i == _idxMin) continue;
+                double v = _s11dB[i];
+                if (v >= DipThresholdDb) continue;
+                if (v < _s11dB[i - 1] && v <= _s11dB[i + 1])
+                    dips.Add(i);
+                else if (v <= _s11dB[i - 1] && v < _s11dB[i + 1])
+                    dips.Add(i);
+            }
+            _dipIndices = dips.ToArray();
         }
 
         // ── Chart tab switching ────────────────────────────────────────
@@ -324,6 +372,19 @@ namespace AntennaSimulatorApp.Views
             for (int i = 0; i < _freqGHz.Length; i++)
                 polyline.Points.Add(new Point(Xmap(_freqGHz[i]), Ymap(_s11dB[i])));
             S11Canvas.Children.Add(polyline);
+
+            // Secondary dip markers (local minima < -5 dB, excluding global min)
+            var dipBrush = new SolidColorBrush(Color.FromRgb(230, 120, 0));
+            foreach (int di in _dipIndices)
+            {
+                double dx = Xmap(_freqGHz[di]), dy = Ymap(_s11dB[di]);
+                AddMarker(S11Canvas, dx, dy, dipBrush, 5);
+                string dtxt = $"{_freqGHz[di]:F3} GHz\n{_s11dB[di]:F1} dB";
+                double dlx = dx + 6, dly = dy - 24;
+                if (dlx + 70 > cw) dlx = dx - 76;
+                if (dly < mt) dly = dy + 6;
+                AddLabel(S11Canvas, dtxt, dlx, dly, 9, dipBrush, 0.95, FontWeights.SemiBold);
+            }
 
             // Resonance marker
             double mx = Xmap(_freqGHz[_idxMin]), my = Ymap(_s11dB[_idxMin]);
@@ -611,6 +672,25 @@ namespace AntennaSimulatorApp.Views
                     rx + 8, ry - 30, 10, Brushes.Red, 1.0, FontWeights.SemiBold);
             }
 
+            // Secondary dip markers (local minima < -5 dB)
+            var dipBrush = new SolidColorBrush(Color.FromRgb(230, 120, 0));
+            foreach (int di in _dipIndices)
+            {
+                double dgRe = _s11Real[di], dgIm = _s11Imag[di];
+                double dmag = Math.Sqrt(dgRe * dgRe + dgIm * dgIm);
+                if (dmag > 1) { dgRe /= dmag; dgIm /= dmag; }
+                double dx = Sx(dgRe), dy = Sy(dgIm);
+                AddMarker(SmithCanvas, dx, dy, dipBrush, 5);
+                double dzr = _zReal[di], dzi = _zImag[di];
+                string dsign = dzi >= 0 ? "+" : "-";
+                double dlx = dx + 6, dly = dy - 26;
+                if (dlx + 110 > cw) dlx = dx - 116;
+                if (dly < 2) dly = dy + 6;
+                AddLabel(SmithCanvas,
+                    $"{_freqGHz[di]:F3} GHz\nZ={dzr:F1}{dsign}j{Math.Abs(dzi):F1}Ω",
+                    dlx, dly, 9, dipBrush, 0.95, FontWeights.SemiBold);
+            }
+
             // Center dot (50 Ω match)
             var dot = new Ellipse { Width = 4, Height = 4, Fill = Brushes.Black };
             Canvas.SetLeft(dot, cx - 2); Canvas.SetTop(dot, cy - 2);
@@ -760,5 +840,155 @@ namespace AntennaSimulatorApp.Views
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
+
+        // ══════════════════════════════════════════════════════════════
+        // Embedded auxiliary result tabs (Far-Field, Field Distribution)
+        // ══════════════════════════════════════════════════════════════
+
+        /// <summary>
+        /// If far-field CSV files exist in <paramref name="resultsDir"/>, embed a
+        /// Far-Field tab (reparented content of a FarFieldResultWindow instance)
+        /// and surface Efficiency/Directivity in the top metrics bar.
+        /// </summary>
+        public void AttachFarField(string resultsDir)
+        {
+            bool hasData = File.Exists(System.IO.Path.Combine(resultsDir, "FarField_Summary.csv"))
+                        || File.Exists(System.IO.Path.Combine(resultsDir, "FarField_Eplane.csv"))
+                        || File.Exists(System.IO.Path.Combine(resultsDir, "FarField_Hplane.csv"))
+                        || File.Exists(System.IO.Path.Combine(resultsDir, "FarField_3D.csv"));
+            if (!hasData) return;
+
+            if (_farSource == null)
+            {
+                try
+                {
+                    _farSource = new FarFieldResultWindow(resultsDir);
+
+                    // Detach inner content grid from source window and host it here.
+                    if (_farSource.Content is UIElement inner)
+                    {
+                        _farSource.Content = null;
+                        // Hide the internal header bar + bottom button bar; the
+                        // S11 window already provides those.
+                        if (_farSource.FindName("HeaderBar") is FrameworkElement hb)
+                            hb.Visibility = Visibility.Collapsed;
+                        if (_farSource.FindName("ButtonBar") is FrameworkElement bb)
+                            bb.Visibility = Visibility.Collapsed;
+
+                        FarFieldHost.Content = inner;
+                        TabFarField.Visibility = Visibility.Visible;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[S11Result] Far-field embed failed: {ex.Message}");
+                    _farSource = null;
+                }
+            }
+
+            // Promote efficiency / directivity to the top metrics bar.
+            if (_farSource != null)
+            {
+                // Reload CSVs in case new data was just written.
+                _farSource.ReloadData();
+
+                double eff = _farSource.EfficiencyValue;
+                if (eff > 0)
+                {
+                    TxtEfficiency.Text = $"{eff * 100:F1}%";
+                    EfficiencyPanel.Visibility = Visibility.Visible;
+                }
+                double dir = _farSource.DirectivityDbi;
+                if (Math.Abs(dir) > 1e-6)
+                {
+                    TxtDirectivity.Text = $"{dir:F2} dBi";
+                    DirectivityPanel.Visibility = Visibility.Visible;
+                }
+
+                // Trigger initial draw the first time the Far-Field tab is viewed.
+                _farSource.RefreshActiveChart();
+            }
+        }
+
+        /// <summary>
+        /// If field-dump PNG images exist, build an inline Field Distribution tab.
+        /// Re-runs are safe but rebuild the inner tab list, so call only when
+        /// the file set (or file timestamps) actually changed.
+        /// </summary>
+        public void AttachFieldDump(string resultsDir)
+        {
+            // Collect timestamps so re-attach is a no-op if nothing changed.
+            var files = new[] { "Jf_surface.png", "Ef_surface.png", "Hf_surface.png" };
+            long signature = 0;
+            foreach (string f in files)
+            {
+                string p = System.IO.Path.Combine(resultsDir, f);
+                if (File.Exists(p))
+                {
+                    try { signature = signature * 31 + File.GetLastWriteTimeUtc(p).Ticks; }
+                    catch { }
+                }
+            }
+            if (signature == 0) return;                 // no images at all
+            if (signature == _fieldDumpSignature) return; // unchanged
+            _fieldDumpSignature = signature;
+
+            var entries = new (string File, string Header)[]
+            {
+                ("Jf_surface.png", "Surface Current (J)"),
+                ("Ef_surface.png", "E-Field"),
+                ("Hf_surface.png", "H-Field"),
+            };
+
+            var inner = new TabControl();
+            bool any = false;
+            foreach (var (file, header) in entries)
+            {
+                string path = System.IO.Path.Combine(resultsDir, file);
+                if (!File.Exists(path)) continue;
+                try
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    bmp.UriSource = new Uri(path, UriKind.Absolute);
+                    bmp.EndInit();
+                    bmp.Freeze();
+
+                    var img = new System.Windows.Controls.Image
+                    {
+                        Source = bmp,
+                        Stretch = Stretch.Uniform
+                    };
+                    RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.HighQuality);
+
+                    var sv = new ScrollViewer
+                    {
+                        HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                        VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
+                        Content = img
+                    };
+                    inner.Items.Add(new TabItem { Header = header, Content = sv });
+                    any = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[S11Result] Load {file} failed: {ex.Message}");
+                }
+            }
+
+            if (!any) return;
+
+            FieldDumpHost.Content = inner;
+            TabFieldDump.Visibility = Visibility.Visible;
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Forward arrow-key camera controls to the embedded Far-Field
+            // window only while that tab is the active top-level tab.
+            if (ChartTabs.SelectedItem == TabFarField && _farSource != null)
+                _farSource.HandlePreviewKey(e);
+        }
     }
 }

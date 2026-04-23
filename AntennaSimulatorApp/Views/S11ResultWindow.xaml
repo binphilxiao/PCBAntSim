@@ -7,8 +7,8 @@
         MinWidth="700"
         MinHeight="500"
         WindowStartupLocation="CenterOwner"
-        ShowInTaskbar="True">
-
+        ShowInTaskbar="True"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -80,6 +80,34 @@
                                    Foreground="#6A1B9A"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
+                    <StackPanel x:Name="EfficiencyPanel"
+                                Orientation="Horizontal"
+                                Visibility="Collapsed"
+                                Margin="0,0,24,0">
+                        <TextBlock Text="Efficiency: "
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtEfficiency"
+                                   Text="—"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#2E7D32"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="DirectivityPanel"
+                                Orientation="Horizontal"
+                                Visibility="Collapsed"
+                                Margin="0,0,24,0">
+                        <TextBlock Text="Directivity: "
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtDirectivity"
+                                   Text="—"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#C62828"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
                 </WrapPanel>
             </DockPanel>
         </Border>
@@ -131,6 +159,16 @@
                             Background="White"
                             SizeChanged="Canvas_SizeChanged"/>
                 </Border>
+            </TabItem>
+            <TabItem x:Name="TabFarField"
+                     Header="Far-Field"
+                     Visibility="Collapsed">
+                <ContentControl x:Name="FarFieldHost"/>
+            </TabItem>
+            <TabItem x:Name="TabFieldDump"
+                     Header="Field Distribution"
+                     Visibility="Collapsed">
+                <ContentControl x:Name="FieldDumpHost"/>
             </TabItem>
         </TabControl>
 

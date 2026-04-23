@@ -43,6 +43,28 @@ namespace AntennaSimulatorApp.Views
             ComputeMetrics();
         }
 
+        // Accessors for hosting inside another window (e.g. S11ResultWindow tab)
+        public double EfficiencyValue   => _efficiency;
+        public double DirectivityDbi    => _directivityDbi;
+        public double SummaryFreqGhz    => _freqGHz;
+        public bool   HasAnyPatternData => _patternE.Length > 0 || _patternH.Length > 0 || _pattern3D != null;
+
+        public void RefreshActiveChart() =>
+            Dispatcher.InvokeAsync(DrawActiveChart, DispatcherPriority.Loaded);
+
+        /// <summary>Reload all CSV data and redraw. Safe to call from live updates.</summary>
+        public void ReloadData()
+        {
+            // Reset the 3D-mesh cache so the next DrawSmithChart rebuild uses fresh data.
+            _3dBuilt = false;
+            LoadData();
+            ComputeMetrics();
+            Dispatcher.InvokeAsync(DrawActiveChart, DispatcherPriority.Loaded);
+        }
+
+        public void HandlePreviewKey(System.Windows.Input.KeyEventArgs e) =>
+            Window_PreviewKeyDown(this, e);
+
         private void LoadData()
         {
             _thetaE   = Array.Empty<double>();

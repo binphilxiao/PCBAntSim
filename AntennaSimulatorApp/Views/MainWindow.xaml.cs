@@ -1541,13 +1541,27 @@ public partial class MainWindow : Window
         // ── Determine output directory: <project>/Sim ──
         if (string.IsNullOrEmpty(_currentProjectPath))
         {
-            MessageBox.Show("Please save the project first before running simulation.",
-                "Project Not Saved", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
+            // Project has never been saved — prompt Save As so we have a
+            // project folder to write Sim/ into.
+            var saveDlg = new Microsoft.Win32.SaveFileDialog
+            {
+                Title    = "Save project before simulation",
+                Filter   = "Antenna Simulator Project|*.antproj|All Files|*.*",
+                FileName = "Untitled.antproj",
+                DefaultExt = ".antproj"
+            };
+            if (saveDlg.ShowDialog(this) != true) return;
+            SaveToFile(saveDlg.FileName);
+            if (string.IsNullOrEmpty(_currentProjectPath)) return;
         }
 
         // ── Auto-save project before simulation ──
         SaveToFile(_currentProjectPath);
+
+        // ── Close any result/console windows left over from previous runs ──
+        // so that the new simulation does not race with an old result window
+        // that is still displaying the previous run's data.
+        CloseStaleResultWindows();
 
         // ── Ask user for analysis type ──
         var typeDlg = new SimTypeDialog { Owner = this };
@@ -1597,7 +1611,7 @@ public partial class MainWindow : Window
             SimSettings  = vm.SimSettings
         };
         var simWin = new SimConsoleWindow(outputDir, vm.SimSettings.Solver.MaxTimesteps, reportCtx) { Owner = this };
-        simWin.Show();
+        EmbedSimConsole(simWin);
         simWin.StartSimulation();
     }
 
@@ -1679,6 +1693,182 @@ public partial class MainWindow : Window
         win.ShowDialog();
     }
 
+    private void MenuRePostProcess_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_currentProjectPath))
+        {
+            MessageBox.Show("Please open or save a project first.",
+                "No Project", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        string projectDir = System.IO.Path.GetDirectoryName(_currentProjectPath)!;
+        string simDir     = System.IO.Path.Combine(projectDir, "Sim");
+        string scriptPath = System.IO.Path.Combine(simDir, "scripts", "run_simulation.py");
+        string simDataDir = System.IO.Path.Combine(simDir, "sim_data");
+
+        if (!System.IO.File.Exists(scriptPath)
+            || !System.IO.Directory.Exists(simDataDir)
+            || System.IO.Directory.GetFiles(simDataDir).Length == 0)
+        {
+            MessageBox.Show(
+                "No previous simulation data found.\n\n"
+                + "Run a full simulation at least once before using post-only mode.",
+                "Post-Only Unavailable", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        CloseStaleResultWindows();
+
+        var simWin = new SimConsoleWindow(simDir) { Owner = this };
+        EmbedSimConsole(simWin);
+        simWin.StartPostOnly();
+    }
+
+    /// <summary>
+    /// Close leftover simulation/result windows from prior runs so the new
+    /// run starts with a clean slate and the user is not confused by an old
+    /// result window still showing the previous simulation's S11/far-field.
+    /// </summary>
+    private void CloseStaleResultWindows()
+    {
+        // Snapshot first — closing mutates Application.Current.Windows.
+        var toClose = new List<Window>();
+        foreach (Window w in Application.Current.Windows)
+        {
+            if (w == this) continue;
+            switch (w)
+            {
+                case SimConsoleWindow:
+                case S11ResultWindow:
+                case FarFieldResultWindow:
+                case FieldResultWindow:
+                    toClose.Add(w);
+                    break;
+            }
+        }
+        foreach (var w in toClose)
+        {
+            try { w.Close(); } catch { }
+        }
+
+        // Also clear any content we had embedded from prior runs so the
+        // placeholder text reappears until the new simulation produces data.
+        ResetEmbeddedPanes();
+    }
+
+    /// <summary>
+    /// Reset the embedded Log/Results panes back to their placeholder text.
+    /// </summary>
+    private void ResetEmbeddedPanes()
+    {
+        try
+        {
+            LogHost.Content = new System.Windows.Controls.TextBlock
+            {
+                Text = "No simulation running. Use Simulate → Run Simulation to start.",
+                Foreground = System.Windows.Media.Brushes.Gray,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            ResultsHost.Content = new System.Windows.Controls.TextBlock
+            {
+                Text = "Run a simulation to view results here.",
+                Foreground = System.Windows.Media.Brushes.Gray,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                TextAlignment = TextAlignment.Center,
+                Margin = new Thickness(20)
+            };
+        }
+        catch { }
+    }
+
+    /// <summary>
+    /// Embed a <see cref="SimConsoleWindow"/>'s content into the main
+    /// window's Log pane, and forward any live result window it spawns
+    /// into the Results pane. The console window itself is not shown.
+    /// </summary>
+    private void EmbedSimConsole(SimConsoleWindow simWin)
+    {
+        var logContent = simWin.DetachContentForEmbedding();
+        if (logContent != null)
+        {
+            LogHost.Content = logContent;
+        }
+
+        simWin.ResultWindowReady += (resultWin) =>
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var rc = resultWin.DetachContentForEmbedding();
+                if (rc != null) ResultsHost.Content = rc;
+
+                // Make sure the Results tab is visible, then switch to it.
+                if (MenuViewResults != null && !MenuViewResults.IsChecked)
+                {
+                    MenuViewResults.IsChecked = true;
+                    ApplyViewVisibility();
+                }
+                if (TopTabs != null && TabResults != null)
+                    TopTabs.SelectedItem = TabResults;
+            });
+        };
+
+        // Ensure both Log and Results panes are visible when a run starts.
+        bool changed = false;
+        if (MenuViewLog != null && !MenuViewLog.IsChecked)     { MenuViewLog.IsChecked = true;     changed = true; }
+        if (MenuViewResults != null && !MenuViewResults.IsChecked) { MenuViewResults.IsChecked = true; changed = true; }
+        if (changed) ApplyViewVisibility();
+        else ApplyViewVisibility(); // make sure current visibility is applied
+    }
+
+    // ── View menu: toggle visibility of the three right-side panes ──────
+    private void MenuViewSection_Click(object sender, RoutedEventArgs e)
+    {
+        ApplyViewVisibility();
+    }
+
+    private void ApplyViewVisibility()
+    {
+        if (Tab3D == null || TabResults == null || PaneLog == null) return;
+
+        bool show3D      = MenuView3D?.IsChecked      ?? true;
+        bool showResults = MenuViewResults?.IsChecked ?? true;
+        bool showLog     = MenuViewLog?.IsChecked     ?? true;
+
+        // Don't let the user hide everything.
+        if (!show3D && !showResults && !showLog)
+        {
+            show3D = true;
+            if (MenuView3D != null) MenuView3D.IsChecked = true;
+        }
+
+        Tab3D.Visibility      = show3D      ? Visibility.Visible : Visibility.Collapsed;
+        TabResults.Visibility = showResults ? Visibility.Visible : Visibility.Collapsed;
+
+        // If the currently selected tab got hidden, pick the other visible one.
+        if (TopTabs != null)
+        {
+            if (TopTabs.SelectedItem is TabItem sel && sel.Visibility != Visibility.Visible)
+            {
+                if (show3D)           TopTabs.SelectedItem = Tab3D;
+                else if (showResults) TopTabs.SelectedItem = TabResults;
+            }
+            TopTabs.Visibility = (show3D || showResults) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        PaneLog.Visibility = showLog ? Visibility.Visible : Visibility.Collapsed;
+        Splitter3DLog.Visibility =
+            ((show3D || showResults) && showLog) ? Visibility.Visible : Visibility.Collapsed;
+
+        // Collapse row heights so hidden panes leave no gap.
+        Row3D.Height     = (show3D || showResults) ? new GridLength(3, GridUnitType.Star) : new GridLength(0);
+        RowLog.Height    = showLog                 ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        RowSplit1.Height = ((show3D || showResults) && showLog) ? GridLength.Auto : new GridLength(0);
+    }
+
     // -- ???? ??? -------------------------------------------------------
 
     private void MenuViewS11_Click(object sender, RoutedEventArgs e)
@@ -1711,20 +1901,6 @@ public partial class MainWindow : Window
         win.Show();
     }
 
-    private void MenuViewGain_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show(
-            "??????(Realized Gain / Peak Gain vs. Frequency)??????????",
-            "???? � ??", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
-
-    private void MenuViewEfficiency_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show(
-            "????(???? / ???)??????????",
-            "???? � ??", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
-
     private void MenuViewCurrentDist_Click(object sender, RoutedEventArgs e)
     {
         var dlg = new Microsoft.Win32.OpenFileDialog
@@ -1738,13 +1914,6 @@ public partial class MainWindow : Window
         string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
         var win = new FieldResultWindow(resultsDir) { Owner = this };
         win.Show();
-    }
-
-    private void MenuViewSmith_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show(
-            "Smith ????????????",
-            "???? � Smith ??", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // -- ?? ------------------------------------------------------------------

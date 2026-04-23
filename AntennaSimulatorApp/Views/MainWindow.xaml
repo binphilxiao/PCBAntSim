@@ -93,6 +93,9 @@
                 <MenuItem Header="_Run Simulation"
                           Click="MenuSimulate_Click"
                           InputGestureText="F5"/>
+                <MenuItem Header="Re-run _Post-Processing Only"
+                          Click="MenuRePostProcess_Click"
+                          ToolTip="Re-run result generation on the existing sim_data (skips FDTD)"/>
                 <MenuItem Header="Simulation _Settings…"
                           Click="MenuSimSettings_Click"/>
                 <Separator/>
@@ -101,15 +104,29 @@
                               Click="MenuViewS11_Click"/>
                     <MenuItem Header="Far-Field Pattern (2D / 3D)"
                               Click="MenuViewFarField_Click"/>
-                    <MenuItem Header="Gain &amp; Directivity"
-                              Click="MenuViewGain_Click"/>
-                    <MenuItem Header="Antenna Efficiency"
-                              Click="MenuViewEfficiency_Click"/>
                     <MenuItem Header="Surface Current Distribution"
                               Click="MenuViewCurrentDist_Click"/>
-                    <MenuItem Header="Smith Chart"
-                              Click="MenuViewSmith_Click"/>
                 </MenuItem>
+            </MenuItem>
+
+            <!-- View -->
+            <MenuItem Header="_View">
+                <MenuItem x:Name="MenuView3D"
+                          Header="_3D Model"
+                          IsCheckable="True"
+                          IsChecked="True"
+                          Click="MenuViewSection_Click"/>
+                <MenuItem x:Name="MenuViewResults"
+                          Header="Simulation _Results"
+                          IsCheckable="True"
+                          IsChecked="True"
+                          Click="MenuViewSection_Click"/>
+                <Separator/>
+                <MenuItem x:Name="MenuViewLog"
+                          Header="Simulation _Log"
+                          IsCheckable="True"
+                          IsChecked="False"
+                          Click="MenuViewSection_Click"/>
             </MenuItem>
 
             <!-- Tools -->
@@ -287,17 +304,6 @@
                                    FontSize="14"
                                    Margin="0,0,4,0"/>
                         <TextBlock Text="S11"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Click="MenuViewSmith_Click"
-                        ToolTip="View Smith Chart"
-                        Padding="6,2">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="◎"
-                                   FontSize="14"
-                                   Margin="0,0,4,0"/>
-                        <TextBlock Text="Smith"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
@@ -988,11 +994,23 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- 3D Visualization Placeholder -->
-            <Border Grid.Column="1"
-                    Background="#C8D0D8"
-                    Margin="5"
-                    CornerRadius="3">
+            <!-- Right workspace: Top area = [3D model | Results] as tabs, Bottom = Simulation Log -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="Row3D"      Height="*" MinHeight="60"/>
+                    <RowDefinition x:Name="RowSplit1"  Height="0"/>
+                    <RowDefinition x:Name="RowLog"     Height="0" MinHeight="0"/>
+                </Grid.RowDefinitions>
+
+                <!-- Tabbed top pane: 3D Model + Results -->
+                <TabControl Grid.Row="0"
+                            x:Name="TopTabs"
+                            Margin="5">
+                    <TabItem Header="3D Model"
+                             x:Name="Tab3D">
+                        <Border x:Name="Pane3D"
+                                Background="#C8D0D8"
+                                CornerRadius="3">
                 <Grid>
 
                     <!-- View control toolbar -->
@@ -1147,6 +1165,66 @@
 
                 </Grid>
             </Border>
+                    </TabItem>
+
+                    <TabItem Header="Results"
+                             x:Name="TabResults">
+                        <Border Background="#F7F7F7"
+                                CornerRadius="3"
+                                BorderBrush="#BBB"
+                                BorderThickness="1">
+                            <ContentControl x:Name="ResultsHost">
+                                <TextBlock Text="Run a simulation to view results here."
+                                           Foreground="#888"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center"
+                                           Margin="20"/>
+                            </ContentControl>
+                        </Border>
+                    </TabItem>
+                </TabControl>
+
+                <!-- Splitter between Top tabs and Log -->
+                <GridSplitter Grid.Row="1"
+                              x:Name="Splitter3DLog"
+                              Height="5"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center"
+                              Background="#888"
+                              ShowsPreview="True"
+                              ResizeBehavior="PreviousAndNext"
+                              ResizeDirection="Rows"
+                              Visibility="Collapsed"/>
+
+                <!-- Simulation Log pane -->
+                <Border Grid.Row="2"
+                        x:Name="PaneLog"
+                        Background="#F7F7F7"
+                        Margin="5,0,5,5"
+                        CornerRadius="3"
+                        BorderBrush="#BBB"
+                        BorderThickness="1"
+                        Visibility="Collapsed">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top"
+                                Background="#2B3A4A"
+                                CornerRadius="3,3,0,0"
+                                Padding="6,3">
+                            <TextBlock Text="Simulation Log"
+                                       Foreground="White"
+                                       FontWeight="SemiBold"/>
+                        </Border>
+                        <ContentControl x:Name="LogHost">
+                            <TextBlock Text="No simulation running. Use Simulate → Run Simulation to start."
+                                       Foreground="#888"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </ContentControl>
+                    </DockPanel>
+                </Border>
+            </Grid>
 
         </Grid>
     </DockPanel>
