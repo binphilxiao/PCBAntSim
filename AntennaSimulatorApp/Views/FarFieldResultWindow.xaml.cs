@@ -65,6 +65,23 @@ namespace AntennaSimulatorApp.Views
         public void HandlePreviewKey(System.Windows.Input.KeyEventArgs e) =>
             Window_PreviewKeyDown(this, e);
 
+        /// <summary>
+        /// Detach this window's root <see cref="Window.Content"/> so it can be
+        /// embedded into another control (e.g. the main window's results pane).
+        /// The window object stays alive but is hidden.
+        /// </summary>
+        public FrameworkElement? DetachContentForEmbedding()
+        {
+            if (this.Content is not FrameworkElement root) return null;
+            this.Content = null;
+            this.ShowInTaskbar = false;
+            this.Visibility = Visibility.Collapsed;
+            this.WindowStyle = WindowStyle.None;
+            this.Width = 0;
+            this.Height = 0;
+            return root;
+        }
+
         private void LoadData()
         {
             _thetaE   = Array.Empty<double>();

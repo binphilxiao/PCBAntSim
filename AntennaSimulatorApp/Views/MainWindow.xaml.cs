@@ -37,6 +37,27 @@ public partial class MainWindow : Window
     /// <summary>Debounce timer to coalesce rapid property-change rebuilds.</summary>
     private DispatcherTimer? _rebuildTimer;
 
+    /// <summary>
+    /// Result window currently embedded in the Results pane via the
+    /// Simulate → View Results menu. Held so it is not GC'd and can be
+    /// closed when a new one is embedded.
+    /// </summary>
+    private Window? _menuEmbeddedResultWindow;
+
+    /// <summary>
+    /// The simulation console currently embedded in the Log pane (if any).
+    /// Used so the unified toolbar Run/Stop button can drive the active
+    /// simulation, and so we can update the button when the run finishes.
+    /// </summary>
+    private SimConsoleWindow? _currentSimConsole;
+
+    /// <summary>
+    /// Remembered width of the left configuration column so we can restore it
+    /// after the user re-shows the panel via the View menu / rail button.
+    /// </summary>
+    private GridLength _savedLeftConfigWidth = new GridLength(430);
+    private double _savedLeftConfigMinWidth = 200;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -1798,6 +1819,20 @@ public partial class MainWindow : Window
             LogHost.Content = logContent;
         }
 
+        // Track the active sim console so the toolbar Run/Stop button can
+        // drive it, and update the button whenever its state changes.
+        _currentSimConsole = simWin;
+        simWin.RunningStateChanged += SimConsole_RunningStateChanged;
+        simWin.Closed += (_, __) =>
+        {
+            if (ReferenceEquals(_currentSimConsole, simWin))
+            {
+                _currentSimConsole = null;
+                UpdateRunStopButton();
+            }
+        };
+        UpdateRunStopButton();
+
         simWin.ResultWindowReady += (resultWin) =>
         {
             Dispatcher.Invoke(() =>
@@ -1824,9 +1859,69 @@ public partial class MainWindow : Window
         else ApplyViewVisibility(); // make sure current visibility is applied
     }
 
+    // ── Toolbar Run / Stop unified button ───────────────────────────────
+    private void SimConsole_RunningStateChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.BeginInvoke(new Action(UpdateRunStopButton));
+    }
+
+    private void UpdateRunStopButton()
+    {
+        if (BtnRunStop == null || BtnRunStopIcon == null || BtnRunStopText == null) return;
+
+        bool running = _currentSimConsole?.IsSimRunning ?? false;
+        if (running)
+        {
+            BtnRunStopIcon.Text       = "■";
+            BtnRunStopIcon.Foreground = System.Windows.Media.Brushes.Red;
+            BtnRunStopText.Text       = "Stop";
+            BtnRunStop.ToolTip        = "Stop running simulation";
+        }
+        else
+        {
+            BtnRunStopIcon.Text       = "▶";
+            BtnRunStopIcon.Foreground = System.Windows.Media.Brushes.Green;
+            BtnRunStopText.Text       = "Run";
+            BtnRunStop.ToolTip        = "Run Simulation (F5)";
+        }
+    }
+
+    private void BtnRunStop_Click(object sender, RoutedEventArgs e)
+    {
+        if (_currentSimConsole != null && _currentSimConsole.IsSimRunning)
+        {
+            _currentSimConsole.RequestStop();
+        }
+        else
+        {
+            MenuSimulate_Click(sender, e);
+        }
+    }
+
     // ── View menu: toggle visibility of the three right-side panes ──────
     private void MenuViewSection_Click(object sender, RoutedEventArgs e)
     {
+        ApplyViewVisibility();
+    }
+
+    // Hide-button on the Simulation Log header pane.
+    private void BtnHideLog_Click(object sender, RoutedEventArgs e)
+    {
+        if (MenuViewLog != null) MenuViewLog.IsChecked = false;
+        ApplyViewVisibility();
+    }
+
+    // Hide-button on the Configuration panel header.
+    private void BtnHideConfig_Click(object sender, RoutedEventArgs e)
+    {
+        if (MenuViewConfig != null) MenuViewConfig.IsChecked = false;
+        ApplyViewVisibility();
+    }
+
+    // Re-show button on the vertical rail when the Configuration panel is hidden.
+    private void BtnShowConfig_Click(object sender, RoutedEventArgs e)
+    {
+        if (MenuViewConfig != null) MenuViewConfig.IsChecked = true;
         ApplyViewVisibility();
     }
 
@@ -1837,6 +1932,7 @@ public partial class MainWindow : Window
         bool show3D      = MenuView3D?.IsChecked      ?? true;
         bool showResults = MenuViewResults?.IsChecked ?? true;
         bool showLog     = MenuViewLog?.IsChecked     ?? true;
+        bool showConfig  = MenuViewConfig?.IsChecked  ?? true;
 
         // Don't let the user hide everything.
         if (!show3D && !showResults && !showLog)
@@ -1867,6 +1963,47 @@ public partial class MainWindow : Window
         Row3D.Height     = (show3D || showResults) ? new GridLength(3, GridUnitType.Star) : new GridLength(0);
         RowLog.Height    = showLog                 ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
         RowSplit1.Height = ((show3D || showResults) && showLog) ? GridLength.Auto : new GridLength(0);
+
+        // Show / hide the left configuration column. When hiding, remember the
+        // current width so we can restore it. The vertical "show" rail button
+        // takes its place so the user can bring the panel back without the menu.
+        if (PaneLeftConfig != null && ColLeftConfig != null && ColShowConfigRail != null
+            && ColLeftSplitter != null && BtnShowConfigRail != null && LeftRightSplitter != null)
+        {
+            if (showConfig)
+            {
+                if (PaneLeftConfig.Visibility != Visibility.Visible)
+                {
+                    PaneLeftConfig.Visibility = Visibility.Visible;
+                    ColLeftConfig.Width    = _savedLeftConfigWidth.Value > 0
+                        ? _savedLeftConfigWidth
+                        : new GridLength(430);
+                    ColLeftConfig.MinWidth = _savedLeftConfigMinWidth;
+                }
+                ColLeftSplitter.Width    = GridLength.Auto;
+                LeftRightSplitter.Visibility = Visibility.Visible;
+                BtnShowConfigRail.Visibility = Visibility.Collapsed;
+                ColShowConfigRail.Width      = GridLength.Auto;
+            }
+            else
+            {
+                if (PaneLeftConfig.Visibility == Visibility.Visible)
+                {
+                    // Remember the current size before collapsing.
+                    _savedLeftConfigWidth    = ColLeftConfig.Width.IsAbsolute && ColLeftConfig.Width.Value > 0
+                        ? ColLeftConfig.Width
+                        : new GridLength(Math.Max(200, PaneLeftConfig.ActualWidth));
+                    _savedLeftConfigMinWidth = ColLeftConfig.MinWidth;
+                }
+                PaneLeftConfig.Visibility = Visibility.Collapsed;
+                ColLeftConfig.MinWidth    = 0;
+                ColLeftConfig.Width       = new GridLength(0);
+                ColLeftSplitter.Width     = new GridLength(0);
+                LeftRightSplitter.Visibility = Visibility.Collapsed;
+                BtnShowConfigRail.Visibility = Visibility.Visible;
+                ColShowConfigRail.Width      = GridLength.Auto;
+            }
+        }
     }
 
     // -- ???? ??? -------------------------------------------------------
@@ -1883,7 +2020,12 @@ public partial class MainWindow : Window
 
         string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
         var win = new S11ResultWindow(resultsDir) { Owner = this };
-        win.Show();
+        // If the user picked a results folder that also has far-field / field-dump
+        // outputs, surface them as additional tabs — same behaviour as a finished
+        // simulation run.
+        try { win.AttachFarField(resultsDir); } catch { }
+        try { win.AttachFieldDump(resultsDir); } catch { }
+        EmbedResultWindowInResultsPane(win);
     }
 
     private void MenuViewFarField_Click(object sender, RoutedEventArgs e)
@@ -1898,7 +2040,7 @@ public partial class MainWindow : Window
 
         string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
         var win = new FarFieldResultWindow(resultsDir) { Owner = this };
-        win.Show();
+        EmbedResultWindowInResultsPane(win);
     }
 
     private void MenuViewCurrentDist_Click(object sender, RoutedEventArgs e)
@@ -1913,7 +2055,45 @@ public partial class MainWindow : Window
 
         string resultsDir = System.IO.Path.GetDirectoryName(dlg.FileName)!;
         var win = new FieldResultWindow(resultsDir) { Owner = this };
-        win.Show();
+        EmbedResultWindowInResultsPane(win);
+    }
+
+    /// <summary>
+    /// Detach a result window's content and embed it into the main window's
+    /// Results pane (instead of showing it as a popup). Mirrors the behaviour
+    /// used when a simulation finishes.
+    /// </summary>
+    private void EmbedResultWindowInResultsPane(Window resultWin)
+    {
+        FrameworkElement? content = resultWin switch
+        {
+            S11ResultWindow s11      => s11.DetachContentForEmbedding(),
+            FarFieldResultWindow ff  => ff.DetachContentForEmbedding(),
+            FieldResultWindow fd     => fd.DetachContentForEmbedding(),
+            _                        => null
+        };
+        if (content == null)
+        {
+            // Fallback: just show as popup if we couldn't detach for any reason.
+            resultWin.Show();
+            return;
+        }
+
+        // Close any previous menu-embedded result window before swapping in
+        // the new one, so timers / file handles are released.
+        try { _menuEmbeddedResultWindow?.Close(); } catch { }
+        _menuEmbeddedResultWindow = resultWin;
+
+        ResultsHost.Content = content;
+
+        // Ensure the Results pane is visible and bring it forward.
+        if (MenuViewResults != null && !MenuViewResults.IsChecked)
+        {
+            MenuViewResults.IsChecked = true;
+            ApplyViewVisibility();
+        }
+        if (TopTabs != null && TabResults != null)
+            TopTabs.SelectedItem = TabResults;
     }
 
     // -- ?? ------------------------------------------------------------------

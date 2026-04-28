@@ -17,6 +17,16 @@ namespace AntennaSimulatorApp.Views
         private string? _pythonExe;            // cached Python path for post-processing
         private Process? _process;
         private bool _isRunning;
+        /// <summary>True while a simulation (FDTD or post-only) is active.</summary>
+        public bool IsSimRunning => _isRunning;
+        /// <summary>Fired whenever <see cref="IsSimRunning"/> changes.</summary>
+        public event EventHandler? RunningStateChanged;
+        private void SetRunning(bool value)
+        {
+            if (_isRunning == value) return;
+            _isRunning = value;
+            try { RunningStateChanged?.Invoke(this, EventArgs.Empty); } catch { }
+        }
         private readonly DispatcherTimer _timer;
         private DateTime _startTime;
 
@@ -142,7 +152,7 @@ namespace AntennaSimulatorApp.Views
             TxtStatus.Text = "Post-processing...";
             _startTime = DateTime.Now;
             _timer.Start();
-            _isRunning = true;
+            SetRunning(true);
 
             RunPostProcessAsync(isFinal: true);
         }
@@ -211,7 +221,7 @@ namespace AntennaSimulatorApp.Views
             _process.ErrorDataReceived  += OnOutputData;
             _process.Exited             += OnProcessExited;
 
-            _isRunning = true;
+            SetRunning(true);
             _startTime = DateTime.Now;
             _timer.Start();
 
@@ -264,7 +274,7 @@ namespace AntennaSimulatorApp.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                _isRunning = false;
+                SetRunning(false);
                 _timer.Stop();
                 _postProcessTimer?.Stop();
 
@@ -579,6 +589,16 @@ namespace AntennaSimulatorApp.Views
         }
 
         private void BtnStop_Click(object sender, RoutedEventArgs e)
+        {
+            RequestStop();
+        }
+
+        /// <summary>
+        /// Public entry point so an external host (e.g. the toolbar Stop
+        /// button on <c>MainWindow</c>) can stop the running simulation.
+        /// Asks for confirmation first; no-op if nothing is running.
+        /// </summary>
+        public void RequestStop()
         {
             if (_process != null && !_process.HasExited)
             {

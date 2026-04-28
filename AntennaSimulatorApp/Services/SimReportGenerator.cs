@@ -171,6 +171,16 @@ namespace AntennaSimulatorApp.Services
                                 col.Item().PaddingTop(4).AlignCenter().Width(400).Image(
                                     RenderChart(400, 200, (c, cw, ch) => DrawAntennaSchematic(c, cw, ch, ant)));
                             }
+
+                            // Combined overlay of all antennas (when multiple are present)
+                            if (ctx.Antennas.Count >= 2)
+                            {
+                                var allAnts = ctx.Antennas;
+                                col.Item().PaddingTop(8).Text("All Antennas (Combined View)")
+                                    .FontSize(12).SemiBold();
+                                col.Item().PaddingTop(2).AlignCenter().Width(500).Image(
+                                    RenderChart(500, 300, (c, cw, ch) => DrawCombinedSchematic(c, cw, ch, allAnts)));
+                            }
                         }
 
                         // ── S11 Results ──
@@ -551,6 +561,121 @@ namespace AntennaSimulatorApp.Services
 
         // ── Antenna Schematic Drawing ───────────────────────────────────
 
+        /// <summary>Axis-aligned trace rectangle in local mm coordinates.</summary>
+        private readonly struct SchRect
+        {
+            public readonly double X0, Y0, X1, Y1;
+            public readonly SKColor Color;
+            public SchRect(double x0, double y0, double x1, double y1, SKColor color)
+            { X0 = Math.Min(x0, x1); Y0 = Math.Min(y0, y1); X1 = Math.Max(x0, x1); Y1 = Math.Max(y0, y1); Color = color; }
+        }
+
+        private static readonly SKColor ColShort = new(0x20, 0x60, 0xCC);
+        private static readonly SKColor ColFeed  = new(0xCC, 0x20, 0x20);
+        private static readonly SKColor ColMatch = new(0xDD, 0x88, 0x00);
+        private static readonly SKColor ColHoriz = new(0x20, 0x60, 0xCC);
+        private static readonly SKColor ColVert  = new(0x88, 0x30, 0xCC);
+        private static readonly SKColor ColGnd   = new(0x80, 0x80, 0x80);
+        private static readonly SKColor ColDim   = new(0x20, 0xAA, 0x40);
+
+        /// <summary>
+        /// Builds axis-aligned filled rectangles representing each trace segment with its physical width
+        /// (mm). Overlap extensions are added at junctions so corners visually merge — same convention as
+        /// the live preview in <c>DrawAntennaWindow</c>.
+        /// </summary>
+        private static List<SchRect> BuildAntennaRects(AntennaParams ant, out double localW, out double localH)
+        {
+            var rects = new List<SchRect>();
+            localW = 0; localH = 0;
+
+            if (ant.Type == AntennaType.InvertedF)
+            {
+                double L = ant.LengthL, H = ant.HeightH, S = ant.FeedGap;
+                double wSh = ant.ShortPinWidth, wFe = ant.FeedPinWidth;
+                double wMa = ant.MatchStubWidth, wRa = ant.RadiatorWidth;
+                localW = L; localH = H;
+
+                if (ant.HasGroundStub)
+                {
+                    // Match section at y=H (between Short and Feed)
+                    rects.Add(new SchRect(-wSh / 2, H - wMa / 2, S + wFe / 2, H + wMa / 2, ColMatch));
+                    // Short stub
+                    rects.Add(new SchRect(-wSh / 2, 0, wSh / 2, H + wMa / 2, ColShort));
+                }
+                // Feed stub
+                rects.Add(new SchRect(S - wFe / 2, 0, S + wFe / 2, H + wRa / 2, ColFeed));
+                // Radiator (horizontal arm)
+                rects.Add(new SchRect(S - wFe / 2, H - wRa / 2, L, H + wRa / 2, ColHoriz));
+            }
+            else if (ant.Type == AntennaType.MeanderedInvertedF)
+            {
+                double L = ant.LengthL, H = ant.MifaHeightH, Hm = ant.MeanderHeight;
+                double pitch = ant.MeanderPitch, feedS = ant.FeedGap;
+                double wSh = ant.MifaShortWidth, wFe = ant.MifaFeedWidth;
+                double wMh = ant.MifaHorizWidth, wMv = ant.MifaVertWidth;
+                if (Hm >= H) Hm = H * 0.8;
+                int nFull = (pitch + Hm) > 0 ? Math.Max(1, (int)Math.Floor((L - feedS) / (pitch + Hm))) : 1;
+                double remaining = L - feedS - nFull * (pitch + Hm);
+                bool hasPartial = remaining >= pitch;
+                int nTurns = hasPartial ? nFull + 1 : nFull;
+                double tailLen = hasPartial ? 0 : Math.Max(remaining, 0);
+                double partialHm = hasPartial ? Math.Max(remaining - pitch, 0) : 0;
+                double totalW = feedS + nTurns * pitch + tailLen;
+                localW = totalW; localH = H;
+
+                // Match section at top (Short ↔ Feed)
+                if (ant.HasGroundStub)
+                    rects.Add(new SchRect(-wSh / 2, H - wMh / 2, feedS + wFe / 2, H + wMh / 2, ColMatch));
+
+                // Meander traces
+                double mx = feedS, myMm = H;
+                for (int i = 0; i < nTurns; i++)
+                {
+                    double hI = (hasPartial && i == nTurns - 1) ? partialHm : Hm;
+                    double yBot = H - hI;
+                    double nyMm = (i % 2 == 0) ? yBot : H;
+                    double nx = mx + pitch;
+
+                    // Horizontal trace (extend by half vert width on both ends to meet vertical legs)
+                    rects.Add(new SchRect(mx - wMv / 2, myMm - wMh / 2, nx + wMv / 2, myMm + wMh / 2, ColHoriz));
+                    // Vertical leg
+                    if (Math.Abs(myMm - nyMm) > 1e-6)
+                    {
+                        double vy0 = Math.Min(myMm, nyMm) - wMh / 2;
+                        double vy1 = Math.Max(myMm, nyMm) + wMh / 2;
+                        rects.Add(new SchRect(nx - wMv / 2, vy0, nx + wMv / 2, vy1, ColVert));
+                    }
+                    mx = nx; myMm = nyMm;
+                }
+                if (tailLen > 0)
+                    rects.Add(new SchRect(mx - wMv / 2, myMm - wMh / 2, mx + tailLen, myMm + wMh / 2, ColHoriz));
+
+                // Vertical posts on top
+                if (ant.HasGroundStub)
+                    rects.Add(new SchRect(-wSh / 2, 0, wSh / 2, H + wMh / 2, ColShort));
+                rects.Add(new SchRect(feedS - wFe / 2, 0, feedS + wFe / 2, H + wMh / 2, ColFeed));
+            }
+
+            return rects;
+        }
+
+        private static void PaintRects(SKCanvas canvas, IEnumerable<SchRect> rects,
+            Func<double, float> px, Func<double, float> py, byte fillAlpha = 0xC0)
+        {
+            using var stroke = new SKPaint { Style = SKPaintStyle.Stroke, StrokeWidth = 0.8f, IsAntialias = true };
+            using var fill = new SKPaint { Style = SKPaintStyle.Fill, IsAntialias = true };
+            foreach (var r in rects)
+            {
+                float left = px(r.X0), right = px(r.X1);
+                float top = py(r.Y1), bottom = py(r.Y0); // y-flip
+                var rect = new SKRect(left, top, right, bottom);
+                fill.Color = r.Color.WithAlpha(fillAlpha);
+                stroke.Color = r.Color;
+                canvas.DrawRect(rect, fill);
+                canvas.DrawRect(rect, stroke);
+            }
+        }
+
         private static void DrawAntennaSchematic(SKCanvas canvas, float w, float h, AntennaParams ant)
         {
             using var bgPaint = new SKPaint { Color = SKColors.White, Style = SKPaintStyle.Fill };
@@ -567,64 +692,59 @@ namespace AntennaSimulatorApp.Services
         private static void DrawIFASchematic(SKCanvas canvas, float w, float h, AntennaParams ant)
         {
             double L = ant.LengthL, H = ant.HeightH, S = ant.FeedGap;
-            double wSh = ant.ShortPinWidth, wFe = ant.FeedPinWidth, wRa = ant.RadiatorWidth;
+            var rects = BuildAntennaRects(ant, out _, out _);
 
-            float margin = 40;
+            // Local bounds (include trace overhang)
+            double minX = rects.Min(r => r.X0), maxX = rects.Max(r => r.X1);
+            double minY = Math.Min(0, rects.Min(r => r.Y0));
+            double maxY = rects.Max(r => r.Y1);
+            double bw = maxX - minX, bh = maxY - minY;
+
+            float margin = 45;
             float pw = w - 2 * margin, ph = h - 2 * margin;
-            float sc = Math.Min(pw / (float)Math.Max(L, 1), ph / (float)Math.Max(H, 1));
-            float drawW = (float)L * sc, drawH = (float)H * sc;
-            float ox = (w - drawW) / 2, oy = (h + drawH) / 2 + 5; // GND y position
+            float sc = Math.Min(pw / (float)Math.Max(bw, 1), ph / (float)Math.Max(bh, 1));
+            float drawW = (float)bw * sc, drawH = (float)bh * sc;
+            float ox = (w - drawW) / 2 - (float)minX * sc;
+            float oy = (h + drawH) / 2 + (float)minY * sc; // GND at y=0
 
             float px(double mm) => ox + (float)mm * sc;
             float py(double mm) => oy - (float)mm * sc;
 
-            using var gndPaint = new SKPaint { Color = new SKColor(0x80, 0x80, 0x80), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var bluePaint = new SKPaint { Color = new SKColor(0x20, 0x60, 0xCC), StrokeWidth = Math.Max(2, (float)wSh * sc * 0.5f), Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var blueFill = new SKPaint { Color = new SKColor(0x20, 0x60, 0xCC, 0x40), Style = SKPaintStyle.Fill, IsAntialias = true };
-            using var redPaint = new SKPaint { Color = new SKColor(0xCC, 0x20, 0x20), StrokeWidth = Math.Max(2, (float)wFe * sc * 0.5f), Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var dimPaint = new SKPaint { Color = new SKColor(0x20, 0xAA, 0x40), IsAntialias = true };
-            using var dimLinePaint = new SKPaint { Color = new SKColor(0x20, 0xAA, 0x40), StrokeWidth = 0.8f, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            using var gndPaint = new SKPaint { Color = ColGnd, StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            using var dimPaint = new SKPaint { Color = ColDim, IsAntialias = true };
+            using var dimLinePaint = new SKPaint { Color = ColDim, StrokeWidth = 0.8f, Style = SKPaintStyle.Stroke, IsAntialias = true };
             using var dimFont = new SKFont { Size = 8 };
             using var labelPaint = new SKPaint { Color = new SKColor(0x33, 0x33, 0x33), IsAntialias = true };
             using var labelFont = new SKFont { Size = 8 };
 
             // GND line
-            canvas.DrawLine(ox - 8, oy, px(L) + 8, oy, gndPaint);
-            canvas.DrawText("GND", ox - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
+            canvas.DrawLine(px(minX) - 8, oy, px(maxX) + 8, oy, gndPaint);
+            canvas.DrawText("GND", px(minX) - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
 
-            // Shorting stub (vertical from GND to top)
+            PaintRects(canvas, rects, px, py);
+
+            // Role labels
             if (ant.HasGroundStub)
-            {
-                canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
-                canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
+                canvas.DrawText("Short", px(0), py(H) - 6, SKTextAlign.Center, labelFont, labelPaint);
+            canvas.DrawText("Feed", px(S) + 5, py(H / 2),
+                SKTextAlign.Left, labelFont, new SKPaint { Color = ColFeed, IsAntialias = true });
+            canvas.DrawText("Radiator", px((S + L) / 2), py(H) - 6, SKTextAlign.Center, labelFont, labelPaint);
 
-                // Match section (horizontal at top from short to feed)
-                canvas.DrawLine(px(0), py(H), px(S), py(H), bluePaint);
-            }
-
-            // Feed stub (vertical from GND to top)
-            canvas.DrawLine(px(S), oy, px(S), py(H), redPaint);
-            canvas.DrawText("Feed", px(S) + 3, py(H / 2), SKTextAlign.Left, labelFont, new SKPaint { Color = new SKColor(0xCC, 0x20, 0x20), IsAntialias = true });
-
-            // Radiating arm (horizontal from feed to end)
-            float radW = Math.Max(2.5f, (float)wRa * sc * 0.5f);
-            using var radPaint = new SKPaint { Color = new SKColor(0x20, 0x60, 0xCC), StrokeWidth = radW, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            canvas.DrawLine(px(S), py(H), px(L), py(H), radPaint);
-            canvas.DrawText("Radiator", px((S + L) / 2), py(H) - 5, SKTextAlign.Center, labelFont, labelPaint);
-
-            // Dimension: L
+            // Dimensions
             float dimY = oy + 14;
             canvas.DrawLine(px(0), dimY, px(L), dimY, dimLinePaint);
             canvas.DrawText($"L={L:F1}", px(L / 2), dimY + 10, SKTextAlign.Center, dimFont, dimPaint);
 
-            // Dimension: S
             canvas.DrawLine(px(0), dimY - 5, px(S), dimY - 5, dimLinePaint);
             canvas.DrawText($"S={S:F1}", px(S / 2), dimY - 7, SKTextAlign.Center, dimFont, dimPaint);
 
-            // Dimension: H
-            float dimX = px(L) + 10;
+            float dimX = px(maxX) + 10;
             canvas.DrawLine(dimX, oy, dimX, py(H), dimLinePaint);
             canvas.DrawText($"H={H:F1}", dimX + 3, py(H / 2) + 3, SKTextAlign.Left, dimFont, dimPaint);
+
+            canvas.DrawText(
+                $"widths: Short={ant.ShortPinWidth:F2} Feed={ant.FeedPinWidth:F2} Match={ant.MatchStubWidth:F2} Rad={ant.RadiatorWidth:F2} mm",
+                margin, h - 4, SKTextAlign.Left, dimFont, dimPaint);
         }
 
         private static void DrawMIFASchematic(SKCanvas canvas, float w, float h, AntennaParams ant)
@@ -637,90 +757,148 @@ namespace AntennaSimulatorApp.Services
             bool hasPartial = remaining >= pitch;
             int nTurns = hasPartial ? nFull + 1 : nFull;
             double tailLen = hasPartial ? 0 : Math.Max(remaining, 0);
-            double partialHm = hasPartial ? Math.Max(remaining - pitch, 0) : 0;
             double totalW = feedS + nTurns * pitch + tailLen;
 
-            float margin = 40;
+            var rects = BuildAntennaRects(ant, out _, out _);
+            double minX = rects.Min(r => r.X0), maxX = rects.Max(r => r.X1);
+            double minY = Math.Min(0, rects.Min(r => r.Y0));
+            double maxY = rects.Max(r => r.Y1);
+            double bw = maxX - minX, bh = maxY - minY;
+
+            float margin = 45;
             float pw = w - 2 * margin, ph = h - 2 * margin;
-            float sc = Math.Min(pw / (float)Math.Max(totalW, 1), ph / (float)Math.Max(H, 1));
-            float drawW = (float)totalW * sc, drawH = (float)H * sc;
-            float ox = (w - drawW) / 2, oy = (h + drawH) / 2 + 5;
+            float sc = Math.Min(pw / (float)Math.Max(bw, 1), ph / (float)Math.Max(bh, 1));
+            float drawW = (float)bw * sc, drawH = (float)bh * sc;
+            float ox = (w - drawW) / 2 - (float)minX * sc;
+            float oy = (h + drawH) / 2 + (float)minY * sc;
 
             float px(double mm) => ox + (float)mm * sc;
             float py(double mm) => oy - (float)mm * sc;
 
-            using var gndPaint = new SKPaint { Color = new SKColor(0x80, 0x80, 0x80), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var bluePaint = new SKPaint { Color = new SKColor(0x20, 0x60, 0xCC), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var purpPaint = new SKPaint { Color = new SKColor(0x88, 0x30, 0xCC), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var redPaint = new SKPaint { Color = new SKColor(0xCC, 0x20, 0x20), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var oranPaint = new SKPaint { Color = new SKColor(0xDD, 0x88, 0x00), StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
-            using var dimPaint = new SKPaint { Color = new SKColor(0x20, 0xAA, 0x40), IsAntialias = true };
-            using var dimLinePaint = new SKPaint { Color = new SKColor(0x20, 0xAA, 0x40), StrokeWidth = 0.8f, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            using var gndPaint = new SKPaint { Color = ColGnd, StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            using var dimPaint = new SKPaint { Color = ColDim, IsAntialias = true };
+            using var dimLinePaint = new SKPaint { Color = ColDim, StrokeWidth = 0.8f, Style = SKPaintStyle.Stroke, IsAntialias = true };
             using var dimFont = new SKFont { Size = 8 };
             using var labelPaint = new SKPaint { Color = new SKColor(0x33, 0x33, 0x33), IsAntialias = true };
             using var labelFont = new SKFont { Size = 8 };
 
-            // GND line
-            canvas.DrawLine(ox - 8, oy, px(totalW) + 8, oy, gndPaint);
-            canvas.DrawText("GND", ox - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
+            canvas.DrawLine(px(minX) - 8, oy, px(maxX) + 8, oy, gndPaint);
+            canvas.DrawText("GND", px(minX) - 8, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
 
-            // Shorting stub
+            PaintRects(canvas, rects, px, py);
+
+            // Labels
             if (ant.HasGroundStub)
-            {
-                canvas.DrawLine(px(0), oy, px(0), py(H), bluePaint);
-                canvas.DrawText("Short", px(0) - 2, py(H) - 4, SKTextAlign.Center, labelFont, labelPaint);
-
-                // Match section at top
-                canvas.DrawLine(px(0), py(H), px(feedS), py(H), oranPaint);
-            }
-
-            // Feed stub
-            canvas.DrawLine(px(feedS), oy, px(feedS), py(H), redPaint);
-            canvas.DrawText("Feed", px(feedS) + 3, py(H / 2), SKTextAlign.Left, labelFont,
-                new SKPaint { Color = new SKColor(0xCC, 0x20, 0x20), IsAntialias = true });
-
-            // Meander traces
-            double mx = feedS, myMm = H;
-            for (int i = 0; i < nTurns; i++)
-            {
-                double hI = (hasPartial && i == nTurns - 1) ? partialHm : Hm;
-                double yBot = H - hI;
-                double nyMm = (i % 2 == 0) ? yBot : H;
-                double nx = mx + pitch;
-
-                // Horizontal trace
-                canvas.DrawLine(px(mx), py(myMm), px(nx), py(myMm), bluePaint);
-                // Vertical connection
-                if (Math.Abs(myMm - nyMm) > 0.01)
-                    canvas.DrawLine(px(nx), py(myMm), px(nx), py(nyMm), purpPaint);
-
-                mx = nx;
-                myMm = nyMm;
-            }
-            // Tail
-            if (tailLen > 0)
-                canvas.DrawLine(px(mx), py(myMm), px(mx + tailLen), py(myMm), bluePaint);
+                canvas.DrawText("Short", px(0), py(H) - 6, SKTextAlign.Center, labelFont, labelPaint);
+            canvas.DrawText("Feed", px(feedS) + 5, py(H / 2),
+                SKTextAlign.Left, labelFont, new SKPaint { Color = ColFeed, IsAntialias = true });
+            canvas.DrawText($"N={nTurns}", px(feedS + (nTurns * pitch + tailLen) / 2),
+                py(H) - 6, SKTextAlign.Center, labelFont, labelPaint);
 
             // Dimensions
             float dimY = oy + 14;
             canvas.DrawLine(px(0), dimY, px(totalW), dimY, dimLinePaint);
             canvas.DrawText($"Total={totalW:F1}", px(totalW / 2), dimY + 10, SKTextAlign.Center, dimFont, dimPaint);
 
-            float dimX = px(totalW) + 10;
+            float dimX = px(maxX) + 10;
             canvas.DrawLine(dimX, oy, dimX, py(H), dimLinePaint);
             canvas.DrawText($"H={H:F1}", dimX + 3, py(H / 2) + 3, SKTextAlign.Left, dimFont, dimPaint);
 
-            // h1 dimension
             float dimX2 = dimX + 30;
             canvas.DrawLine(dimX2, py(H), dimX2, py(H - Hm), dimLinePaint);
             canvas.DrawText($"h1={Hm:F1}", dimX2 + 3, py(H - Hm / 2) + 3, SKTextAlign.Left, dimFont, dimPaint);
 
-            // S dimension
             canvas.DrawLine(px(0), dimY - 5, px(feedS), dimY - 5, dimLinePaint);
             canvas.DrawText($"S={feedS:F1}", px(feedS / 2), dimY - 7, SKTextAlign.Center, dimFont, dimPaint);
 
-            // N label
-            canvas.DrawText($"N={nTurns}", px(totalW / 2), py(H) - 5, SKTextAlign.Center, labelFont, labelPaint);
+            if (nTurns >= 1)
+            {
+                canvas.DrawLine(px(feedS), dimY - 10, px(feedS + pitch), dimY - 10, dimLinePaint);
+                canvas.DrawText($"P={pitch:F1}", px(feedS + pitch / 2), dimY - 12, SKTextAlign.Center, dimFont, dimPaint);
+            }
+
+            canvas.DrawText(
+                $"widths: Short={ant.MifaShortWidth:F2} Feed={ant.MifaFeedWidth:F2} H={ant.MifaHorizWidth:F2} V={ant.MifaVertWidth:F2} mm",
+                margin, h - 4, SKTextAlign.Left, dimFont, dimPaint);
+        }
+
+        /// <summary>
+        /// Renders all antennas overlaid in their actual board positions
+        /// (using OffsetX/OffsetY) so the user can see relative placement.
+        /// </summary>
+        private static void DrawCombinedSchematic(SKCanvas canvas, float w, float h, IList<AntennaParams> ants)
+        {
+            using var bgPaint = new SKPaint { Color = SKColors.White, Style = SKPaintStyle.Fill };
+            canvas.DrawRect(0, 0, w, h, bgPaint);
+
+            // Build rects per antenna in board coordinates (apply OffsetX, OffsetY)
+            var perAnt = new List<(string Name, List<SchRect> Rects)>();
+            double minX = double.PositiveInfinity, minY = double.PositiveInfinity;
+            double maxX = double.NegativeInfinity, maxY = double.NegativeInfinity;
+
+            foreach (var ant in ants)
+            {
+                var rects = BuildAntennaRects(ant, out _, out _);
+                if (rects.Count == 0) continue;
+                var shifted = rects
+                    .Select(r => new SchRect(r.X0 + ant.OffsetX, r.Y0 + ant.OffsetY,
+                                             r.X1 + ant.OffsetX, r.Y1 + ant.OffsetY, r.Color))
+                    .ToList();
+                foreach (var r in shifted)
+                {
+                    if (r.X0 < minX) minX = r.X0;
+                    if (r.X1 > maxX) maxX = r.X1;
+                    if (r.Y0 < minY) minY = r.Y0;
+                    if (r.Y1 > maxY) maxY = r.Y1;
+                }
+                perAnt.Add((ant.Name, shifted));
+            }
+
+            if (perAnt.Count == 0) return;
+
+            // Include GND line at y=0
+            if (minY > 0) minY = 0;
+            double bw = maxX - minX, bh = maxY - minY;
+            if (bw < 1e-6) bw = 1; if (bh < 1e-6) bh = 1;
+
+            float margin = 50;
+            float pw = w - 2 * margin, ph = h - 2 * margin;
+            float sc = Math.Min(pw / (float)bw, ph / (float)bh);
+            float drawW = (float)bw * sc, drawH = (float)bh * sc;
+            float ox = (w - drawW) / 2 - (float)minX * sc;
+            float oy = (h + drawH) / 2 + (float)minY * sc;
+
+            float px(double mm) => ox + (float)mm * sc;
+            float py(double mm) => oy - (float)mm * sc;
+
+            using var gndPaint = new SKPaint { Color = ColGnd, StrokeWidth = 2, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            using var labelPaint = new SKPaint { Color = new SKColor(0x33, 0x33, 0x33), IsAntialias = true };
+            using var labelFont = new SKFont { Size = 9 };
+            using var dimPaint = new SKPaint { Color = ColDim, IsAntialias = true };
+            using var dimFont = new SKFont { Size = 8 };
+
+            canvas.DrawLine(px(minX) - 6, oy, px(maxX) + 6, oy, gndPaint);
+            canvas.DrawText("GND", px(minX) - 6, oy + 11, SKTextAlign.Left, labelFont, labelPaint);
+
+            // Use translucent fills so overlapping antennas are visible
+            foreach (var (name, rects) in perAnt)
+                PaintRects(canvas, rects, px, py, fillAlpha: 0x88);
+
+            // Antenna name tags at top-left of each antenna's bounding box
+            foreach (var (name, rects) in perAnt)
+            {
+                double aMinX = rects.Min(r => r.X0);
+                double aMaxY = rects.Max(r => r.Y1);
+                canvas.DrawText(name, px(aMinX), py(aMaxY) - 4,
+                    SKTextAlign.Left, labelFont, labelPaint);
+            }
+
+            // Overall span dimension
+            float dimY = oy + 14;
+            using var dimLinePaint = new SKPaint { Color = ColDim, StrokeWidth = 0.8f, Style = SKPaintStyle.Stroke, IsAntialias = true };
+            canvas.DrawLine(px(minX), dimY, px(maxX), dimY, dimLinePaint);
+            canvas.DrawText($"Span={(maxX - minX):F1} mm", px((minX + maxX) / 2), dimY + 10,
+                SKTextAlign.Center, dimFont, dimPaint);
         }
 
         private static void DrawCustomSchematic(SKCanvas canvas, float w, float h, AntennaParams ant)

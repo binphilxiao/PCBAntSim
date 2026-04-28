@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.5] - 2026-04-28
+
+### Added
+- Main window now embeds **View Results** (S11 / Far-Field / Surface Current) panes inline instead of opening separate popup windows
+- Draggable splitter between the configuration panel and the right workspace, so the left column width is now adjustable
+- Hide / show buttons on the Simulation Log pane and Configuration panel (with a re-show rail when configuration is hidden); both also toggleable from the **View** menu
+- Toolbar:
+  - Unified **Run / Stop** button — automatically switches to red ■ Stop while a simulation is running
+  - New buttons: **Save As**, **Re-run Post-Processing**, **Far-Field**, **Surface Currents**, **Freq/λ**, **Skin Depth**, **Options**, **View** (panel toggles), **About**, **Check for Updates**
+
+### Changed
+- `SimConsoleWindow` exposes `IsSimRunning`, `RunningStateChanged`, and `RequestStop()` so the main toolbar can drive the running simulation
+- Simulation report generator (`SimReportGenerator`) refresh
+
 ## [1.0.4] - 2026-04-23
 
 ### Changed
