@@ -42,14 +42,16 @@
   >> ADD Module default copper: L2 Z=0.6225
   >> ADD Module dielectric: Sub1-2 Z=0.6650
   >> ADD Module dielectric: TopMask Z=0.7375
-  Total ManualShapes=7
+  Total ManualShapes=9
     shape='MODULE_L3_GND' board=Module layer=L3 show3D=True merged=0 verts=5
     shape='MODULE_TOP_GND' board=Module layer=TOP show3D=True merged=0 verts=10
     shape='CARRIER_L2_GND' board=Carrier layer=L2 show3D=True merged=0 verts=9
     shape='CARRIER_TOP_GND' board=Carrier layer=TOP show3D=True merged=0 verts=13
     shape='MODULE_BOT' board=Module layer=BOTTOM show3D=True merged=0 verts=5
-    shape='Ant_tail' board=Module layer=TOP show3D=True merged=0 verts=5
-    shape='Antenna (MIFA)' board=Module layer=TOP show3D=True merged=16 verts=5
+    shape='Antenna (2.4G_ARM)' board=Module layer=TOP show3D=True merged=12 verts=5
+    shape='Antenna (GND_Stud)' board=Module layer=TOP show3D=True merged=0 verts=6
+    shape='Antenna (5G_ARM)' board=Module layer=TOP show3D=True merged=2 verts=5
+    shape='Antenna (5GBranches)' board=Module layer=TOP show3D=True merged=0 verts=10
   Shape 'MODULE_L3_GND': GerberShapes=1, MergedPolygons=0, Vertices=5
     GerberShape[0]: pts=4, isClear=False
   >> grp.Children.Count=1 (3D meshes from shape)
@@ -70,11 +72,7 @@
     GerberShape[0]: pts=4, isClear=False
   >> grp.Children.Count=1 (3D meshes from shape)
   >> ADD Copper shape: MODULE_BOT layer=BOTTOM
-  Shape 'Ant_tail': GerberShapes=1, MergedPolygons=0, Vertices=5
-    GerberShape[0]: pts=4, isClear=False
-  >> grp.Children.Count=1 (3D meshes from shape)
-  >> ADD Copper shape: Ant_tail layer=TOP
-  Shape 'Antenna (MIFA)': GerberShapes=17, MergedPolygons=16, Vertices=5
+  Shape 'Antenna (2.4G_ARM)': GerberShapes=13, MergedPolygons=12, Vertices=5
     GerberShape[0]: pts=4, isClear=False
     GerberShape[1]: pts=4, isClear=False
     GerberShape[2]: pts=4, isClear=False
@@ -88,9 +86,19 @@
     GerberShape[10]: pts=4, isClear=False
     GerberShape[11]: pts=4, isClear=False
     GerberShape[12]: pts=4, isClear=False
-    GerberShape[13]: pts=4, isClear=False
-    GerberShape[14]: pts=4, isClear=False
-    GerberShape[15]: pts=4, isClear=False
-    GerberShape[16]: pts=4, isClear=False
-  >> grp.Children.Count=17 (3D meshes from shape)
-  >> ADD Antenna shape: Antenna (MIFA) layer=TOP
+  >> grp.Children.Count=13 (3D meshes from shape)
+  >> ADD Antenna shape: Antenna (2.4G_ARM) layer=TOP
+  Shape 'Antenna (GND_Stud)': GerberShapes=1, MergedPolygons=0, Vertices=6
+    GerberShape[0]: pts=4, isClear=False
+  >> grp.Children.Count=1 (3D meshes from shape)
+  >> ADD Antenna shape: Antenna (GND_Stud) layer=TOP
+  Shape 'Antenna (5G_ARM)': GerberShapes=3, MergedPolygons=2, Vertices=5
+    GerberShape[0]: pts=4, isClear=False
+    GerberShape[1]: pts=4, isClear=False
+    GerberShape[2]: pts=4, isClear=False
+  >> grp.Children.Count=3 (3D meshes from shape)
+  >> ADD Antenna shape: Antenna (5G_ARM) layer=TOP
+  Shape 'Antenna (5GBranches)': GerberShapes=1, MergedPolygons=0, Vertices=10
+    GerberShape[0]: pts=8, isClear=False
+  >> grp.Children.Count=1 (3D meshes from shape)
+  >> ADD Antenna shape: Antenna (5GBranches) layer=TOP
