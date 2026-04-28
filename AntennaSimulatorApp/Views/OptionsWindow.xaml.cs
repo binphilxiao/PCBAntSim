@@ -10,8 +10,9 @@ namespace AntennaSimulatorApp.Views
         {
             InitializeComponent();
             var s = AppSettings.Instance;
-            OpenEmsPathBox.Text = s.OpenEmsPath;
-            PythonPathBox.Text  = s.PythonPath;
+            OpenEmsPathBox.Text     = s.OpenEmsPath;
+            PythonPathBox.Text      = s.PythonPath;
+            SimDataScratchBox.Text  = s.SimDataScratchRoot;
         }
 
         private void BrowseOpenEms_Click(object sender, RoutedEventArgs e)
@@ -35,11 +36,22 @@ namespace AntennaSimulatorApp.Views
                 PythonPathBox.Text = dlg.FileName;
         }
 
+        private void BrowseSimDataScratch_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFolderDialog
+            {
+                Title = "Select local scratch folder for openEMS sim_data (e.g. C:\\PCBAntSimRuns)"
+            };
+            if (dlg.ShowDialog(this) == true)
+                SimDataScratchBox.Text = dlg.FolderName;
+        }
+
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             var s = AppSettings.Instance;
-            s.OpenEmsPath = OpenEmsPathBox.Text.Trim();
-            s.PythonPath  = PythonPathBox.Text.Trim();
+            s.OpenEmsPath        = OpenEmsPathBox.Text.Trim();
+            s.PythonPath         = PythonPathBox.Text.Trim();
+            s.SimDataScratchRoot = SimDataScratchBox.Text.Trim();
             s.Save();
             DialogResult = true;
         }

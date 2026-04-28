@@ -96,6 +96,9 @@
                 <MenuItem Header="Re-run _Post-Processing Only"
                           Click="MenuRePostProcess_Click"
                           ToolTip="Re-run result generation on the existing sim_data (skips FDTD)"/>
+                <MenuItem Header="_Generate Report…"
+                          Click="MenuGenerateReport_Click"
+                          ToolTip="Generate a PDF simulation report from existing results"/>
                 <MenuItem Header="Simulation _Settings…"
                           Click="MenuSimSettings_Click"/>
                 <Separator/>

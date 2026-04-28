@@ -20,6 +20,35 @@ namespace AntennaSimulatorApp.Services
     /// </summary>
     public static class OpenEmsExporter
     {
+        /// <summary>
+        /// Resolve the absolute folder where openEMS should write its
+        /// time-domain / NF2FF / field-dump HDF5 files.
+        ///
+        /// If <see cref="AppSettings.SimDataScratchRoot"/> is empty, the
+        /// in-project <c>&lt;simDir&gt;/sim_data</c> folder is used
+        /// (legacy behavior). When it is set, sim_data is redirected to
+        /// <c>&lt;scratchRoot&gt;/&lt;projectFolderName&gt;/sim_data</c>
+        /// on a real local disk, while <c>results/</c> stays in the
+        /// project folder so it can be cloud-synced safely.
+        /// </summary>
+        public static string ResolveSimDataDir(string simDir)
+        {
+            string scratch = AppSettings.Instance.SimDataScratchRoot ?? "";
+            if (string.IsNullOrWhiteSpace(scratch))
+                return Path.Combine(simDir, "sim_data");
+
+            // Use the project folder name (parent of Sim) as the namespacing
+            // segment so multiple projects can share the same scratch root
+            // without colliding.
+            string projectDir = Path.GetDirectoryName(simDir) ?? "";
+            string projectName = string.IsNullOrEmpty(projectDir)
+                ? "project"
+                : Path.GetFileName(projectDir);
+            if (string.IsNullOrWhiteSpace(projectName))
+                projectName = "project";
+
+            return Path.Combine(scratch, projectName, "sim_data");
+        }
         private const double MountGap = 0.1; // mm gap between carrier and module
 
         private static string F(double v) =>
@@ -51,7 +80,7 @@ namespace AntennaSimulatorApp.Services
 
             var scriptsDir  = Path.Combine(outputDir, "scripts");
             var geometryDir = Path.Combine(outputDir, "geometry");
-            var simDataDir  = Path.Combine(outputDir, "sim_data");
+            var simDataDir  = ResolveSimDataDir(outputDir);
             var resultsDir  = Path.Combine(outputDir, "results");
             Directory.CreateDirectory(scriptsDir);
             Directory.CreateDirectory(geometryDir);
@@ -62,7 +91,7 @@ namespace AntennaSimulatorApp.Services
             var stlEntries = new List<(string FileName, string Material, int Priority)>();
 
             WriteHeader(sb);
-            WriteImports(sb);
+            WriteImports(sb, simDataDir);
             WriteSimParameters(sb, vm);
             WriteFdtdSetup(sb, vm);
             WriteMaterials(sb, vm);
@@ -127,7 +156,7 @@ namespace AntennaSimulatorApp.Services
             return null;
         }
 
-        private static void WriteImports(StringBuilder sb)
+        private static void WriteImports(StringBuilder sb, string simDataDir)
         {
             string? resolvedPath = ResolveOpenEmsPath();
 
@@ -140,7 +169,16 @@ namespace AntennaSimulatorApp.Services
             sb.AppendLine("script_dir = os.path.dirname(os.path.abspath(__file__))");
             sb.AppendLine("sim_base = os.path.dirname(script_dir)  # Sim/");
             sb.AppendLine("geometry_dir = os.path.join(sim_base, 'geometry')");
-            sb.AppendLine("sim_data_dir = os.path.join(sim_base, 'sim_data')");
+
+            // sim_data may be redirected to a local-disk scratch directory
+            // (configured in Tools -> Options) so cloud-synced project folders
+            // do not corrupt HDF5 dumps. The path is baked into the script at
+            // export time so --post-only re-runs find the same data.
+            // We emit a Python raw-string literal; backslashes need no escaping
+            // but we defend against an embedded single quote.
+            string pyPath = simDataDir.Replace("'", "\\'");
+            sb.AppendLine($"sim_data_dir = r'{pyPath}'");
+            sb.AppendLine("os.makedirs(sim_data_dir, exist_ok=True)");
             sb.AppendLine("results_dir  = os.path.join(sim_base, 'results')");
             sb.AppendLine();
 

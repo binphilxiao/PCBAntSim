@@ -1726,7 +1726,8 @@ public partial class MainWindow : Window
         string projectDir = System.IO.Path.GetDirectoryName(_currentProjectPath)!;
         string simDir     = System.IO.Path.Combine(projectDir, "Sim");
         string scriptPath = System.IO.Path.Combine(simDir, "scripts", "run_simulation.py");
-        string simDataDir = System.IO.Path.Combine(simDir, "sim_data");
+        // sim_data may be redirected to a local scratch disk (Options).
+        string simDataDir = OpenEmsExporter.ResolveSimDataDir(simDir);
 
         if (!System.IO.File.Exists(scriptPath)
             || !System.IO.Directory.Exists(simDataDir)
@@ -1744,6 +1745,206 @@ public partial class MainWindow : Window
         var simWin = new SimConsoleWindow(simDir) { Owner = this };
         EmbedSimConsole(simWin);
         simWin.StartPostOnly();
+    }
+
+    /// <summary>
+    /// Generate a PDF simulation report from the current project's results
+    /// directory without re-running the simulation. Useful when the user has
+    /// existing results and just wants a fresh PDF.
+    /// </summary>
+    private void MenuGenerateReport_Click(object sender, RoutedEventArgs e)
+    {
+        if (!(DataContext is MainViewModel vm)) return;
+
+        // If no project is currently loaded (e.g. user reopened the app and
+        // wants to generate a report from existing results), prompt them to
+        // pick an .antproj file. Loading the project also restores antennas
+        // and simulation settings so the report has the correct metadata.
+        if (string.IsNullOrEmpty(_currentProjectPath))
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Title  = "Open Project to Generate Report",
+                Filter = "Antenna Simulator Project|*.antproj|All Files|*.*"
+            };
+            if (dlg.ShowDialog() != true) return;
+
+            try
+            {
+                ProjectSerializer.Load(dlg.FileName, vm);
+                _currentProjectPath = dlg.FileName;
+                Title = $"PCB Antenna Simulator  v{AppVersion.Current}  -  {System.IO.Path.GetFileName(dlg.FileName)}";
+                RebuildLayerVisuals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open project.\n\n{ex.Message}",
+                    "Open Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        string projectDir = System.IO.Path.GetDirectoryName(_currentProjectPath)!;
+        string simDir     = System.IO.Path.Combine(projectDir, "Sim");
+        string resultsDir = System.IO.Path.Combine(simDir, "results");
+
+        // Robust resolution of the results directory. The default layout is
+        // <projectDir>\Sim\results\, but a project file may have been moved
+        // separately from its sim output, so we also probe a few common
+        // alternative locations and finally fall back to a folder picker.
+        if (!HasResultData(resultsDir))
+        {
+            string? located = LocateResultsDir(projectDir);
+            if (located == null)
+            {
+                var pickedResults = PromptForResultsFolder(projectDir);
+                if (pickedResults == null) return;
+                located = pickedResults;
+            }
+            resultsDir = located;
+            // simDir is the parent of the results folder; SimReportGenerator
+            // uses Path.GetDirectoryName(simDir) to decide where to drop the PDF.
+            simDir = System.IO.Path.GetDirectoryName(resultsDir)!;
+        }
+
+        if (!HasResultData(resultsDir))
+        {
+            MessageBox.Show(
+                "No simulation results found.\n\n"
+                + "Run a simulation (or Re-run Post-Processing) at least once before generating a report.",
+                "No Results", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        // Determine analysis type from what files exist on disk.
+        bool hasS11      = System.IO.File.Exists(System.IO.Path.Combine(resultsDir, "S11.csv"));
+        bool hasFarField = System.IO.File.Exists(System.IO.Path.Combine(resultsDir, "FarField_Summary.csv"));
+        AnalysisType atype = (hasS11, hasFarField) switch
+        {
+            (true,  true)  => AnalysisType.Both,
+            (false, true)  => AnalysisType.FarField,
+            _              => AnalysisType.S11Only,
+        };
+
+        var reportCtx = new SimReportGenerator.ReportContext
+        {
+            ProjectName  = System.IO.Path.GetFileNameWithoutExtension(_currentProjectPath),
+            ProjectPath  = _currentProjectPath,
+            AnalysisType = atype,
+            Antennas     = vm.DrawnAntennas.ToList(),
+            SimSettings  = vm.SimSettings
+        };
+
+        try
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            string? path = SimReportGenerator.Generate(simDir, reportCtx, TimeSpan.Zero);
+            Mouse.OverrideCursor = null;
+
+            if (path == null)
+            {
+                MessageBox.Show("Report could not be generated (no results directory).",
+                    "Generate Report", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Open the freshly-generated PDF in the default viewer.
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = path, UseShellExecute = true });
+            }
+            catch
+            {
+                MessageBox.Show($"Report saved to:\n{path}",
+                    "Generate Report", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            Mouse.OverrideCursor = null;
+            MessageBox.Show($"Failed to generate report.\n\n{ex.Message}",
+                "Generate Report", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    /// <summary>
+    /// True if <paramref name="dir"/> exists and contains at least one of
+    /// the expected result artifacts (S11.csv, FarField_Summary.csv, or any
+    /// PNG produced by post-processing).
+    /// </summary>
+    private static bool HasResultData(string dir)
+    {
+        if (string.IsNullOrEmpty(dir) || !System.IO.Directory.Exists(dir)) return false;
+        if (System.IO.File.Exists(System.IO.Path.Combine(dir, "S11.csv"))) return true;
+        if (System.IO.File.Exists(System.IO.Path.Combine(dir, "FarField_Summary.csv"))) return true;
+        try
+        {
+            return System.IO.Directory.EnumerateFiles(dir, "*.png").Any()
+                || System.IO.Directory.EnumerateFiles(dir, "*.csv").Any();
+        }
+        catch { return false; }
+    }
+
+    /// <summary>
+    /// Try to locate a "results" folder containing simulation artifacts under
+    /// or near <paramref name="projectDir"/>. Returns null if nothing is
+    /// found and the caller should fall back to a folder picker.
+    /// </summary>
+    private static string? LocateResultsDir(string projectDir)
+    {
+        // 1. Default layout: <projectDir>\Sim\results
+        string p1 = System.IO.Path.Combine(projectDir, "Sim", "results");
+        if (HasResultData(p1)) return p1;
+
+        // 2. Direct subfolder: <projectDir>\results
+        string p2 = System.IO.Path.Combine(projectDir, "results");
+        if (HasResultData(p2)) return p2;
+
+        // 3. Shallow recursive search (up to 3 levels deep) for any folder
+        //    literally named "results" with valid content. Bounded to avoid
+        //    walking huge trees.
+        try
+        {
+            foreach (var candidate in System.IO.Directory.EnumerateDirectories(
+                projectDir, "results", System.IO.SearchOption.AllDirectories))
+            {
+                // Limit depth: count separators relative to projectDir.
+                string rel = System.IO.Path.GetRelativePath(projectDir, candidate);
+                int depth = rel.Count(c => c == System.IO.Path.DirectorySeparatorChar
+                                         || c == System.IO.Path.AltDirectorySeparatorChar);
+                if (depth > 3) continue;
+                if (HasResultData(candidate)) return candidate;
+            }
+        }
+        catch { /* ignore – fall through to picker */ }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Prompt the user to pick the folder containing the simulation results
+    /// (typically a folder literally named "results"). Returns null if the
+    /// user cancels or the chosen folder has no result artifacts.
+    /// </summary>
+    private string? PromptForResultsFolder(string initialDir)
+    {
+        var ofd = new Microsoft.Win32.OpenFolderDialog
+        {
+            Title          = "Select the 'results' folder containing S11.csv / FarField_Summary.csv",
+            InitialDirectory = System.IO.Directory.Exists(initialDir) ? initialDir : ""
+        };
+        if (ofd.ShowDialog(this) != true) return null;
+
+        string folder = ofd.FolderName;
+        if (!HasResultData(folder))
+        {
+            MessageBox.Show(
+                $"The selected folder does not appear to contain simulation results:\n\n{folder}\n\n"
+                + "Please select the folder named 'results' that contains S11.csv or FarField_Summary.csv.",
+                "Invalid Results Folder", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return null;
+        }
+        return folder;
     }
 
     /// <summary>

@@ -127,7 +127,21 @@ namespace AntennaSimulatorApp.Services
                         // ── Antenna Parameters ──
                         if (ctx.Antennas.Count > 0)
                         {
+                            // When multiple antennas are present, render the combined
+                            // overlay first so users see the relative placement, and
+                            // skip the per-antenna mini schematic to avoid duplication.
+                            bool multipleAntennas = ctx.Antennas.Count >= 2;
+
                             col.Item().PaddingTop(10).Text("Antenna Parameters").FontSize(14).Bold().FontColor(Colors.Blue.Darken1);
+
+                            if (multipleAntennas)
+                            {
+                                col.Item().PaddingTop(4).Text("All Antennas (Combined View)")
+                                    .FontSize(12).SemiBold();
+                                col.Item().PaddingTop(2).AlignCenter().Width(500).Image(
+                                    RenderChart(500, 300, (c, cw, ch) => DrawCombinedSchematic(c, cw, ch, ctx.Antennas)));
+                            }
+
                             foreach (var ant in ctx.Antennas)
                             {
                                 col.Item().PaddingTop(4).Text($"{ant.Name} ({ant.Type})").FontSize(12).SemiBold();
@@ -167,19 +181,14 @@ namespace AntennaSimulatorApp.Services
                                     }
                                 });
 
-                                // Antenna schematic diagram
-                                col.Item().PaddingTop(4).AlignCenter().Width(400).Image(
-                                    RenderChart(400, 200, (c, cw, ch) => DrawAntennaSchematic(c, cw, ch, ant)));
-                            }
-
-                            // Combined overlay of all antennas (when multiple are present)
-                            if (ctx.Antennas.Count >= 2)
-                            {
-                                var allAnts = ctx.Antennas;
-                                col.Item().PaddingTop(8).Text("All Antennas (Combined View)")
-                                    .FontSize(12).SemiBold();
-                                col.Item().PaddingTop(2).AlignCenter().Width(500).Image(
-                                    RenderChart(500, 300, (c, cw, ch) => DrawCombinedSchematic(c, cw, ch, allAnts)));
+                                // Per-antenna schematic only when there is just one antenna.
+                                // For multi-antenna projects the combined overlay above
+                                // already conveys placement; individual diagrams are skipped.
+                                if (!multipleAntennas)
+                                {
+                                    col.Item().PaddingTop(4).AlignCenter().Width(400).Image(
+                                        RenderChart(400, 200, (c, cw, ch) => DrawAntennaSchematic(c, cw, ch, ant)));
+                                }
                             }
                         }
 

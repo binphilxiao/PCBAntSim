@@ -128,7 +128,7 @@ namespace AntennaSimulatorApp.Views
                 return;
             }
 
-            string simDataDir = Path.Combine(_simDir, "sim_data");
+            string simDataDir = AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir);
             if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
             {
                 AppendLine($"[ERROR] No time-domain data in: {simDataDir}");
@@ -170,7 +170,7 @@ namespace AntennaSimulatorApp.Views
 
             // Clear stale data from the previous run so the live result window
             // does not briefly show the old S11 curve while FDTD warms up.
-            TryCleanDir(Path.Combine(_simDir, "sim_data"));
+            TryCleanDir(AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir));
             TryCleanDir(Path.Combine(_simDir, "results"));
 
             // Close any result window left open from a previous run so it
@@ -326,7 +326,7 @@ namespace AntennaSimulatorApp.Views
             if (_postProcessRunning) return;
             if (_pythonExe == null || !File.Exists(_scriptPath)) return;
 
-            string simDataDir = Path.Combine(_simDir, "sim_data");
+            string simDataDir = AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir);
             if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
                 return;
 
@@ -359,7 +359,7 @@ namespace AntennaSimulatorApp.Views
             if (_postProcessRunning) return;
             if (_pythonExe == null || !File.Exists(_scriptPath)) return;
 
-            string simDataDir = Path.Combine(_simDir, "sim_data");
+            string simDataDir = AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir);
             if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
             {
                 if (isFinal) AppendLine("[INFO] No simulation data found — cannot generate results.");

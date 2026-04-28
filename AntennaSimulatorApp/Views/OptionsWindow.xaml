@@ -2,22 +2,25 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Options"
-        Width="600"
-        Height="260"
+        Width="640"
+        Height="360"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="12"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="12"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="12"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
@@ -38,7 +41,7 @@
                 Click="BrowseOpenEms_Click"
                 VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="1"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                    Foreground="#888"
@@ -47,23 +50,55 @@
                    Text="Folder containing openEMS.exe (e.g. C:\openEMS\openEMS). Leave empty for auto-detect."/>
 
         <!-- Python path -->
-        <Label Grid.Row="4"
+        <Label Grid.Row="3"
                 Grid.Column="0"
                 Content="Python path:"
                 VerticalAlignment="Center"/>
-        <TextBox Grid.Row="4"
+        <TextBox Grid.Row="3"
                 Grid.Column="1"
                 x:Name="PythonPathBox"
                  VerticalAlignment="Center"
                 Margin="0,0,8,0"/>
-        <Button Grid.Row="4"
+        <Button Grid.Row="3"
                 Grid.Column="2"
                 Content="Browse…"
                 Click="BrowsePython_Click"
                 VerticalAlignment="Center"/>
 
+        <TextBlock Grid.Row="4"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                   Foreground="#888"
+                FontStyle="Italic"
+                TextWrapping="Wrap"
+                   Text="Path to python.exe. Leave empty to use the system Python on PATH."/>
+
+        <!-- Sim_data scratch directory -->
+        <Label Grid.Row="6"
+                Grid.Column="0"
+                Content="Local sim_data folder:"
+                VerticalAlignment="Center"/>
+        <TextBox Grid.Row="6"
+                Grid.Column="1"
+                x:Name="SimDataScratchBox"
+                 VerticalAlignment="Center"
+                Margin="0,0,8,0"/>
+        <Button Grid.Row="6"
+                Grid.Column="2"
+                Content="Browse…"
+                Click="BrowseSimDataScratch_Click"
+                VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="7"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                   Foreground="#888"
+                FontStyle="Italic"
+                TextWrapping="Wrap"
+                   Text="Local disk folder for openEMS HDF5 dumps (e.g. C:\PCBAntSimRuns). Required when projects live on Google Drive / OneDrive / Dropbox — writing GB-scale HDF5 files to cloud-synced folders causes corruption. Leave empty to keep sim_data inside the project."/>
+
         <!-- OK / Cancel -->
-        <StackPanel Grid.Row="6"
+        <StackPanel Grid.Row="9"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                     Orientation="Horizontal"
