@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.6] - 2026-04-29
+
+### Added
+- **Local sim_data scratch folder** (Tools → Options): redirect openEMS HDF5 dumps / NF2FF / port time-domain data to a fast local disk so cloud-synced project folders (Google Drive, OneDrive, Dropbox) do not corrupt or thrash on GB-scale files
+- After a successful full simulation, scratch `sim_data` is automatically mirrored back to `<project>/Sim/sim_data` in a single bulk copy, so re-post-processing and reports remain reproducible later (or on another machine) without re-running FDTD
+- `AppSettings.ReloadFromDisk()` so multiple running instances of the app pick up the latest Options on the next export instead of using a stale in-memory copy
+
+### Changed
+- Generated `run_simulation.py` now bakes both the scratch and the in-project `sim_data` paths and chooses at runtime: full FDTD always writes to scratch; `--post-only` prefers whichever location actually has data, falling back to the in-project mirror
+- `Re-run Post-Processing` (menu and `SimConsoleWindow.StartPostOnly`) now searches both scratch and in-project `sim_data` via `OpenEmsExporter.FindExistingSimDataDir`
+
 ## [1.0.5] - 2026-04-28
 
 ### Added
