@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2026-04-29
+
+### Changed
+- S11 / VSWR plots and PDF report now shade and label **every** contiguous frequency band where S11 < -10 dB (not just the band containing the global minimum), with each band annotated `BW=xMHz`
+- PDF report adds an `All -10 dB Bands` row listing every band's range, MHz, and fractional bandwidth when more than one is present
+
 ## [1.0.6] - 2026-04-29
 
 ### Added

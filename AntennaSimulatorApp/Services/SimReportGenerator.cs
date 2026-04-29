@@ -77,6 +77,13 @@ namespace AntennaSimulatorApp.Services
                     { bwHigh = Lerp(s11.Freq[i], s11.Freq[i + 1], s11.S11dB[i], s11.S11dB[i + 1], -10); break; }
             }
 
+            // All -10 dB bands across the sweep (each contiguous region where
+            // S11 < -10 dB), used for shading every dip in the S11 chart and
+            // listing every band in the report.
+            var bwBands = s11.Freq.Length > 0
+                ? S11ResultWindow.FindBwBands(s11.Freq, s11.S11dB, -10.0)
+                : Array.Empty<(double, double)>();
+
             // Captured locals for lambdas
             var capturedS11 = s11;
             var capturedIdxMin = idxMin;
@@ -211,11 +218,25 @@ namespace AntennaSimulatorApp.Services
                                     InfoRow(t, "-10 dB Bandwidth", $"{bwMHz:F1} MHz ({pctBW:F1}%)");
                                     InfoRow(t, "-10 dB Range", $"{bwLow:F4} \u2013 {bwHigh:F4} GHz");
                                 }
+                                if (bwBands.Length > 1)
+                                {
+                                    var sb = new System.Text.StringBuilder();
+                                    for (int b = 0; b < bwBands.Length; b++)
+                                    {
+                                        var (fL, fH) = bwBands[b];
+                                        double mhz = (fH - fL) * 1000;
+                                        double ctr = (fL + fH) / 2;
+                                        double pct = ctr > 0 ? mhz / (ctr * 1000) * 100 : 0;
+                                        if (b > 0) sb.Append("; ");
+                                        sb.Append($"{fL:F3}\u2013{fH:F3} GHz ({mhz:F1} MHz, {pct:F1}%)");
+                                    }
+                                    InfoRow(t, "All -10 dB Bands", sb.ToString());
+                                }
                             });
 
                             // S11 Chart
                             col.Item().PaddingTop(5).Image(RenderChart(520, 220, (c, cw, ch) =>
-                                DrawS11Chart(c, cw, ch, capturedS11, capturedIdxMin)));
+                                DrawS11Chart(c, cw, ch, capturedS11, capturedIdxMin, bwBands)));
 
                             // Smith Chart
                             if (capturedS11.S11Real.Length > 0)
@@ -315,7 +336,8 @@ namespace AntennaSimulatorApp.Services
 
         // ── SkiaSharp chart drawing ─────────────────────────────────────
 
-        private static void DrawS11Chart(SKCanvas canvas, float w, float h, S11Data s11, int idxMin)
+        private static void DrawS11Chart(SKCanvas canvas, float w, float h, S11Data s11, int idxMin,
+                                         (double FLow, double FHigh)[]? bwBands = null)
         {
             const float ML = 45, MR = 15, MT = 15, MB = 30;
             float pw = w - ML - MR, ph = h - MT - MB;
@@ -358,6 +380,33 @@ namespace AntennaSimulatorApp.Services
             float y10 = MT + ph * (float)((sMax - (-10)) / (sMax - sMin));
             if (y10 >= MT && y10 <= MT + ph)
                 canvas.DrawLine(ML, y10, ML + pw, y10, refPaint);
+
+            // -10 dB band shading + per-band BW labels
+            if (bwBands != null && bwBands.Length > 0)
+            {
+                using var bandFill = new SKPaint { Color = new SKColor(0x00, 0xB4, 0x00, 0x28), Style = SKPaintStyle.Fill };
+                using var bandEdge = new SKPaint
+                {
+                    Color = new SKColor(0x00, 0xA0, 0x00, 0xB0),
+                    StrokeWidth = 0.8f,
+                    Style = SKPaintStyle.Stroke,
+                    PathEffect = SKPathEffect.CreateDash(new[] { 3f, 2f }, 0)
+                };
+                using var bwTextPaint = new SKPaint { Color = new SKColor(0x00, 0x80, 0x00), IsAntialias = true };
+                using var bwFont = new SKFont { Size = 8, Embolden = true };
+                foreach (var (fL, fH) in bwBands)
+                {
+                    if (fH <= fMin || fL >= fMax) continue;
+                    float xL = ML + (float)((Math.Max(fL, fMin) - fMin) / (fMax - fMin)) * pw;
+                    float xR = ML + (float)((Math.Min(fH, fMax) - fMin) / (fMax - fMin)) * pw;
+                    canvas.DrawRect(xL, MT, xR - xL, ph, bandFill);
+                    canvas.DrawLine(xL, MT, xL, MT + ph, bandEdge);
+                    canvas.DrawLine(xR, MT, xR, MT + ph, bandEdge);
+                    double bwMHz = (fH - fL) * 1000.0;
+                    canvas.DrawText($"BW={bwMHz:F1}MHz", (xL + xR) / 2, MT + 9,
+                                    SKTextAlign.Center, bwFont, bwTextPaint);
+                }
+            }
 
             // S11 curve
             using var path = new SKPath();

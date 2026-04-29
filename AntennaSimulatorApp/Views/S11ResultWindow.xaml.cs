@@ -32,7 +32,9 @@ namespace AntennaSimulatorApp.Views
 
         // Bandwidth annotation data
         private double _bwFLow, _bwFHigh;
-        private bool _hasBw;
+        // All -10 dB bands (contiguous regions where S11 < -10 dB), with
+        // edges linearly interpolated to the threshold crossing.
+        private (double FLow, double FHigh)[] _bwBands = Array.Empty<(double, double)>();
         private int _idxMin;
 
         // Secondary dip markers (local minima below -5 dB, excluding global min)
@@ -222,9 +224,11 @@ namespace AntennaSimulatorApp.Views
                 TxtVswr.Text = $"{_vswr[_idxMin]:F2}";
 
             double threshold = -10.0;
-            _hasBw = false;
+            _bwBands = FindBwBands(_freqGHz, _s11dB, threshold);
+
             if (minVal < threshold)
             {
+                // Header text reflects the band that contains the global minimum
                 int left = _idxMin;
                 while (left > 0 && _s11dB[left - 1] < threshold) left--;
                 int right = _idxMin;
@@ -247,8 +251,10 @@ namespace AntennaSimulatorApp.Views
                 double bwMHz = (_bwFHigh - _bwFLow) * 1000.0;
                 double center = _freqGHz[_idxMin];
                 double pct = center > 0 ? bwMHz / (center * 1000) * 100 : 0;
-                TxtBandwidth.Text = $"{bwMHz:F1} MHz ({_bwFLow:F3}–{_bwFHigh:F3} GHz, {pct:F1}%)";
-                _hasBw = true;
+                if (_bwBands.Length > 1)
+                    TxtBandwidth.Text = $"{bwMHz:F1} MHz ({_bwFLow:F3}–{_bwFHigh:F3} GHz, {pct:F1}%)  [+{_bwBands.Length - 1} more]";
+                else
+                    TxtBandwidth.Text = $"{bwMHz:F1} MHz ({_bwFLow:F3}–{_bwFHigh:F3} GHz, {pct:F1}%)";
             }
             else
             {
@@ -271,6 +277,53 @@ namespace AntennaSimulatorApp.Views
                     dips.Add(i);
             }
             _dipIndices = dips.ToArray();
+        }
+
+        /// <summary>
+        /// Find every contiguous frequency band where the S11 trace dips
+        /// below <paramref name="thresholdDb"/> (e.g. -10 dB). Edges are
+        /// linearly interpolated to the threshold crossing so adjacent
+        /// samples don't truncate the band.
+        /// </summary>
+        internal static (double FLow, double FHigh)[] FindBwBands(double[] freq, double[] s11dB, double thresholdDb)
+        {
+            if (freq.Length < 2 || s11dB.Length != freq.Length)
+                return Array.Empty<(double, double)>();
+
+            var bands = new List<(double, double)>();
+            int i = 0;
+            int n = s11dB.Length;
+            while (i < n)
+            {
+                if (s11dB[i] >= thresholdDb) { i++; continue; }
+
+                // Start of a band — interpolate left edge
+                double fLow;
+                if (i == 0)
+                    fLow = freq[0];
+                else
+                {
+                    double t = (thresholdDb - s11dB[i - 1]) / (s11dB[i] - s11dB[i - 1]);
+                    fLow = freq[i - 1] + t * (freq[i] - freq[i - 1]);
+                }
+
+                // Walk to end of band
+                int j = i;
+                while (j < n - 1 && s11dB[j + 1] < thresholdDb) j++;
+
+                double fHigh;
+                if (j == n - 1)
+                    fHigh = freq[n - 1];
+                else
+                {
+                    double t = (thresholdDb - s11dB[j]) / (s11dB[j + 1] - s11dB[j]);
+                    fHigh = freq[j] + t * (freq[j + 1] - freq[j]);
+                }
+
+                if (fHigh > fLow) bands.Add((fLow, fHigh));
+                i = j + 1;
+            }
+            return bands.ToArray();
         }
 
         // ── Chart tab switching ────────────────────────────────────────
@@ -343,24 +396,27 @@ namespace AntennaSimulatorApp.Views
                 AddLabel(S11Canvas, "-10 dB", ml + pw - 45, py10 - 14, 9, Brushes.Red, 0.7);
             }
 
-            // Bandwidth shading
-            if (_hasBw && sMin < -10)
+            // Bandwidth shading — every -10 dB band
+            if (sMin < -10 && _bwBands.Length > 0)
             {
-                double xL = Xmap(_bwFLow), xR = Xmap(_bwFHigh);
-                var rect = new Rectangle
-                {
-                    Width = xR - xL, Height = ph,
-                    Fill = new SolidColorBrush(Color.FromArgb(25, 0, 180, 0))
-                };
-                Canvas.SetLeft(rect, xL); Canvas.SetTop(rect, mt);
-                S11Canvas.Children.Add(rect);
-
                 var dash = new DoubleCollection { 4, 2 };
-                S11Canvas.Children.Add(new Line { X1 = xL, Y1 = mt, X2 = xL, Y2 = mt + ph, Stroke = Brushes.Green, StrokeThickness = 1, StrokeDashArray = dash, Opacity = 0.6 });
-                S11Canvas.Children.Add(new Line { X1 = xR, Y1 = mt, X2 = xR, Y2 = mt + ph, Stroke = Brushes.Green, StrokeThickness = 1, StrokeDashArray = dash, Opacity = 0.6 });
+                foreach (var (fLow, fHigh) in _bwBands)
+                {
+                    double xL = Xmap(fLow), xR = Xmap(fHigh);
+                    var rect = new Rectangle
+                    {
+                        Width = Math.Max(1, xR - xL), Height = ph,
+                        Fill = new SolidColorBrush(Color.FromArgb(25, 0, 180, 0))
+                    };
+                    Canvas.SetLeft(rect, xL); Canvas.SetTop(rect, mt);
+                    S11Canvas.Children.Add(rect);
 
-                double bwMHz = (_bwFHigh - _bwFLow) * 1000.0;
-                AddLabel(S11Canvas, $"BW={bwMHz:F1}MHz", (xL + xR) / 2 - 30, mt + 4, 9, Brushes.Green, 0.9, FontWeights.SemiBold);
+                    S11Canvas.Children.Add(new Line { X1 = xL, Y1 = mt, X2 = xL, Y2 = mt + ph, Stroke = Brushes.Green, StrokeThickness = 1, StrokeDashArray = dash, Opacity = 0.6 });
+                    S11Canvas.Children.Add(new Line { X1 = xR, Y1 = mt, X2 = xR, Y2 = mt + ph, Stroke = Brushes.Green, StrokeThickness = 1, StrokeDashArray = dash, Opacity = 0.6 });
+
+                    double bwMHz = (fHigh - fLow) * 1000.0;
+                    AddLabel(S11Canvas, $"BW={bwMHz:F1}MHz", (xL + xR) / 2 - 30, mt + 4, 9, Brushes.Green, 0.9, FontWeights.SemiBold);
+                }
             }
 
             // S11 curve
@@ -442,13 +498,13 @@ namespace AntennaSimulatorApp.Views
                 AddLabel(VswrCanvas, "VSWR=2", ml + pw - 55, py2 - 14, 9, Brushes.Red, 0.7);
             }
 
-            // Bandwidth shading
-            if (_hasBw)
+            // Bandwidth shading — every -10 dB band
+            foreach (var (fLow, fHigh) in _bwBands)
             {
-                double xL = Xmap(_bwFLow), xR = Xmap(_bwFHigh);
+                double xL = Xmap(fLow), xR = Xmap(fHigh);
                 var rect = new Rectangle
                 {
-                    Width = xR - xL, Height = ph,
+                    Width = Math.Max(1, xR - xL), Height = ph,
                     Fill = new SolidColorBrush(Color.FromArgb(25, 0, 180, 0))
                 };
                 Canvas.SetLeft(rect, xL); Canvas.SetTop(rect, mt);
