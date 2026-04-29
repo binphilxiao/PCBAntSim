@@ -49,6 +49,35 @@ namespace AntennaSimulatorApp.Services
 
             return Path.Combine(scratch, projectName, "sim_data");
         }
+
+        /// <summary>
+        /// Always returns the in-project <c>&lt;simDir&gt;/sim_data</c> path,
+        /// regardless of scratch settings. Used as a post-simulation mirror
+        /// destination so that re-post-processing remains possible later
+        /// (e.g. on another machine, or after the scratch disk is wiped).
+        /// </summary>
+        public static string GetProjectSimDataDir(string simDir)
+            => Path.Combine(simDir, "sim_data");
+
+        /// <summary>
+        /// Picks the sim_data directory that actually contains data: prefers
+        /// the scratch location (current run), falls back to the in-project
+        /// mirror created after a previous successful simulation. Returns the
+        /// scratch location if neither has data (caller will surface a
+        /// "no data" error).
+        /// </summary>
+        public static string FindExistingSimDataDir(string simDir)
+        {
+            string scratch = ResolveSimDataDir(simDir);
+            string project = GetProjectSimDataDir(simDir);
+            if (HasData(scratch)) return scratch;
+            if (HasData(project)) return project;
+            return scratch;
+
+            static bool HasData(string d) =>
+                Directory.Exists(d) && Directory.EnumerateFileSystemEntries(d).Any();
+        }
+
         private const double MountGap = 0.1; // mm gap between carrier and module
 
         private static string F(double v) =>
@@ -81,6 +110,7 @@ namespace AntennaSimulatorApp.Services
             var scriptsDir  = Path.Combine(outputDir, "scripts");
             var geometryDir = Path.Combine(outputDir, "geometry");
             var simDataDir  = ResolveSimDataDir(outputDir);
+            var projectSimDataDir = GetProjectSimDataDir(outputDir);
             var resultsDir  = Path.Combine(outputDir, "results");
             Directory.CreateDirectory(scriptsDir);
             Directory.CreateDirectory(geometryDir);
@@ -91,7 +121,7 @@ namespace AntennaSimulatorApp.Services
             var stlEntries = new List<(string FileName, string Material, int Priority)>();
 
             WriteHeader(sb);
-            WriteImports(sb, simDataDir);
+            WriteImports(sb, simDataDir, projectSimDataDir);
             WriteSimParameters(sb, vm);
             WriteFdtdSetup(sb, vm);
             WriteMaterials(sb, vm);
@@ -156,7 +186,7 @@ namespace AntennaSimulatorApp.Services
             return null;
         }
 
-        private static void WriteImports(StringBuilder sb, string simDataDir)
+        private static void WriteImports(StringBuilder sb, string simDataDir, string projectSimDataDir)
         {
             string? resolvedPath = ResolveOpenEmsPath();
 
@@ -173,11 +203,25 @@ namespace AntennaSimulatorApp.Services
             // sim_data may be redirected to a local-disk scratch directory
             // (configured in Tools -> Options) so cloud-synced project folders
             // do not corrupt HDF5 dumps. The path is baked into the script at
-            // export time so --post-only re-runs find the same data.
-            // We emit a Python raw-string literal; backslashes need no escaping
-            // but we defend against an embedded single quote.
-            string pyPath = simDataDir.Replace("'", "\\'");
-            sb.AppendLine($"sim_data_dir = r'{pyPath}'");
+            // export time so --post-only re-runs find the same data. We also
+            // bake the in-project mirror path so post-only still works after
+            // the scratch disk is wiped or the project is opened on another
+            // machine (the app copies scratch -> in-project on success).
+            string pyScratch = simDataDir.Replace("'", "\\'");
+            string pyProject = projectSimDataDir.Replace("'", "\\'");
+            sb.AppendLine($"_sim_data_scratch  = r'{pyScratch}'");
+            sb.AppendLine($"_sim_data_project  = r'{pyProject}'");
+            sb.AppendLine("def _has_data(d):");
+            sb.AppendLine("    try: return os.path.isdir(d) and any(True for _ in os.scandir(d))");
+            sb.AppendLine("    except OSError: return False");
+            sb.AppendLine("if post_only:");
+            sb.AppendLine("    # Prefer whichever location actually has data so re-post-processing");
+            sb.AppendLine("    # works even if the scratch disk has been cleared.");
+            sb.AppendLine("    sim_data_dir = _sim_data_scratch if _has_data(_sim_data_scratch) else (");
+            sb.AppendLine("        _sim_data_project if _has_data(_sim_data_project) else _sim_data_scratch)");
+            sb.AppendLine("else:");
+            sb.AppendLine("    # Full FDTD run always writes to the (fast, local) scratch location.");
+            sb.AppendLine("    sim_data_dir = _sim_data_scratch");
             sb.AppendLine("os.makedirs(sim_data_dir, exist_ok=True)");
             sb.AppendLine("results_dir  = os.path.join(sim_base, 'results')");
             sb.AppendLine();

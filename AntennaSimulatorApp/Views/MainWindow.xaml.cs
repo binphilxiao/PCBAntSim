@@ -1727,7 +1727,9 @@ public partial class MainWindow : Window
         string simDir     = System.IO.Path.Combine(projectDir, "Sim");
         string scriptPath = System.IO.Path.Combine(simDir, "scripts", "run_simulation.py");
         // sim_data may be redirected to a local scratch disk (Options).
-        string simDataDir = OpenEmsExporter.ResolveSimDataDir(simDir);
+        // After a successful run we also mirror it back into the project,
+        // so post-only works from either location.
+        string simDataDir = OpenEmsExporter.FindExistingSimDataDir(simDir);
 
         if (!System.IO.File.Exists(scriptPath)
             || !System.IO.Directory.Exists(simDataDir)

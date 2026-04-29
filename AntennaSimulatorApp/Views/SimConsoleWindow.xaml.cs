@@ -128,7 +128,7 @@ namespace AntennaSimulatorApp.Views
                 return;
             }
 
-            string simDataDir = AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir);
+            string simDataDir = AntennaSimulatorApp.Services.OpenEmsExporter.FindExistingSimDataDir(_simDir);
             if (!Directory.Exists(simDataDir) || Directory.GetFiles(simDataDir).Length == 0)
             {
                 AppendLine($"[ERROR] No time-domain data in: {simDataDir}");
@@ -292,6 +292,7 @@ namespace AntennaSimulatorApp.Views
                     TxtProgress.Text = $"{_maxTimesteps:N0} / {_maxTimesteps:N0}  (100.0%)";
                     TxtStatus.Text = "Simulation completed successfully";
                     AppendLine("[DONE] Simulation finished successfully.");
+                    MirrorScratchToProjectAsync();
                     FinalRefreshResults();
                     GenerateReport();
                 }
@@ -349,6 +350,68 @@ namespace AntennaSimulatorApp.Views
             }
             catch { }
             return total;
+        }
+
+        /// <summary>
+        /// After a successful simulation, copy the scratch sim_data folder
+        /// (typically on a local SSD, e.g. C:\PCBAntSimData) back into the
+        /// project's <c>Sim/sim_data</c> so that re-post-processing remains
+        /// possible later when the project is opened on a different machine
+        /// or the scratch disk is wiped. This is a one-shot bulk copy of
+        /// final data only — it does NOT happen during the run, so the
+        /// cloud-sync provider only sees a single write at the end instead
+        /// of GB-scale streaming HDF5 churn.
+        /// </summary>
+        private void MirrorScratchToProjectAsync()
+        {
+            string scratch = AntennaSimulatorApp.Services.OpenEmsExporter.ResolveSimDataDir(_simDir);
+            string project = AntennaSimulatorApp.Services.OpenEmsExporter.GetProjectSimDataDir(_simDir);
+
+            // Same path → nothing to mirror (scratch root not configured).
+            if (string.Equals(Path.GetFullPath(scratch), Path.GetFullPath(project),
+                              StringComparison.OrdinalIgnoreCase))
+                return;
+
+            if (!Directory.Exists(scratch)) return;
+
+            AppendLine($"[INFO] Mirroring sim_data to project folder: {project}");
+            TxtStatus.Text = "Copying sim_data to project...";
+
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                try
+                {
+                    Directory.CreateDirectory(project);
+                    CopyDirectory(scratch, project);
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        AppendLine("[INFO] sim_data mirrored successfully.");
+                        TxtStatus.Text = "Simulation completed successfully";
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        AppendLine($"[WARN] Failed to mirror sim_data: {ex.Message}");
+                    });
+                }
+            });
+        }
+
+        private static void CopyDirectory(string sourceDir, string destDir)
+        {
+            Directory.CreateDirectory(destDir);
+            foreach (string file in Directory.EnumerateFiles(sourceDir))
+            {
+                string dest = Path.Combine(destDir, Path.GetFileName(file));
+                File.Copy(file, dest, overwrite: true);
+            }
+            foreach (string sub in Directory.EnumerateDirectories(sourceDir))
+            {
+                string dest = Path.Combine(destDir, Path.GetFileName(sub));
+                CopyDirectory(sub, dest);
+            }
         }
 
         /// <summary>
